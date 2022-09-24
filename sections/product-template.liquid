@@ -300,7 +300,7 @@
         {% endcomment %}
         {% capture img_id_class %}product-single__photo-{{ image.id }}{% endcapture %}
         {% capture wrapper_id %}ProductImageWrapper-{{ image.id }}{% endcapture %}
-        <h2>hello friends dekho</h2>
+       
 
         <div class="product-single__photo--flex-wrapper">
           <div class="product-single__photo--flex">
@@ -723,6 +723,7 @@ for="ProductSelect-option-{{ forloop.index0 }}">
             {% if section.settings.social_sharing_products %}
             <div class="small--text-center product-social-sharing">
               {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+              <h2>hello friends dekho</h2>
             </div>
             {% endif %}
             {% assign cbu = product.variants.first.barcode | split : ',CBU:' %}

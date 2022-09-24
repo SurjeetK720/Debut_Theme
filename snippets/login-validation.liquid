@@ -1,0 +1,143 @@
+<script>
+       {% if template contains 'customers/register' %}
+      var create_user = false;
+      if('localStorage' in window){
+        localStorage.setItem('register','false');  
+      }  
+  	
+      $('#Email').blur(function(){
+        $('.email__error').text("");
+        $('.email__error').hide();
+      });
+      $('#CreatePassword').blur(function(){
+        $('.password__error').text("");
+        $('.password__error').hide();
+      });
+      $('#FirstName').blur(function(){
+        $('.firstname__error').text("");
+        $('.firstname__error').hide();
+      });
+      $('#LastName').blur(function(){
+        $('.lastname__error').text("");
+        $('.lastname__error').hide();
+      });
+      function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+      }
+      $('.register--button').click(function(){
+        if ($('#FirstName').val() == '') {
+          $('.firstname__error').css('display','block');
+          $('.firstname__error').text("Please enter first name");
+          create_user = false;
+          return false;
+        }
+        else
+        {
+          if($('#FirstName').val().length < 3)
+          {
+            $('.firstname__error').css('display','block');
+            $('.firstname__error').text("First name must contains more than 2 letters.");
+            create_user = false;
+            return false;
+          }
+          else
+          {
+            create_user = true;
+          }
+        }
+        if ($('#LastName').val() == '') {
+          $('.lastname__error').css('display','block');
+          $('.lastname__error').text("Please enter last name");
+          create_user = false;
+          return false;
+        }
+        else
+        {
+           if($('#LastName').val().length < 3)
+          {
+            $('.lastname__error').css('display','block');
+            $('.lastname__error').text("Last name must contains more than 2 letters.");
+            create_user = false;
+            return false;
+          }
+          else
+          {
+            create_user = true;
+          }
+        }
+        if (!validateEmail($('#Email').val())) 
+        {
+          $('.email__error').css('display','block');
+          $('.email__error').text("Please enter a valid email address");
+          create_user = false;
+          return false;
+        }
+        else
+        {
+        create_user = true;
+        }
+        if ($('#Email').val() == '') {
+          $('.email__error').css('display','block');
+          $('.email__error').text("Please enter a valid email address");
+          create_user = false;
+          return false;
+        }
+        else
+        {
+          create_user = true;
+        }
+        if ($('#CreatePassword').val() == '') {
+          $('.password__error').css('display','block');
+          $('.password__error').text("Please enter password");
+          create_user = false;
+          return false;
+        }
+        else
+        {
+          if ($('#CreatePassword').val().length < 5 ) {
+            $('.password__error').css('display','block');
+            $('.password__error').text("Password must contain minimum 5 letters.");
+            create_user = false;
+            return false;
+          }
+          else
+          {
+            create_user = true;
+          }
+        }
+      
+        if(create_user == true || create_user == 'true')
+        {
+          //console.log('true');
+
+           if('localStorage' in window){
+        localStorage.setItem('register','true');  
+      }  
+  	
+        }
+        
+      })
+      {% endif %}
+      {% if template contains 'index' %}
+      if('localStorage' in window){
+      if(localStorage.getItem('register')=='true')
+      {
+        console.log('true');
+        setTimeout(function(){
+           var ev = {};
+        ev.eventInfo={
+          'type':ctConstants.trackEvent,
+          'eventAction': ctConstants.registration,
+          'eventLabel' : 'Registration has been successful.',
+          'eventValue' :1
+        };
+        ev.category ={'primaryCategory':ctConstants.other};
+        digitalData.event.push(ev);
+        localStorage.setItem('register','false');
+        },1000);
+       
+      }
+      }
+      {% endif %}
+  </script>

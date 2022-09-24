@@ -1,0 +1,75 @@
+<div class="grid">
+  {% if section.settings.url != blank %}
+  <a href="{{ section.settings.url }}">
+    {% endif %}
+    <div class="grid__item one-whole">
+      {% if section.settings.image != blank %}
+      <div class="feature-row__image-wrapper">
+        <div class="banner__image">
+          <img 
+               src="{{ section.settings.image | img_url: '1350x767' }}"
+               alt="{{ section.settings.image.alt | escape }}" class="small--hide">
+          {% if section.settings.mob_image != blank %}
+          <img 
+               src="{{ section.settings.mob_image | img_url: '1350x767' }}"
+               alt="{{ section.settings.mob_image.alt | escape }}" class="large--hide medium--hide">
+          {% endif %}
+          {% if section.settings.btn_text != blank %}
+          <span href="{{ section.settings.url }}" class="btn abs-btn">{{ section.settings.btn_text }}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% if section.settings.url != blank %}
+  </a>
+  {% endif %}
+</div>
+{% schema %}
+{
+"name": {
+"en": "Banner with button"
+},
+"class": "banner_with_button--section",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": {
+"en": "Desktop Background Image"
+}
+},
+{
+"type": "image_picker",
+"id": "mob_image",
+"label": {
+"en": "Mobile Background Image"
+}
+},
+{
+"type": "text",
+"id": "btn_text",
+"label": {
+"en": "Button text"
+}
+},
+{
+"type": "url",
+"id": "url",
+"label": {
+"en": "Url"
+}
+}
+],
+"presets": [
+{
+"name": {
+"en": "Banner with button"
+},
+"category": {
+"en": "Image"
+}
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,47 @@
+<div class="lips-content">
+  {% if section.settings.heading != blank %}
+  <div class="lips-heading">
+    {{section.settings.heading}}
+  </div>
+  {% endif %}
+  {% if section.settings.content != blank %}
+  <div class="lips-paragraph">
+    <p>{{section.settings.content}}</p>
+  </div>
+  {% endif %}
+   {% if section.settings.product != blank %}
+  {%- assign product = all_products[section.settings.product] -%}
+  <div class="grid lips-grid-item">
+  {% include 'product-grid-item-lips'%}
+  </div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Lips Mobile Content",
+	"class": "lips-content-wrapper", 
+    "settings": [
+    {
+    "type" : "html",
+    "id" : "heading",
+    "label" : "Enter Heading"
+    },
+	{
+    "type" : "textarea",
+    "id" : "content",
+    "label" : "Enter Content"
+    },
+	{
+    "type" : "product",
+    "id" : "product",
+    "label" : "Choose Product"
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

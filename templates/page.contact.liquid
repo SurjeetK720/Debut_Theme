@@ -1,0 +1,21 @@
+<!-- /templates/page.contact.liquid -->
+<div class="grid">
+
+  <div class="grid__item large--five-sixths push--large--one-twelfth">
+    {% include 'breadcrumbs' %}
+    <header class="section-header text-center">
+      <h1>{{ page.title }}</h1>
+      <hr class="hr--small">
+      <p class="recover-text">
+        {{ page.content }}
+      </p>
+    </header>
+    <div class="grid">
+      <div class="grid__item large--four-fifths push--large--one-tenth">
+        {% section 'contact-template' %}
+      </div>
+    </div>
+
+  </div>
+
+</div>

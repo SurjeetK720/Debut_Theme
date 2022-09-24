@@ -1,0 +1,19 @@
+<!-- snippets/lakmeContent-video.liquid -->
+{% assign widgetStyle = '' %}
+{% if contentWidget.backgroundImage != blank %}
+    {% assign widgetStyle = "background: url(" | append: contentWidget.backgroundImage | append: ") center center no-repeat; padding: 30px 0;" %}
+{% endif %}
+<div class="grid text-center contentWidget contentWidgetContainer contentWidget-video contentWidget__{{ widgetSerial }}" style="{{ widgetStyle }}">
+    <div class="grid__item contentWidget-heading">
+        {% if contentWidget.heading != blank %}
+            <span class="h5 contentWidget-heading abcd">{{ contentWidget.heading }}</span>
+        {% endif %}
+    </div>
+    <div class="contentWidget-content ">
+        <div class="grid__item">
+            <iframe {% if product.handle contains 'kareena-kapoor-khan-lakme-absolute-lash-definer-black-15-ml' %}
+        id ="definerYoutubeApi"{% endif %} src="https://www.youtube.com/embed/{{ contentWidget.videoId }}?enablejsapi=1" frameborder="0"
+                    allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>

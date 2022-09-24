@@ -1,0 +1,271 @@
+<div class="trends-slider-content">
+  {% for block in section.blocks %}
+  <div class="trends__item" {{ block.shopify_attributes }}>
+
+    {% case block.type %}
+    {% when 'html' %}
+    <div class="grid--full trends__item-inner small--hide medium--hide trends__item-inner--{{ block.type }}">
+      {% if block.settings.enable_image1 %}
+      <div class="trends--image1_section text-left grid__item one-whole">
+        <a href="{{ block.settings.button_link1 }}">
+        {% if block.settings.image1 != blank %}
+        <img src="{{ block.settings.image1 | img_url : '1350x425' }}" alt="" />
+        {% endif %}
+        <div class="hero__text-wrap">
+          <div class="hero__text-align">
+            <div class="hero__text-content{% if block.settings.content_alignment == 'top' %} posi-top{% elsif block.settings.content_alignment == 'middle' %} posi-middle{% else %} posi-bottom{% endif %}">
+              <div class="wrapper">
+                {% if block.settings.heading1 != blank %}
+                <h2 class="h2">{{ block.settings.heading1 }}</h2>
+                {% endif %}
+                {% if block.settings.subheading1 != blank %}
+                <h3 class="h3">{{ block.settings.subheading1 }}</h3>
+                {% endif %}
+                {% if block.settings.content != blank %}
+                <p class="content_wrapper">{{ block.settings.content }}
+                  {% if block.settings.button_text1 != blank and block.settings.button_link1 != blank  %}
+                  <span class="link-text">{{ block.settings.button_text1 }}</span>
+                  {% endif %}
+                </p>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+      {% endif %}
+      {% if block.settings.enable_image2 %}
+      <div class="trends--image2_section text-right grid__item one-half">
+        <a href="{{ block.settings.button_link2 }}">
+        <div class="trends-inner">
+          {% if block.settings.image2 != blank %}
+          <img src="{{ block.settings.image2 | img_url : '657x429' }}" alt="" />
+          {% endif %}
+          <div class="hero__text-wrap">
+            <div class="hero__text-align">
+              <div class="hero__text-content{% if block.settings.content_alignment == 'top' %} posi-top{% elsif block.settings.content_alignment == 'middle' %} posi-middle{% else %} posi-bottom{% endif %}">
+                {% if block.settings.heading2 != blank %}
+                <h2 class="h2">{{ block.settings.heading2 }}</h2>
+                {% endif %}
+                {% if block.settings.subheading2 != blank %}
+                <h3 class="h3">{{ block.settings.subheading2 }}</h3>
+                {% endif %}
+                {% if block.settings.button_text2 != blank and block.settings.button_link2 != blank  %}
+                <span class="btn">{{ block.settings.button_text2 }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    <div class="mobile--trends trends__item-inner grid--full large--hide trends__item-inner--{{ block.type }}">
+      {% if block.settings.mob_enable_image %}
+      <div class="trends--image1_section text-left grid__item one-whole">
+        <a href="{{ block.settings.mob_button_link }}">
+        {% if block.settings.mob_image != blank %}
+        <img src="{{ block.settings.mob_image | img_url : 'original' }}" alt="" />
+        {% endif %}
+        <div class="mobile-abs hero__image1">
+          {% if block.settings.mob_heading != blank %}
+          <h2 class="h2">{{ block.settings.mob_heading }}</h2>
+          {% endif %}
+          {% if block.settings.mob_subheading != blank %}
+          <h3 class="h3">{{ block.settings.mob_subheading }}</h3>
+          {% endif %}
+          {% if block.settings.mob_content != blank %}
+          <p class="content_wrapper hero__subtitle">{{ block.settings.mob_content }}
+           {% if block.settings.mob_button_text != blank and block.settings.mob_button_link != blank  %}
+          <span class="link-text">{{ block.settings.mob_button_text }}</span>
+          {% endif %}
+          </p>
+          {% endif %}
+        </div>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    {% endcase %}
+  </div>
+  {% endfor %}
+  {% if section.blocks.size == 0 %}
+  <div class="wrapper">
+    <div class="grid">
+      <div class="grid__item">
+        <div class="rte text-center">
+          {{ 'home_page.onboarding.no_content' | t }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+"name": {
+"en": "Trends Slider"
+},
+"class" : "trends-slider-section",
+"max_blocks": 9,
+"blocks": [
+{
+"type": "html",
+"name": {
+"en": "Trends Slider"
+},
+"settings": [
+{
+"type" : "header",
+"content" : "For Desktop"
+},
+{
+"type" : "header",
+"content" : "Image Content"
+},
+{
+"type" : "checkbox",
+"id": "enable_image1",
+"label" : "Enable image 1 section"
+},
+{
+"type" : "image_picker",
+"id": "image1",
+"label" : "Image 1"
+},
+{
+"type" : "text",
+"id" : "heading1",
+"label" : "Heading"
+},
+{
+"type" : "text",
+"id" : "subheading1",
+"label" : "Sub Heading"
+},
+{
+"type" : "html",
+"id" : "content",
+"label" : "Content"
+},
+{
+"type": "select",
+"id": "content_alignment",
+"options": [
+{ "value": "top", "label": "Top"},
+{ "value": "middle", "label": "Middle"},
+{ "value": "bottom", "label": "Bottom"}
+],
+"label": "Content Alignment"
+},
+{
+"type" : "text",
+"id" : "button_text1",
+"label" : "Button Text"
+},
+{
+"type" : "url",
+"id" : "button_link1",
+"label" : "Button link"
+},
+{
+"type" : "header",
+"content" : "Image 2 Content"
+},
+{
+"type" : "checkbox",
+"id": "enable_image2",
+"label" : "Enable image 2 section"
+},
+{
+"type" : "image_picker",
+"id": "image2",
+"label" : "Image 1"
+},
+{
+"type" : "text",
+"id" : "heading2",
+"label" : "Heading"
+},
+{
+"type" : "text",
+"id" : "subheading2",
+"label" : "Sub Heading"
+},
+{
+"type" : "text",
+"id" : "button_text2",
+"label" : "Button Text"
+},
+{
+"type" : "url",
+"id" : "button_link2",
+"label" : "Button link"
+},
+{
+"type" : "header",
+"content" : "For Mobile"
+},
+{
+"type" : "header",
+"content" : "Image Content"
+},
+{
+"type" : "checkbox",
+"id": "mob_enable_image",
+"label" : "Enable image section"
+},
+{
+"type" : "image_picker",
+"id": "mob_image",
+"label" : "Image"
+},
+{
+"type" : "text",
+"id" : "mob_heading",
+"label" : "Heading"
+},
+{
+"type" : "text",
+"id" : "mob_subheading",
+"label" : "Sub Heading"
+},
+{
+"type" : "html",
+"id" : "mob_content",
+"label" : "Content"
+},
+{
+"type" : "text",
+"id" : "mob_button_text",
+"label" : "Button Text"
+},
+{
+"type" : "url",
+"id" : "mob_button_link",
+"label" : "Button link"
+}
+]
+}
+],
+"presets": [
+{
+"name": {
+"en": "Trends Slider"
+},
+"category": {
+"en": "Image"
+},
+"blocks": [
+{
+"type": "html"
+}
+]
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/articles/edit-field/51561
+{% endcomment %}
+{% if article.metafields.custom_fields["step1_product3"] != blank %}
+  <div class="custom-field custom-field__step1-product3 custom-field__type--product-reference">
+    <h3 class="custom-field--title">step1 product3</h3>
+    <div class="custom-field--value">  
+    {% assign product_ref = all_products[article.metafields.custom_fields["step1_product3"]] %}
+    {{ product_ref.title | link_to: product_ref.url }}
+    </div>
+  </div>
+{% endif %}

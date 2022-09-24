@@ -1,0 +1,3894 @@
+{% comment %}
+This snippet is the main file for all events of adobe analytics.
+This snippet will be imported in theme.liquid file and sections of
+this snippet will be present on all pages.
+
+<img class="bottom-float-chat" id="liveagent_button_online_5730L0000008fyx" style="width:60px;float:right;display:none;border:0px none;cursor:pointer;position:fixed;right:3px;bottom:50px;z-index:11;" onclick="liveagent.startChat('5730L0000008fyx')" src="https://cdn.shopify.com/s/files/1/0014/3514/0183/files/chat-icon-lakme.png?17426028078594316616" />
+<img class="bottom-float-chat" id="liveagent_button_offline_5730L0000008fyx" style="width:60px;display:none;border:0px none;float:right;position:fixed;right:3px;bottom:50px;z-index:11;" src="https://cdn.shopify.com/s/files/1/0014/3514/0183/files/chat-icon-lakme.png?17426028078594316616" />
+{% endcomment %}
+<script type="text/javascript">
+  if (!window._laq) { window._laq = []; }
+  window._laq.push(function(){liveagent.showWhenOnline('5730L0000008fyx', document.getElementById('liveagent_button_online_5730L0000008fyx'));
+                              liveagent.showWhenOffline('5730L0000008fyx', document.getElementById('liveagent_button_offline_5730L0000008fyx'));
+                             });</script>
+<script type='text/javascript' src='https://c.la1-c1-phx.salesforceliveagent.com/content/g/js/39.0/deployment.js'></script>
+<script type='text/javascript'>
+  liveagent.init('https://d.la1-c1-phx.salesforceliveagent.com/chat', '572E0000000blJY', '00DE0000000bbLj');
+</script>
+<script id="adobe_analytics_datalayer">
+
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+    var ifMobile = true;
+  }else{
+    var ifMobile = false;
+  }
+
+
+  var baseURL = "https://lakmeindia.com/";
+  var destinationURL = window.location.href;
+
+
+
+
+
+    var page_name = '{{ page.title }}';
+    var page_type = '{{ page.title }}';
+    var content_type = '{{ page.title }}'
+
+
+
+  {% if template.name == "index" %}
+  var page_name = 'Home page';
+  var page_type = 'Home page';
+  var content_type = 'Home page';
+  $(window).on('load',function(){
+    let redKareenaImg = $('.hero-slideshow .slick-track .hero__slide .hero__image img');
+    $(redKareenaImg).eq(1).css('object-position','right top');
+  });
+  {% endif %}
+
+  {% if template contains 'product' %}
+  var page_name = '{{ product.title }}';
+  var page_type = 'Product';
+  var content_type = 'Product';
+
+  $('.tryit-btn').click(function(){
+    aaEvent3Call('clicked Try it on');
+  });
+
+  $('.hr-custom-h5-heading a').not('.insta--feed a').click(function(){
+    var this_text_split = ($(this).attr('href')).split('/');
+    var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+    var this_href = aaRemakeURL($(this).attr('href'));
+
+    if($(this).parent().hasClass('trends--content')){
+      var this_cta = "content";
+    }else if($(this).parent().hasClass('hr-custom-h5-heading')){
+      var this_cta = "heading";
+    }else{
+      var this_cta = "image";
+    }
+    aaEvent4Call(this_href, this_cta, this_text);
+  });
+
+
+
+  // $('.spr-summary-actions-newreview').click(function(){
+  //   console.log('write a review');
+  //   var linkName = $(this).text();
+  //   aaEvent3Call(linkName);
+  // });
+
+  $(window).on('load',function(){
+    $('.breadcrumb span:nth-child(4)').remove();
+    $('.breadcrumb span:nth-child(4)').remove();
+  });
+  {% endif %}
+
+  var windowLocation = window.location.href;
+  var splitedUrl = windowLocation.substr(windowLocation.indexOf("?") + 1);
+  if(splitedUrl == 'customer_posted=true#contact_form'){
+   console.log('newsletter signup');
+  }
+
+  {% if template contains 'collection' %}
+  var page_name = '{{ collection.handle }}';
+  var page_type = 'Product listing page';
+  var content_type = 'Product listing page';
+  {% endif %}
+
+  {% if template contains 'customers/account' %}
+    console.log('customers/account');
+  {% endif %}
+
+  var all_blog_handles = ['trends','experts-speak','how-tos','women-who-inspire','lookbook'];
+  var this_blog_handle = '{{ blog.handle }}';
+  if(all_blog_handles.indexOf(this_blog_handle) > -1){
+    var page_name = 'Blog page';
+    var page_type = 'Blog page';
+    var content_type = 'Blog page';
+    // digitalData.page.dmpattributes.age = '26 Kalpesh';
+
+
+    // setTimeout(function(){
+      // $('.hidden-metafield').each(function(){
+      //   var dataCat = $(this).attr('data-cat');
+      //   console.log(dataCat);
+      //
+      //   if(dataCat == "age"){
+      //     var dataVal = $(this).attr('value');
+      //     console.log(dataVal);
+      //     digitalData.page.dmpattributes.age = dataVal;
+      //   }
+      // });
+    // },1000);
+
+    setTimeout(function(){
+      var ev = {};
+        var product_position_index = 1;
+        $('.slick-slide').not('.slick-cloned').each(function(){
+          if($(this).find('.grid-product__inner').attr('data-id') != undefined){
+            var product_id = $(this).find('.grid-product__inner').attr('data-id');
+            var product_name = $(this).find('.grid-product__title').text();
+            var product_position = product_position_index++;
+
+            var listing_product_data = {
+              'productInfo' :{
+                'productID':product_id,
+                'productName':product_name,
+                'brand':'Lakme'
+              },
+              'attributes': {
+                'listPosition':product_position
+              }
+            };
+
+            var listing_component_data = {
+              'componentInfo' :{
+                'componentID':product_name
+              },
+              'attributes':{
+                'position':product_position,
+                'listPosition':product_position
+              }
+            };
+
+            digitalData.product.push(listing_product_data);
+            digitalData.component.push(listing_component_data);
+          }
+        });
+
+        ev.eventInfo={
+          'type':ctConstants.productImpression
+        };
+        ev.category ={'primaryCategory':ctConstants.custom};
+        ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+        ev.subcategory = 'Lead';
+        digitalData.event.push(ev);
+
+
+      $('.grid-product-section a').click(function(){
+        var product_id = $(this).closest('.grid-product__inner').attr('data-id');
+        var product_name = $(this).closest('.grid-product__inner').find('.grid-product__title').text();
+        if($(this).closest('.grid-product__inner').find('.on-sale').text() == ''){
+          var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.grid-product__price').text());
+        }else{
+          var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.on-sale').text());
+        }
+        var product_variant_count = parseInt($(this).closest('.grid-product__inner').find('.shades_count').text());
+        var product_list_position = parseInt($(this).closest('.slick-slide').attr('index'))+1;
+        product_variant_count = (isNaN(product_variant_count)) ? 0 : product_variant_count;
+        //console.log(product_id+'---'+product_name+'---'+product_price+'---'+product_variant_count+'---'+product_list_position);
+        digitalData.product = [];
+        digitalData.product.push({
+          'productInfo' :{
+            'productID':product_id,
+            'productName':product_name,
+            'price':product_price,
+            'brand':'Lakme',
+            'quantity':'',
+            'componentName':'Bestsellers'
+          },
+          'category':{
+            'primaryCategory':'Bestsellers'
+          },
+          'attributes':{
+            'productVariants':product_variant_count,
+            'listPosition':product_list_position
+          }
+        });
+        ev.eventInfo = {
+          'type':ctConstants.productclick,
+        };
+
+        ev.subcategory = 'Interest';
+        digitalData.event.push(ev);
+      });
+
+    },1500);
+
+
+    $('.social-sharing a').click(function(){
+				var this_data = ($(this).attr('title')).split(' ');
+				aaEvent47Call(this_data[this_data.length-1]);
+		});
+
+
+		$('.insta-wrapper a').on('click',function(){
+			var this_href = $(this).attr('href');
+			aaEvent48Call(this_href);
+		});
+
+    setTimeout(function(){
+      $('.text-link').click(function(){
+          var linkname = $(this).find('strong').text();
+          var linkUrl = $(this).attr('href');
+          var linkNameUrl = linkname+'-'+linkUrl;
+
+          aaEvent2Call(linkNameUrl, linkUrl);
+      });
+
+
+      $('.related--articles a').click(function(){
+          var linkUrl = $(this).attr('href');
+          var getLinkUrl = $(this).attr('href').split('/')[3];
+          // var articleName = aaRemakeHypenlessText(getLinkUrl);
+          var articleName = $(this).parent().find('.related__article-content').find('p').text();
+
+          var ev = {};
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.relatedArticle,
+            'eventLabel' : articleName,
+            'eventValue' :1
+          };
+            ev.category ={'primaryCategory':ctConstants.custom};
+            ev.subcategory = 'Read';
+            digitalData.event.push(ev);
+      });
+
+    },500);
+
+
+    setTimeout(function(){
+      var articleName = $('#shopify-section-article-alternate-template .article__excerpt p').text();
+      // console.log("Kalpesh " + articleName);
+
+      var ev = {};
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction': ctConstants.articleView,
+        'eventLabel' : articleName,
+        'eventValue' :1
+      };
+      ev.category ={'primaryCategory':ctConstants.other};
+      ev.subcategory = 'Read';
+      digitalData.event.push(ev);
+
+    },1000);
+  }
+
+  {% if template contains 'cart' %}
+  var page_name = 'Cart page';
+  var page_type = 'Cart page';
+  var content_type = 'Cart page';
+  {% endif %}
+
+  {% if template contains 'account' %}
+  var page_name = 'Account page';
+  var page_type = 'Account page';
+  var content_type = 'Account page';
+  {% endif %}
+
+  console.log('Base URL: '+baseURL);
+  console.log('Destination URL: '+destinationURL);
+  console.log('Page name: '+page_name);
+  console.log('Page type: '+page_type);
+  console.log('Content type: '+content_type);
+
+
+  function isMobile() {
+    var check = false;
+    (function(a) {
+      if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i
+          .test(a)
+          || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i
+          .test(a.substr(0, 4))) {
+        check = true;
+      }
+    })(navigator.userAgent || navigator.vendor || window.opera);
+    return check;
+  }
+
+
+  var channelVal;
+  if (isMobile()) {
+    channelVal = "Mobile Site";
+  } else {
+    channelVal = "Brand Site";
+  }
+  digitalData = {
+    siteInfo : {
+      channel : '',
+      sitetype : 'Shopify'
+    },
+    page : {
+      pageInfo : {
+        destinationURL : destinationURL
+      },
+      category : {
+        pageType : page_type
+      }
+    },
+    video : [],
+    campaign: [],
+    product : [],
+    transaction: {
+      item : []
+    },
+    privacy : {
+      accessCategories : [ {
+        domains : []
+      } ]
+    },
+    component : [],
+    trackingInfo : {
+      GID : '',
+      "un" : "",
+      tool : [ {
+        ids : ""
+      } ]
+    },
+    promotion : []
+  }
+  digitalData.siteInfo.channel = channelVal;
+  digitalData.page.category.primaryCategory = channelVal;
+  digitalData.trackingInfo = {};
+  digitalData.trackingInfo.tool = [ {} ];
+  digitalData.privacy = {};
+  digitalData.page.attributes = {};
+  digitalData.privacy.accessCategories = [ {} ];
+  digitalData.privacy.accessCategories[0].domains = [];
+  digitalData.event = [];
+  digitalData.page.pageInfo.pageName = page_name;
+  digitalData.page.pageInfo.language = "English";
+  digitalData.page.category.subCategory1 = "";
+  digitalData.page.category.subCategory2 = "";
+  digitalData.page.category.subCategory3 = "";
+  digitalData.page.attributes.contentType = content_type;
+
+  digitalData.page.dmpattributes = {};
+
+  if(all_blog_handles.indexOf(this_blog_handle) > -1){
+    var article_head = $('.article__excerpt p').text();
+    digitalData.page.attributes.articleName = article_head;
+
+
+    var articleDataCA =  $('[data-cat="consumer_attributes"]').val();
+    digitalData.page.dmpattributes.consumerattributes = articleDataCA;
+
+    var articleDataInterest =  $('[data-cat="interest"]').val();
+    digitalData.page.dmpattributes.interest = articleDataInterest;
+
+    var articleDataPersona =  $('[data-cat="persona"]').val();
+    digitalData.page.dmpattributes.persona = articleDataPersona;
+
+    var articleDataProblems =  $('[data-cat="problems"]').val();
+    digitalData.page.dmpattributes.problems = articleDataProblems;
+
+    var articleDataEvents =  $('[data-cat="events"]').val();
+    digitalData.page.dmpattributes.events = articleDataEvents;
+
+    var articleDataAge =  $('[data-cat="age"]').val();
+    digitalData.page.dmpattributes.age = articleDataAge;
+
+    var articleDataBody =  $('[data-cat="body_type"]').val();
+    digitalData.page.dmpattributes.bodytype = articleDataBody;
+
+    var articleDataProdcut =  $('[data-cat="product"]').val();
+    digitalData.page.dmpattributes.product = articleDataProdcut;
+
+    var articleDataColour =  $('[data-cat="colour"]').val();
+    digitalData.page.dmpattributes.colour = articleDataColour;
+
+    var articleDataValues =  $('[data-cat="values"]').val();
+    digitalData.page.dmpattributes.values = articleDataValues;
+
+    var articleDataPrice =  $('[data-cat="price"]').val();
+    digitalData.page.dmpattributes.price = articleDataPrice;
+
+    var articleDataPD =  $('[data-cat="purchase_details"]').val();
+    digitalData.page.dmpattributes.purchasedetails = articleDataPD;
+
+    var articleDataLifestyle =  $('[data-cat="lifestyle"]').val();
+    digitalData.page.dmpattributes.lifestyle = articleDataLifestyle;
+
+    var articleDataDIY =  $('[data-cat="diy"]').val();
+    digitalData.page.dmpattributes.diy = articleDataDIY;
+
+    var articleDataHM =  $('[data-cat="homemaking"]').val();
+    digitalData.page.dmpattributes.homemaking = articleDataHM;
+
+    var articleDataMS =  $('[data-cat="marital_status"]').val();
+    digitalData.page.dmpattributes.maritalstatus = articleDataMS;
+
+    var articleDataSport =  $('[data-cat="sport"]').val();
+    digitalData.page.dmpattributes.sport = articleDataSport;
+
+    var articleDataCelebrities =  $('[data-cat="celebrities"]').val();
+    digitalData.page.dmpattributes.celebrities = articleDataCelebrities;
+
+    var articleDataCause =  $('[data-cat="cause"]').val();
+    digitalData.page.dmpattributes.cause = articleDataCause;
+
+    var articleDataCulture =  $('[data-cat="culture"]').val();
+    digitalData.page.dmpattributes.culture = articleDataCulture;
+
+    var articleDataFashion =  $('[data-cat="fashion"]').val();
+    digitalData.page.dmpattributes.fashion = articleDataFashion;
+
+    var articleDataGender =  $('[data-cat="gender"]').val();
+    digitalData.page.dmpattributes.gender = articleDataGender;
+
+    var articleDataIndulgence =  $('[data-cat="indulgence"]').val();
+    digitalData.page.dmpattributes.indulgence = articleDataIndulgence;
+
+    var articleDataLSM =  $('[data-cat="lsm"]').val();
+    digitalData.page.dmpattributes.lsm = articleDataLSM;
+
+    var articleDataOnsite =  $('[data-cat="onsite"]').val();
+    digitalData.page.dmpattributes.onsite = articleDataOnsite;
+
+    var articleDataTS =  $('[data-cat="trials"]').val();
+    digitalData.page.dmpattributes.trials = articleDataTS;
+
+    var articleDataHC =  $('[data-cat="health_concious"]').val();
+    digitalData.page.dmpattributes.healthconcious = articleDataHC;
+
+    var articleDataMedia =  $('[data-cat="media"]').val();
+    digitalData.page.dmpattributes.media = articleDataMedia;
+
+    var articleDataLE =  $('[data-cat="life_events"]').val();
+    digitalData.page.dmpattributes.lifeevents = articleDataLE;
+
+    var articleDataEntertainment =  $('[data-cat="entertainment"]').val();
+    digitalData.page.dmpattributes.entertainment = articleDataEntertainment;
+
+    var articleDataFS =  $('[data-cat="family_size"]').val();
+    digitalData.page.dmpattributes.familysize = articleDataFS;
+
+    var articleDataNaturals =  $('[data-cat="naturals"]').val();
+    digitalData.page.dmpattributes.naturals = articleDataNaturals;
+
+    var articleDataTravel =  $('[data-cat="travel"]').val();
+    digitalData.page.dmpattributes.travel = articleDataTravel;
+
+    var articleDataHA =  $('[data-cat="hair_attributes"]').val();
+    digitalData.page.dmpattributes.hairattributes = articleDataHA;
+
+    var articleDataVegan =  $('[data-cat="vegan"]').val();
+    digitalData.page.dmpattributes.vegan = articleDataVegan;
+
+    var articleDataContent =  $('[data-cat="content"]').val();
+    digitalData.page.dmpattributes.content = articleDataContent;
+
+    var articleDataMoments =  $('[data-cat="moments"]').val();
+    digitalData.page.dmpattributes.moments = articleDataMoments;
+
+    var articleDataPlaces =  $('[data-cat="places"]').val();
+    digitalData.page.dmpattributes.places = articleDataPlaces;
+
+    var articleDataSeasonality =  $('[data-cat="seasonality"]').val();
+    digitalData.page.dmpattributes.seasonality = articleDataSeasonality;
+
+    var articleDataSS =  $('[data-cat="social_status"]').val();
+    digitalData.page.dmpattributes.socialstatus = articleDataSS;
+
+    var articleDataWeather =  $('[data-cat="weather"]').val();
+    digitalData.page.dmpattributes.weather = articleDataWeather;
+
+    var articleDataTime =  $('[data-cat="time"]').val();
+    digitalData.page.dmpattributes.time = articleDataTime;
+
+    var articleDataUB =  $('[data-cat="usage_behaviour"]').val();
+    digitalData.page.dmpattributes.usagebehaviour = articleDataUB;
+
+    var articleDataFFC =  $('[data-cat="fine_food_cooking"]').val();
+    digitalData.page.dmpattributes.finefoodandcooking = articleDataFFC;
+
+    var articleDataSC =  $('[data-cat="super_category"]').val();
+    digitalData.page.dmpattributes.supercategory = articleDataSC;
+
+    //digitalData.page.dmpattributes.interest = "make-up";
+    //digitalData.page.dmpattributes.product = "Cleanser|Concealer";
+    //digitalData.page.dmpattributes.problems = "Pigmentation";
+  }
+
+
+
+  digitalData.page.attributes.brandCategory = 'Personal care';
+  digitalData.page.attributes.country = 'India';
+  digitalData.page.attributes.globalBrand = 'Lakme';
+  digitalData.page.attributes.localBrand = 'Lakme india';
+  digitalData.trackingInfo.tool[0].id = "UA-38696892-1,UA-75088913-1";
+</script>
+<script id="adobe_analytics">
+$('.grid-product-section .buy_cart--wrapper button[value="Cart"]').click(function(){
+
+    var productWrapper = $(this).parent().parent().siblings().find('.grid-product__inner');
+    var prodcutId = productWrapper.attr('data-id');
+    var prodcutName = productWrapper.find('.grid-product__title').text();
+    var productPrice = productWrapper.find('#ProductPrice').attr('content').split('.')[0];
+
+    console.log(
+        "Prodcut Name : " + prodcutName+ "\n" +
+        "Prodcut Id : " + prodcutId+ "\n" +
+        "Prodcut Price : " +productPrice+ "\n"
+      );
+
+    // addtocart
+    var ev = {};
+    digitalData.cart={}
+    digitalData.cart.item=[];
+    digitalData.product=[];
+
+    var y = {
+        'productInfo' :{
+          'productID':prodcutId,
+          'productName':prodcutName,
+          'price':productPrice,
+          'brand':'Lakme',
+          'quantity': '1'
+        },
+        'category':{
+          'primaryCategory':''
+        },
+        'pCAT':
+        {
+          name:prodcutName,
+          level:prodcutId
+        },
+        'attributes':
+        {
+          'productVariants':'',
+          'listPosition':''
+        }
+      }
+
+      digitalData.cart.item.push(y);
+
+      digitalData.component.push({
+          'componentInfo' :{
+            'componentID':prodcutName
+          },
+
+          'attributes':{
+            'position':'1',
+            'listPosition':''
+          }
+      });
+
+
+      var z = {
+        'productInfo' :{
+              'productID':prodcutId,
+              'productName':prodcutName,
+              'price':productPrice,
+              'brand':'Lakme',
+              'quantity': ''
+            },
+            'category':{
+              'primaryCategory':''
+            },
+            'pCAT':
+            {
+              name:prodcutName,
+              level:prodcutId
+            },
+            'attributes':
+            {
+              'productVariants':'',
+              'listPosition':'1'
+            }
+      }
+
+      digitalData.product.push(z);
+
+      ev.eventInfo={
+        'type':ctConstants.addtoCart
+      };
+      ev.category ={'primaryCategory':ctConstants.custom};
+      ev.subcategory = 'Lead';
+      digitalData.event.push(ev);
+});
+  //This is adobe analytics script
+
+
+  // User registered Successfully
+  // $(window).on('load',function(){
+  //   // var userLogIn = $('customer-logged-in');
+  //   // var indexBody = $('.template-index');
+  //   // var accountBody = $('.template-customers-account');
+  //
+  //
+  //   if($('.template-customers-account').hasClass('customer-logged-in') || $('.template-customers-account').hasClass('customer-logged-in')){
+  //     console.log('User has been successful log in.');
+  //
+  //     var userId = $('#account').find('.grid p.h5').text();
+  //
+  //     var ev = {};
+  //     ev.eventInfo={
+  //       'type':ctConstants.trackEvent,
+  //       'eventAction': ctConstants.registration,
+  //       'eventLabel' : userId,
+  //       'eventValue' :1
+  //     };
+  //       ev.category ={'primaryCategory':ctConstants.other};
+  //       digitalData.event.push(ev);
+  //   }
+  //
+  //   console.log('Hi javascript');
+  // });
+  // User registered Successfully
+
+
+  $('.filter-group.refine-header h4').html('&nbsp;&nbsp;&nbsp;');
+
+  setTimeout(function(){
+    $('.site-nav__link, .site-nav__dropdown-link, .trend-content-section .blog-category, #ProductSection-product-relatedStories .hr-custom-width span a').click(function(event){
+      if($(this).attr('href') == "/search"){
+        aaEvent3Call('Search icon');
+      }else if($(this).attr('href') == "/cart"){
+          var eventLable = "Shopping Bag Clicked"
+          var this_href = aaRemakeURL($(this).attr('href'));
+          var linkName_URL = eventLable+'-'+this_href;
+          aaEvent2Call(linkName_URL,this_href);
+      }else if($(this).attr('href') === undefined){
+
+      }else{
+        var this_text = aaRemakeHypenlessText(($(this).text()).trim());
+        var this_href = aaRemakeURL($(this).attr('href'));
+        var linkName_URL = this_text+'-'+this_href;
+        aaEvent2Call(linkName_URL,this_href);
+      }
+    });
+  },1000);
+
+  $('.site-footer__linklist li a').click(function(event){
+    var this_text = aaRemakeHypenlessText(($(this).text()).trim());
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('.footer-content a').click(function(){
+    var storeLocator = $(this).text();
+
+    if(storeLocator == "Store Locator"){
+      var ev = {};
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction':ctConstants.linkClick,
+        'eventLabel':"clicked store locator",
+        'eventValue':1
+      };
+      ev.category ={'primaryCategory':ctConstants.custom};
+      digitalData.event.push(ev);
+    }
+  });
+
+
+  $('.social-icons li a').click(function(){
+    var socail_link_URL = $(this).attr('href');
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.clickstosocialplatforms,
+      'eventLabel' : socail_link_URL,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.referral};
+    digitalData.event.push(ev);
+  });
+
+  $('.scrollup').click(function(){
+    aaEvent3Call('Go to top');
+  });
+
+  $('.newsletter--form input').click(function(){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction':ctConstants.SignUpstart,
+      'eventLabel':"Event Label:"+destinationURL,
+      'eventValue':1
+    };
+    ev.category ={'primaryCategory':ctConstants.other};
+    digitalData.event.push(ev);
+  });
+
+  $(window).on('load',function(){
+    if(aaGetUrlParameter('customer_posted') == "true"){
+      var ev = {};
+      //var digitalData ={};
+      digitalData.component=[];
+      digitalData.component.push({
+        'componentInfo':{
+          'componentID':'Newsletter Subscribed Successfully'
+        },
+        'attributes':{
+          'brandOptin':[],
+        }
+      });
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction': ctConstants.SignUpSubmit,
+        'eventLabel' : "Event Label: Successful Sign Up",
+        'eventValue' : 1
+      };
+      ev.category ={'primaryCategory':ctConstants.other};
+      ev.subcategory = 'Lead';
+      digitalData.event.push(ev);
+    }
+  });
+
+  if((window.location.href).includes('/pages/')){
+
+  }
+
+  $('.site-header__logo-link').click(function(){
+    var this_text = 'Logo click';
+    var this_href = baseURL;
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('#MenuChildren-3-3 > li > .featured-prod-item').click(function(){
+    var this_text = aaRemakeHypenlessText(($(this).parent().find('.site-nav__dropdown-link').text()).trim())+' collections';
+    var this_href = aaRemakeURL($(this).parent().find('.site-nav__dropdown-link').attr('href'));
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('.bottom-float-chat').click(function(){
+  		var ev = {};
+		ev.eventInfo={
+			'type':ctConstants.trackEvent,
+			'eventAction':ctConstants.contactus,
+			'eventLabel':'bottom chat icon',
+			'eventValue':1
+        };
+		ev.category ={'primaryCategory':ctConstants.other};
+		digitalData.event.push(ev);
+  	});
+
+  // $('.content_on_right--link').click(function(){
+  //   var this_text = aaRemakeHypenlessText(($(this).text()).trim());
+  //   var this_href = aaRemakeURL($(this).attr('href'));
+  //   var linkName_URL = this_text+'-'+this_href;
+  //   aaEvent2Call(linkName_URL,this_href);
+  // });
+
+  {% if template.name == "index" %}
+  $(window).on('load',function(){
+    setTimeout(function(){
+      if(ifMobile){
+        var fav_length = $('.shop-your-favourites .wrapper .grid .grid__item').length;
+        var fav_section_width = $('.shop-your-favourites .wrapper .grid').width();
+        var grid_contents = $('.shop-your-favourites .wrapper .grid').html();
+        $('.shop-your-favourites .wrapper .grid').html('<div class="grid-cus-inner">'+grid_contents+'</div>');
+        $('.shop-your-favourites .wrapper .grid .grid-cus-inner').css('width',((fav_section_width*0.3)*fav_length)+'px');
+        $('.shop-your-favourites .wrapper .grid').css('width','100%');
+        $('.shop-your-favourites .wrapper .grid').css('overflow-x','scroll');
+        $('.shop-your-favourites .wrapper').css('padding-right','0px');
+        $('.shop-your-favourites .wrapper .grid').css('margin-left','0px');
+        $('.shop-your-favourites .wrapper .grid .grid__item').css('width',(fav_section_width*0.3)+'px');
+        $('.shop-your-favourites').css('margin-bottom','15px');
+      }
+    },1000);
+  });
+
+  $('#shopify-section-slideshow .hero__slide a').click(function(){
+    var this_text_split = ($(this).attr('href')).split('/');
+    var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var linkName_URL = 'Home banner '+this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('.trends--image1_section a, .hero__image1-inner a').click(function(){
+    var this_text_split = ($(this).attr('href')).split('/');
+    var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var linkName_URL = 'Home article '+this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('.content_on_right-wrapper .content_on_right--link').click(function(){
+    var article_name = $(this).parent().find('h2.section-header__title1').text();
+    // var article_name = aaRemakeHypenlessText($(this).parent().parent().parent().find('h3.section-subheader__title').text().trim());
+    // var this_cta = ($(this).text()).trim();
+    // var this_href = aaRemakeURL($(this).attr('href'));
+    // aaEvent4Call(this_href, this_cta, article_name);
+    articelEvent4(article_name);
+  });
+  $('.article-right-section.medium--two-thirds.small--two-third .content_on_right--link').click(function(){
+    var article_name = aaRemakeHypenlessText($(this).parent().find('p').text().trim());
+    var this_cta = ($(this).text()).trim();
+    // var this_href = aaRemakeURL($(this).attr('href'));
+    var this_href = $(this).attr('href').split('/').pop();
+    var article_name = aaRemakeHypenlessText(this_href)
+    // aaEvent4Call(this_href, this_cta, article_name);
+
+    articelEvent4(article_name);
+  });
+
+  $('.shop-your-favourites .grid__item .favourites--image_wrapper a').click(function(){
+    var this_text_split = ($(this).attr('href')).split('/');
+    var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('.view_all_stories a').click(function(){
+    var this_text_split = ($(this).attr('href')).split('/');
+    var this_text = 'View all stories';
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('.feature-row__image-wrapper .banner__image .abs-btn').click(function(){
+    var this_text_split = ($(this).attr('href')).split('/');
+    var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('#instafeed').on('click','.slick-track .grid__item a',function(){
+    var this_href = $(this).attr('href');
+    aaEvent48Call(this_href);
+  });
+
+  // video event start
+    // 2. This code loads the IFrame Player API code asynchronously.
+    // var tag = document.createElement('script');
+    //
+    // tag.src = "https://www.youtube.com/iframe_api";
+    // var firstScriptTag = document.getElementsByTagName('script')[0];
+    // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+
+    var player;
+     function onYouTubeIframeAPIReady() {
+       player = new YT.Player('aa_yt_player', {
+           events: {
+             'onStateChange': onPlayerStateChange
+           }
+       });
+     }
+
+   var videotime = 0;
+   var timeupdater;
+
+
+
+    function onPlayerStateChange(event){
+      var VidTitle = player.l.videoData.title;
+
+        if(event.data == -1){
+          console.log('video is unstarted');
+        }else if(event.data == 0){
+
+          // event 42
+          var ev = {};
+          digitalData.video=[];
+          digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.videoCompletes,
+            'eventLabel' : 'Youtube - 100% - ',
+            'eventValue' :1
+          };
+          ev.category ={'primaryCategory':ctConstants.custom};
+          ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+          console.log('video is ended');
+        }else if(event.data == 1){
+
+          // event41
+          var ev = {};
+          digitalData.video=[];
+          digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.videoPlays,
+            'eventLabel' : 'Youtube - 0% - ',
+            'eventValue' :1  };
+          ev.category ={'primaryCategory':ctConstants.other};
+          ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+
+          // video process function
+          function updateTime() {
+              var oldTime = videotime;
+              if(player && player.getCurrentTime) {
+                videotime = player.getCurrentTime();
+              }
+              if(videotime !== oldTime) {
+                  onProgress(videotime);
+              }
+            }
+
+            timeupdater = setInterval(updateTime, 100);
+
+            var totalDurection = player.getDuration();
+            var getPercentage25Val = (totalDurection*0.25);
+            var getPercentage50Val = (totalDurection*0.50);
+            var getPercentage75Val = (totalDurection*0.75);
+            var per25done = true;
+            var per50done = true;
+            var per75done = true;
+
+            function onProgress(currentTime) {
+              if(currentTime > getPercentage25Val && per25done){
+                per25done = false;
+
+                console.log('user video seen 25%');
+
+                // videoPercentageEvent(VidTitle,'25%');
+                aaVideoPercentageEvent(VidTitle,player,'25%')
+             }else if(currentTime > getPercentage50Val && per50done){
+               per50done = false;
+               console.log('user video seen 50%');
+               // videoPercentageEvent(VidTitle,'50%')
+               aaVideoPercentageEvent(VidTitle,player,'50%');
+             }else if(currentTime > getPercentage75Val && per75done){
+                per75done = false;
+                 console.log('user video seen 75%');
+                 // videoPercentageEvent(VidTitle,'75%');
+                 aaVideoPercentageEvent(VidTitle,player,'75%');
+             }
+
+            }
+
+          console.log('video is playing');
+        }else if(event.data == 2){
+          console.log('video is paused');
+        }else if(event.data == 3){
+          console.log('video is buffering');
+        }else {
+          console.log('video is video cued');
+        }
+    }
+
+    // video event end
+
+
+  // var tag = document.createElement('script');
+	// tag.src = "https://www.youtube.com/iframe_api";
+	// var firstScriptTag = document.getElementsByTagName('script')[0];
+	// firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  //
+  //
+  // 	var aa_yt_player;
+  // 	var aaVideoTitle = "";
+  // 	var i;
+  //   var aa_yt_25 = true;
+  //   var aa_yt_50 = true;
+  //   var aa_yt_75 = true;
+  //
+  // 	function onAAYouTubeIframeAPIReady(aa_yt_player,YT_str_width,YT_str_height,YT_id,YT_str_style){
+  //     aa_yt_player = new YT.Player(aa_yt_player,{
+  //       height:YT_str_width,
+  //       width:YT_str_height,
+  //       videoId:YT_id,
+  //       events:{'onStateChange':function(event){
+  //         	aaVideoTitle = aa_yt_player.l.videoData.title;
+  //           if(event.data === 3){
+  //             console.log('Video started');
+  //             aaVideoStartsEvent(aaVideoTitle,YT_id);
+  //             i = setInterval(function(){
+  //             	console.log(aa_yt_player);
+  //               var c = Math.round((aa_yt_player.getCurrentTime())/(aa_yt_player.getDuration())*100);
+  //               console.log(c);
+  //               if(c>=25&&aa_yt_25){aaVideoPercentageEvent(aaVideoTitle,YT_id,'25%');console.log('Video 25%');aa_yt_25=false;}
+  //               if(c>=50&&aa_yt_50){aaVideoPercentageEvent(aaVideoTitle,YT_id,'50%');console.log('Video 50%');aa_yt_50=false;}
+  //               if(c>=75&&aa_yt_75){aaVideoPercentageEvent(aaVideoTitle,YT_id,'75%');console.log('Video 75%');aa_yt_75=false;}
+  //             },1000);
+  //           }
+  //           if(event.data === 0){
+  //             console.log('Video ended');
+  //             aaVideoEndsEvent(aaVideoTitle,YT_id);
+  //             clearInterval(i);
+  //           }
+  //       }}
+  //     });
+  //     $("#aa_yt_player").attr('style',YT_str_style);
+  //   }
+  //
+  // 	$(window).on('load',function(){
+  //     var YT_str = $('.video--wrapper').attr('src');
+  //     var YT_str_width = $('.video--wrapper').attr('width');
+  //     var YT_str_height = $('.video--wrapper').attr('height');
+  //     var YT_str_style = $('.video--wrapper').attr('style');
+  //
+  //     var YT_str_array = YT_str.split('/');
+  //     if(YT_str_array[4].indexOf('?') > -1){
+  //       var YT_str_array2 = YT_str_array[4].split('?');
+  //       var YT_id = YT_str_array2[0];
+  //     }else{
+  //       var YT_id = YT_str_array[5]
+  //       }
+  //     $('.video--wrapper').parent().html('<div id="aa_yt_player" class="video--wrapper" ></div>');
+  //     onAAYouTubeIframeAPIReady('aa_yt_player',YT_str_width,YT_str_height,YT_id,YT_str_style);
+	// });
+
+
+  $(window).on('load',function(){
+    var ev = {};
+    var product_position_index = 1;
+    $('.slick-slide').not('.slick-cloned').each(function(){
+      if($(this).find('.grid-product__inner').attr('data-id') != undefined){
+        var product_id = $(this).find('.grid-product__inner').attr('data-id');
+        var product_name = $(this).find('.grid-product__title').text();
+        var product_position = product_position_index++;
+
+
+        var listing_product_data = {
+          'productInfo' :{
+            'productID':product_id,
+            'productName':product_name,
+            'brand':'Lakme'
+          },
+          'attributes': {
+            'listPosition':product_position
+          }
+        };
+
+        var listing_component_data = {
+          'componentInfo' :{
+            'componentID':product_name
+          },
+          'attributes':{
+            'position':product_position,
+            'listPosition':product_position
+          }
+        };
+
+        digitalData.product.push(listing_product_data);
+        digitalData.component.push(listing_component_data);
+      }
+    });
+
+    ev.eventInfo={
+      'type':ctConstants.productImpression
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+    ev.subcategory = 'Lead';
+    digitalData.event.push(ev);
+  });
+
+  $('.grid-product-section a').click(function(){
+    var product_id = $(this).closest('.grid-product__inner').attr('data-id');
+    var product_name = $(this).closest('.grid-product__inner').find('.grid-product__title').text();
+    if($(this).closest('.grid-product__inner').find('.on-sale').text() == ''){
+      var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.grid-product__price').text());
+    }else{
+      var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.on-sale').text());
+    }
+    var product_variant_count = parseInt($(this).closest('.grid-product__inner').find('.shades_count').text());
+    var product_list_position = parseInt($(this).closest('.slick-slide').attr('index'))+1;
+    product_variant_count = (isNaN(product_variant_count)) ? 0 : product_variant_count;
+    //console.log(product_id+'---'+product_name+'---'+product_price+'---'+product_variant_count+'---'+product_list_position);
+    var ev = {};
+
+
+    var x = {
+      'productInfo' :{
+        'productID':product_id,
+        'productName':product_name,
+        'price':product_price,
+        'brand':'Lakme',
+        'quantity':'',
+        'componentName':product_name
+      },
+      'category':{
+        'primaryCategory':'bestsellers'
+      },
+      'attributes':{
+        'productVariants':product_variant_count,
+        'listPosition':product_list_position
+      }
+    };
+
+    var y = {
+      'componentInfo' :{
+        'componentID':product_name
+      },
+      'attributes':{
+        'position':'',
+        'listPosition':product_list_position
+      }
+    };
+
+    digitalData.product.push(x);
+    digitalData.component.push(y);
+
+    ev.eventInfo = {
+      'type':ctConstants.productclick,
+    };
+    ev.subcategory = 'Interest';
+    digitalData.event.push(ev);
+  });
+
+  // $('.btn[value="Cart"]').click(function(){
+  //   console.log('adasd');
+  //   //return false;
+  // })
+
+  $('.hero__cta').click(function(){
+    // e.preventDefault();
+    var linkName = $(this).parent().parent().attr('href').split('/');
+    var this_text = aaRemakeHypenlessText(linkName[linkName.length-1]);
+
+    var ev = {};
+    digitalData.promotion=[];
+    digitalData.promotion.push({
+      'promotionInfo': {
+        'promotionId':'',
+        'promotionName':this_text,
+        'promotionCreative':'',
+        'position':''
+      }}
+
+    );
+    ev.eventInfo={
+      'type':ctConstants.promotionClick,
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.subcategory = 'Interest';
+    digitalData.event.push(ev);
+
+  });
+
+  $('.hero__slide a').click(function(){
+    var linkName = $(this).attr('href').split('/');
+    var this_text = aaRemakeHypenlessText(linkName[linkName.length-1]);
+
+    var ev = {};
+    digitalData.promotion=[];
+    digitalData.promotion.push({
+      'promotionInfo': {
+        'promotionId':'',
+        'promotionName':this_text,
+        'promotionCreative':'',
+        'position':''
+      }}
+
+    );
+    ev.eventInfo={
+      'type':ctConstants.promotionClick,
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.subcategory = 'Interest';
+    digitalData.event.push(ev);
+  });
+
+  $('.video_wrapper--subtext .content_on_right--link').click(function(){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction':ctConstants.linkClick,
+      'eventLabel':"clicked store locator",
+      'eventValue':1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    digitalData.event.push(ev);
+  });
+
+
+  {% endif %}
+
+  {% if template contains 'page.trends' %}
+  $(window).on('load',function(){
+    if(ifMobile){
+      var trends_tab_length = $('#shopify-section-trends-articles1 .tabs1 .tab-link1').length;
+      var trends_tab_width = $('#shopify-section-trends-articles1 .tabs1').width();
+      $('#shopify-section-trends-articles1 .tabs1 .tab-link1').css('width',(trends_tab_width*0.4)+'px');
+      $('#shopify-section-trends-articles1 .tabs1').css('width',(((trends_tab_width*0.4)*trends_tab_length)+20)+'px');
+      $('#shopify-section-trends-articles1 .grid-top').css('overflow-x','scroll');
+    }
+  });
+
+  $('.trends--content a, .trends--heading a, .trends--left_image a').not('.insta--feed a').click(function(){
+		var this_text_split = ($(this).attr('href')).split('/');
+		var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+		// var this_href = aaRemakeURL($(this).attr('href'));
+
+	  //   if($(this).parent().hasClass('trends--content')){
+		// 	var this_cta = "content";
+		// }else if($(this).parent().hasClass('trends--heading')){
+		// 	var this_cta = "heading";
+		// }else{
+		// 	var this_cta = "image";
+		// }
+
+      if($(this).parent().hasClass('trends--content')){
+        var titleName =  $(this).parent().prev().find('a').text();
+      }else if($(this).parent().hasClass('trends--heading')){
+        var titleName =  $(this).parent().find('a').text();
+      }
+
+      articelEvent4(titleName);
+
+      // if(this_text === "aqua avatar 1"){
+      //   articelEvent4('Aqua Avatar');
+      // }else{
+      //   articelEvent4(this_text);
+      // }
+
+      	// aaEvent4Call(this_href, this_cta, this_text);
+	});
+
+  $('.insta--feed').click(function(){
+    var this_href = $(this).find('a').attr('href');
+    var linkName_URL = 'Instagram feed-'+this_href;
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction':ctConstants.linkClick,
+      'eventLabel':linkName_URL,
+      'eventValue':1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    digitalData.event.push(ev);
+  });
+
+  // specific article name event4
+
+  	$('#shopify-section-trends-articles1 .tabs1 .tab-link1 a').click(function(e){
+			// var thisArticleName = $(this).find('.overlay-content span').text();
+      // var this_href = aaRemakeURL($(this).attr('href'));
+
+
+      // if(this_href === "https://lakmeindia.com/blogs/trends/bronzed-skin-is-in-and-here-s-what-you-need-to-know-about-the-trend"){
+      //   specificarticelNameEvent4('Bronzed Skin Is in and Here’s What You Need to Know About the Trend');
+      // }else if(this_href === "https://lakmeindia.com/blogs/trends/it-s-all-about-bold-lips-and-bare-eyes-now"){
+      //   specificarticelNameEvent4('It’s All About Bold Lips and Bare Eyes Now');
+      // }else if(this_href === "https://lakmeindia.com/blogs/trends/glossy-brows-are-the-next-big-thing-and-this-is-how-you-can-achieve-them"){
+      //   specificarticelNameEvent4('Glossy Brows Are The Next Big Thing And This Is How You Can Achieve Them');
+      // }else if(this_href === "https://lakmeindia.com/blogs/trends/forget-monochrome-dressing-you-should-wear-monochrome-makeup"){
+      //   specificarticelNameEvent4('Forget Monochrome Dressing, You Should Wear Monochrome Makeup');
+      // }else {
+      //   articelEvent4(thisArticleName);
+      // }
+
+			// e.preventDefault();
+
+  		var this_text_split = ($(this).attr('href')).split('/');
+      var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+			// var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1])+'(Featured)';
+			var this_href = aaRemakeURL($(this).attr('href'));
+    	var this_cta = "image";
+      	articelEvent4(this_text);
+
+  	});
+
+  {% endif %}
+
+  {% if template contains 'page.discover' %}
+  $(window).on('load',function(){
+    if(ifMobile){
+      var trends_tab_length = $('#shopify-section-discover .tabs1 .tab-link1').length -1;
+      var trends_tab_width = $('#shopify-section-discover .tabs1').width();
+      $('#shopify-section-discover .tabs1 .tab-link1').css('width',(trends_tab_width*0.4)+'px');
+      $('#shopify-section-discover .tabs1').css('width',(((trends_tab_width*0.4)*trends_tab_length)+20)+'px');
+      $('#shopify-section-discover .grid-top').css('overflow-x','scroll');
+    }
+  });
+
+  $('#shopify-section-discover .tabs1 .tab-link1').click(function(){
+    var linkName = $(this).find('span').text()+'(Filter)';
+    aaEvent3Call(linkName);
+  });
+
+  $('.trends--content a, .trends--heading a, .trends--left_image a').not('.insta--feed a').click(function(){
+      var this_text_split = ($(this).attr('href')).split('/');
+      var this_text = aaRemakeHypenlessText(this_text_split[this_text_split.length-1]);
+      // var this_href = aaRemakeURL($(this).attr('href'));
+			//
+      if($(this).parent().hasClass('trends--content')){
+        var titleName =  $(this).parent().prev().find('p').text();
+      }else if($(this).parent().hasClass('trends--heading')){
+        var titleName =  $(this).parent().find('p').text();
+      }
+
+      articelEvent4(titleName);
+
+
+      // }else if($(this).parent().hasClass('trends--heading')){
+      //   var this_cta = "heading";
+      // }else{
+      //   var this_cta = "image";
+      // }
+      // aaEvent4Call(this_href, this_cta, this_text);
+
+			// articelEvent4(this_text);
+    });
+
+    $('.insta-wrapper a').click(function(){
+				var getLink = $(this).attr('href');
+				var findLinkName = getLink.split('/').pop();
+				var linkName = aaRemakeHypenlessText(findLinkName);
+				var linkName_URL = linkName+' -https://lakmeindia.com/'+getLink;
+      	aaEvent2Call(linkName_URL,getLink);
+		});
+
+  console.log('this is a discover page');
+
+  {% endif %}
+
+
+  {% if template contains 'page.drenched-in-dew' %}
+
+  $('.insta--feed').click(function(){
+    var this_href = $(this).find('a').attr('href');
+    var linkName_URL = 'Instagram feed-'+this_href;
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction':ctConstants.linkClick,
+      'eventLabel':linkName_URL,
+      'eventValue':1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    digitalData.event.push(ev);
+  });
+
+  $(window).on('load',function(){
+    var article_head = $('.section-header h1').text();
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction':ctConstants.articleView,
+      'eventLabel':'Event Label:'+article_head,
+      'eventValue':1
+    };
+    ev.category ={'primaryCategory':ctConstants.other};
+    ev.subcategory = 'Read';
+    digitalData.event.push(ev);
+  });
+
+  {% endif %}
+
+  {% if template contains 'customer.login' %}
+  console.log('this is login page');
+  {% endif %}
+
+
+  {% if template contains 'collection' %}
+  var ev = {};
+  $(window).on('load',function(){
+    var product_position_index = 1;
+    $('.grid-product').each(function(){
+      var product_id = $(this).find('.grid-product__inner').attr('data-id');
+      var product_name = $(this).find('.grid-product__title').text();
+      var product_position = product_position_index++;
+
+      var listing_product_data = {
+        'productInfo' :{
+          'productID':product_id,
+          'productName':product_name,
+          'brand':'Lakme'
+        },
+        'attributes': {
+          'listPosition':product_position
+        }
+      };
+
+      var listing_component_data = {
+        'componentInfo' :{
+          'componentID':product_name
+        },
+        'attributes':{
+          'position':product_position,
+          'listPosition':product_position
+        }
+      };
+
+      digitalData.product.push(listing_product_data);
+      digitalData.component.push(listing_component_data);
+    });
+    ev.eventInfo={
+      'type':ctConstants.productImpression
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+    ev.subcategory = 'Lead';
+    digitalData.event.push(ev);
+  });
+
+  $('.grid-product-section a').click(function(){
+    var product_id = $(this).closest('.grid-product__inner').attr('data-id');
+    var product_name = $(this).closest('.grid-product__inner').find('.grid-product__title').text();
+    if($(this).closest('.grid-product__inner').find('.on-sale').text() == ''){
+      var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.grid-product__price').text());
+    }else{
+      var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.on-sale').text());
+    }
+    var product_variant_count = parseInt($(this).closest('.grid-product__inner').find('.shades_count').text());
+    var product_list_position = parseInt($(this).closest('.grid-product').index());
+    product_list_position = (product_list_position == 0) ? 1 : (parseInt(product_list_position/2)+1);
+    product_variant_count = (isNaN(product_variant_count)) ? 0 : product_variant_count;
+    var primary_category = $('.breadcrumb span:last-child').text();
+
+    digitalData.product = [];
+    digitalData.product.push({
+      'productInfo' :{
+        'productID':product_id,
+        'productName':product_name,
+        'price':product_price,
+        'brand':'Lakme',
+        'quantity':'',
+        'componentName':''
+      },
+      'category':{
+        'primaryCategory':primary_category
+      },
+      'attributes':{
+        'productVariants':product_variant_count,
+        'listPosition':product_list_position
+      }
+    });
+    ev.eventInfo = {
+      'type':ctConstants.productclick,
+    };
+
+    ev.subcategory = 'Interest';
+    digitalData.event.push(ev);
+  });
+
+  $(document).on('click','.collection-name',function(event){
+    var this_filter = $(this).parent().attr('data-filter');
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.filter,
+      'eventLabel' : this_filter,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.subcategory = 'Interest';
+    digitalData.event.push(ev);
+  });
+
+  $(document).on('click','.filter-group-bestsellers',function(event){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.filter,
+      'eventLabel' : 'bestsellers',
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.subcategory = 'Interest';
+    digitalData.event.push(ev);
+  });
+
+  {% endif %}
+
+
+  {% if template.name == 'product' %}
+
+  var ev = {};
+  $(window).on('load',function(){
+
+  // prodView
+  setTimeout(function(){
+        var product_id = $('.product_id').text();
+        var product_name = $('.product-single__title.small--hide').text();
+        var product_price = $('.product-single__meta').find('#ProductPrice').attr('content');
+        var product_quantity = 1;
+
+        digitalData.product.push({
+          'productInfo' :{
+            'productID':product_id,
+            'productName':product_name,
+            'price':product_price,
+            'brand':'Lakme',
+            'quantity': product_quantity
+          }
+        });
+
+        digitalData.component.push({'componentInfo' :{
+          'componentID':product_name
+        }});
+
+        ev.eventInfo={
+           'type':ctConstants.productInfo
+         };
+        ev.category ={'primaryCategory':ctConstants.other};
+        ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+        ev.subcategory = 'Read';
+        digitalData.event.push(ev);
+
+  },200);
+
+
+    setTimeout(function(){
+        // event9
+        var product_position_index = 1;
+        $('.related__products .slick-slide').each(function(){
+          if($(this).find('.grid-product__inner').attr('data-id') != undefined){
+            var product_id = $(this).find('.grid-product__inner').attr('data-id');
+            var product_name = $(this).find('.grid-product__title').text();
+            var product_position = product_position_index++;
+
+            digitalData.product.push({
+              'productInfo' :{
+                'productID':product_id,
+                'productName':product_name,
+                'brand':'Lakme'
+              },
+
+              'attributes': {
+                'listPosition': product_position
+              }
+            });
+
+            digitalData.component.push({'componentInfo' :{
+              'componentID':product_name
+            },
+
+            'attributes':
+            {
+              'position':'',
+              'listPosition':product_position
+            }
+          });
+
+          }
+        });
+
+        ev.eventInfo={
+          'type':ctConstants.productImpression
+        };
+        ev.category ={'primaryCategory':ctConstants.custom};
+        ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+        ev.subcategory = 'Lead';
+        digitalData.event.push(ev);
+
+    },400);
+
+    // setTimeout(function(){
+    //   // event17 (On load rate review)
+    //   var viewProdcutRatingName = $('.product-single__title.small--hide').text();
+    //   var product_id = $('.product_id').text();
+    //
+    //   console.log(
+    //     "Event 17 :- " + viewProdcutRatingName
+    //   );
+    //
+    //   // var ev = {};
+    //   ev.eventInfo={
+    //     'type':ctConstants.trackEvent,
+    //     'eventAction': ctConstants.rrRenders,
+    //     'eventLabel' : product_id,
+    //     'eventValue' :1
+    //   };
+    //   ev.category ={'primaryCategory':ctConstants.custom};
+    //   ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+    //   ev.subcategory = 'Read';
+    //   digitalData.event.push(ev);
+    //
+    //
+    //   // event17 (On load rate review)
+    // },600);
+
+    var swatch_reseter = true;
+    $('.swatch-element').click(function(){
+      if(swatch_reseter){
+        var this_swatch = $(this).attr('data-value');
+        linkName = this_swatch+" swatch selected";
+        aaEvent3Call(linkName);
+        swatch_reseter = false;
+        setTimeout(function(){
+          swatch_reseter = true;
+        },200);
+      }
+    });
+
+    $('.tab-link').click(function(){
+      var linkName = 'Product '+$(this).text();
+      aaEvent3Call(linkName);
+    });
+
+    $('.product_review--link').click(function(){
+      aaEvent3Call('Read reviews');
+    });
+
+    $('.social-sharing a').click(function(){
+      var this_data = ($(this).attr('title')).split(' ');
+      aaEvent47Call(this_data[this_data.length-1]);
+    });
+
+
+    //writeaReviewBtn();
+    // function writeaReviewBtn(){
+
+  setTimeout(function(){
+    $(document).on('click','.spr-summary-actions-newreview',function(){
+
+      var product_id = $('.product_id').text();
+      var product_name = $('.product-single__title.small--hide').text();
+
+        var ev = {};
+        digitalData.product=[];
+
+        var customReviewEvent = {
+          'productInfo' :{
+            'productID':product_id,
+            'productName':product_name
+          }
+        }
+
+        digitalData.product.push(customReviewEvent);
+
+        ev.eventInfo={
+          'type':ctConstants.trackEvent,
+          'eventAction': ctConstants.rrOpen,
+          'eventLabel' : "Kalpesh",
+          'eventValue' :1
+        };
+           ev.category ={'primaryCategory':ctConstants.custom};
+           ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+        // event17
+        // var ev = {};
+
+
+        ev.eventInfo={
+          'type':ctConstants.trackEvent,
+          'eventAction': ctConstants.rrRenders,
+          'eventLabel' : "Kalpesh",
+          'eventValue' :1
+        };
+          ev.category ={'primaryCategory':ctConstants.custom};
+          ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+          ev.subcategory = 'Read';
+          digitalData.event.push(ev);
+
+        var new_article_form = $('.new-review-form').attr('onsubmit');
+        console.log(new_article_form);
+    });
+  },5000);
+    // };
+
+    //newReviewSubmit();
+    function newReviewSubmit(){
+      var product_name = $('.product-single__title.small--hide').text();
+      setTimeout(function(){
+        if($('.new-review-form').find('.spr-form-message-success').text() != ""){
+          var ev = {};
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.ratingreview,
+            'eventLabel' : product_name,
+            'eventValue' :1
+          };
+          ev.category ={'primaryCategory':ctConstants.other};
+          digitalData.event.push(ev);
+        }
+      },500);
+    };
+
+    $(document).on('click','.close--review_popup',function(){
+      var product_id = $('.product_id').text();
+      var product_name = $('.product-single__title.small--hide').text();
+
+        var ev = {};
+        digitalData.product=[];
+
+        var customReviewEvent = {
+          'productInfo' :{
+            'productID':product_id,
+            'productName':product_name
+          }
+        }
+
+        digitalData.product.push(customReviewEvent);
+
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction': ctConstants.rrClose,
+        'eventLabel' : product_name,
+        'eventValue' :1
+      };
+      ev.category ={'primaryCategory':ctConstants.custom};
+      ev.subcategory = 'Interest';
+      digitalData.event.push(ev);
+    });
+
+    $('.product-single__thumbnail').click(function(){
+      aaEvent3Call('Product image change');
+    });
+
+    // $('.product-single__add-to-cart #AddToCart--product-template').click(function(){
+    //   console.log('clicked');
+    //   var product_id = $('.product_id').text();
+    //   var product_name = $('.product-single__title:first-child').text();
+    //   var product_price = $('.product-single__meta').find('#ProductPrice').attr('content');
+    //   var product_quantity = $('#Quantity').val();
+    //   var product_category = $('.breadcrumb a:nth-child(3)').text();
+    //   //var product_variant = ($('.swatch-element.active_swatch').attr('data-value') != undefined) ? $('.swatch-element.active_swatch').attr('data-value') : "";
+    //   var product_variants = $('.swatch-element').length;
+    //   var product_position = "";
+    //   var list_position = "";
+    //   console.log(
+    //     "Prodcut ID :- " + product_id + '\n' +
+    //     "Prodcut Name :- " + product_name +'\n'+
+    //     "Prodcut Price :- " + product_price +'\n'+
+    //     "Prodcut Qty :- " + product_quantity + '\n' +
+    //     "Prodcut Category :- " + product_category +'\n' +
+    //     "Prodcut variant :- " + product_variants +'\n'+
+    //     "Prodcut position :- " + product_position+'\n'+
+    //     "Prodcut list position :- " + list_position
+    //   );
+    //   aaEventAddToCartCall(product_id,product_name,product_price,product_quantity,product_category,product_variants,list_position
+    //   );
+    // });
+
+    $('.buy_cart--wrapper form .btn[value="Cart"]').click(function(){
+      var product_id = $(this).parents('.grid-product-section').find('.grid-product__inner').attr('data-id');
+      var product_name = $(this).parents('.grid-product-section').find('.grid-product__title').text();
+      if($(this).parents('.grid-product-section').find('.on-sale').text() == ''){
+        var product_price = priceRecreator($(this).parents('.grid-product-section').find('.grid-product__price').text());
+      }else{
+        var product_price = priceRecreator($(this).parents('.grid-product-section').find('.on-sale').text());
+      }
+      var product_variant_count = parseInt($(this).parents('.grid-product-section').find('.shades_count').text());
+      var product_list_position = parseInt($(this).parents('.slick-slide').attr('index'))+1;
+      var product_category = $('.breadcrumb a:nth-child(3)').text();
+      product_variant_count = (isNaN(product_variant_count)) ? 0 : product_variant_count;
+      //console.log(product_id+'---'+product_name+'---'+product_price+'---'+product_variant_count+'---'+product_list_position);
+      aaEventAddToCartCall(product_id,product_name,product_price,1,product_category,product_variant_count,product_list_position);
+    });
+
+    // var new_article_btn = $('.spr-summary-actions-newreview').attr('onclick');
+    // $('.spr-summary-actions-newreview').attr('onclick','writeaReviewBtn();'+new_article_btn);
+
+
+    setTimeout(function(){
+      $("#AddToCart--product-template").click(function(){
+        var product_id = $('.product_id').text();
+        var product_name = $('.product-single__title.small--hide').text();
+        var product_price = $('.product-single__meta').find('#ProductPrice').attr('content').split('.')[0];
+        var product_quantity = $('.product-single__meta').find('.quntity-input').val();
+
+        console.log(
+          "Prodcut Name : " + product_name+ "\n" +
+          "Prodcut Id : " + product_id+ "\n" +
+          "Prodcut Price : " +product_price+ "\n" +
+          "Prodcut quntity : " +product_quantity+ "\n"
+        );
+
+        setTimeout(function(){
+          if($('.product-single__meta').find('.qty__error.form-error').css("display") === "none"){
+            var ev = {};
+            digitalData.cart={}
+            digitalData.cart.item=[];
+            digitalData.product=[];
+
+            var c = {
+              'productInfo' :{
+                'productID':product_id,
+                'productName':product_name,
+                'price':product_price,
+                'brand':'Lakme',
+                'quantity': product_quantity
+              },
+              'category':{
+                'primaryCategory':''
+              },
+              'pCAT':{
+                name:product_name,
+                level:product_id
+              },
+              'attributes':{
+                'productVariants':'',
+                'listPosition':''
+              }
+            }
+
+            digitalData.cart.item.push(c);
+
+              digitalData.component.push({'componentInfo' :{
+                'componentID':product_name
+              },
+              'attributes':
+              {
+                'position':'',
+                'listPosition':''
+              }
+            });
+
+
+            var p = {
+              'productInfo' :{
+                'productID':product_id,
+                'productName':product_name,
+                'price':product_price,
+                'brand':'Lakme',
+                'quantity': product_quantity
+              },
+              'category':{
+                'primaryCategory':''
+              },
+              'pCAT':{
+                name:product_name,
+                level:product_id
+              },
+              'attributes':{
+                'productVariants':'',
+                'listPosition':''
+              }
+            }
+
+
+            digitalData.product.push(p);
+
+              // addCart
+              ev.eventInfo={
+                'type':ctConstants.addtoCart
+              };
+              ev.category ={'primaryCategory':ctConstants.custom};
+              ev.subcategory = 'Lead';
+              digitalData.event.push(ev);
+
+
+            // event38
+            ev.eventInfo={
+              'type':ctConstants.trackEvent,
+              'eventAction': ctConstants.purchase,
+              'eventLabel' : product_name,
+              'eventValue' :1
+            };
+            ev.subcategory = 'Lead';
+            digitalData.event.push(ev);
+          }else {
+            console.log("out of stock");
+          }
+        },2000);
+
+      });
+    },800);
+
+
+    setTimeout(function(){
+        // Event10
+        $('.grid-product-section a').click(function(){
+          var product_id = $(this).closest('.grid-product__inner').attr('data-id');
+          var product_name = $(this).closest('.grid-product__inner').find('.grid-product__title').text();
+          if($(this).closest('.grid-product__inner').find('.on-sale').text() == ''){
+            var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.grid-product__price').text());
+          }else{
+            var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.on-sale').text());
+          }
+          var product_variant_count = parseInt($(this).closest('.grid-product__inner').find('.shades_count').text());
+          var product_list_position = parseInt($(this).closest('.slick-slide').attr('index'))+1;
+          product_variant_count = (isNaN(product_variant_count)) ? 0 : product_variant_count;
+
+          console.log(
+            "Prodcut ID :- " + product_id+'\n'+
+            "Prodcut Name :- " + product_name+'\n'+
+            "Prodcut Price :- " + product_price+'\n'+
+            "Prodcut variant count :- " + product_variant_count+'\n'+
+            "Prodcut Position :- " + product_list_position
+          );
+
+          var ev = {};
+          digitalData.product=[];
+
+          var pc = {
+            'productInfo' :{
+              'productID':product_id,
+              'productName':product_name,
+              'price':product_price,
+              'brand':'Lakme',
+              'quantity': '',
+              'componentName':product_name
+            },
+            'category':{
+              'primaryCategory': ''
+            },
+            'attributes':
+            {
+              'productVariants':product_variant_count,
+              'listPosition':product_list_position
+            }
+          }
+
+          digitalData.product.push(pc);
+
+          ev.eventInfo = {
+            'type':ctConstants.productclick,
+          };
+          ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+        });
+
+    },1000);
+
+});
+  {% endif %}
+
+  {% if template contains 'cart' %}
+
+
+
+  $('.cart__image, .cart__product-name').click(function(){
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var this_text = aaRemakeHypenlessText($(this).parents('.cart__row').find('.cart__product-name').text());
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  $('.continue-btn').click(function(){
+    var this_href = aaRemakeURL($(this).attr('href'));
+    var this_text = 'Continue shopping';
+    var linkName_URL = this_text+'-'+this_href;
+    aaEvent2Call(linkName_URL,this_href);
+  });
+
+  // $('.cart__checkout').click(function(){
+  //   var linkName_URL = "Checkout-";
+  //   aaEvent2Call(linkName_URL,'');
+  // });
+
+  $('.cart__product-meta .remove').click(function(){
+    var product_id = $(this).parents('.cart__row').find('.cart__product-name').attr('data-id');
+    var product_name = ($(this).parents('.cart__row').find('.cart__product-name').text()).trim();
+    var product_price = priceRecreator($(this).parents('.cart__row').find('.cart__price').text());
+    var product_quantity = parseInt($(this).parents('.cart__row').find('.quntity-input').val())
+    var product_position = $(this).parents('.cart__row').index();
+    //console.log(product_id+'---'+product_name+'---'+product_price+'---'+product_quantity+'---'+product_position);
+    aaRemoveFromCartCall(product_id,product_name,product_price,product_quantity,product_position);
+  });
+
+  $(window).on('load',function(){
+    var product_ids = [];
+    $('.cart__row').not('.cart__header-labels').each(function(){
+      var this_product_id = $(this).find('.cart__product-name').attr('data-id');
+      if(this_product_id != undefined){
+        product_ids.push(this_product_id);
+      }
+    });
+    var project_ids_string = product_ids.join('|');
+    var product_ids = [];
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.cartview,
+      'eventLabel' : project_ids_string,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.subcategory = 'Lead';
+    digitalData.event.push(ev);
+  });
+
+  $('.sp-minus').click(function(){
+    var product_id = $(this).parents('.cart__row').find('.cart__product-name').attr('data-id');
+    var product_name = ($(this).parents('.cart__row').find('.cart__product-name').text()).trim();
+    var product_price = parseInt($(this).parents('.cart__row').find('.cart__product-name').attr('data-price'));
+    var product_quantity = parseInt($(this).parents('.cart__row').find('.quntity-input').val())
+    var product_position = $(this).parents('.cart__row').index();
+    aaRemoveFromCartCall(product_id,product_name,product_price,product_quantity,product_position);
+    console.log(product_id+'---'+product_name+'---'+product_price+'---'+product_quantity+'---'+product_position);
+    return false;
+  });
+  //data-price
+  $('.sp-plus').click(function(){
+    var product_id = $(this).parents('.cart__row').find('.cart__product-name').attr('data-id');
+    var product_name = ($(this).parents('.cart__row').find('.cart__product-name').text()).trim();
+    var product_price = parseInt($(this).parents('.cart__row').find('.cart__product-name').attr('data-price'));
+    var product_quantity = parseInt($(this).parents('.cart__row').find('.quntity-input').val())
+    var product_position = $(this).parents('.cart__row').index();
+
+    // addtocart
+    var ev = {};
+    digitalData.cart={}
+    digitalData.cart.item=[];
+    digitalData.product=[];
+
+    var y = {
+        'productInfo' :{
+          'productID':product_id,
+          'productName':product_name,
+          'price':product_price,
+          'brand':'Lakme',
+          'quantity': product_quantity
+        },
+        'category':{
+          'primaryCategory':''
+        },
+        'pCAT':
+        {
+          name:product_name,
+          level:product_id
+        },
+        'attributes':
+        {
+          'productVariants':'',
+          'listPosition':product_position
+        }
+      }
+
+      digitalData.cart.item.push(y);
+
+      digitalData.component.push({
+          'componentInfo' :{
+            'componentID':product_name
+          },
+
+          'attributes':{
+            'position':product_position,
+            'listPosition':product_position
+          }
+      });
+
+
+      var z = {
+        'productInfo' :{
+              'productID':product_id,
+              'productName':product_name,
+              'price':product_price,
+              'brand':'Lakme',
+              'quantity': product_quantity
+            },
+            'category':{
+              'primaryCategory':''
+            },
+            'pCAT':
+            {
+              name:product_name,
+              level:product_id
+            },
+            'attributes':
+            {
+              'productVariants':'',
+              'listPosition':product_position
+            }
+      }
+
+      digitalData.product.push(z);
+
+      ev.eventInfo={
+        'type':ctConstants.addtoCart
+      };
+      ev.category ={'primaryCategory':ctConstants.custom};
+      ev.subcategory = 'Lead';
+      digitalData.event.push(ev);
+
+    console.log(product_id+'---'+product_name+'---'+product_price+'---'+product_quantity+'---'+product_position);
+    return false;
+  });
+  /*
+  $(window).on('load',function(){
+  	$('.cart__row').not('.cart__header-labels').each(function(){
+    	var this_product_id = $(this).find('.cart__product-name').attr('data-id');
+    	console.log(this_product_id);
+  	})
+  });
+  */
+
+  $('.cart__checkout').click(function(){
+
+    var ev = {};
+    digitalData.cart={};
+    digitalData.cart.item=[];
+    digitalData.product=[];
+
+    var cartProdcutPosition = 1;
+    $('.cart__row').not('.cart__header-labels').each(function(){
+
+        var prodcutName = $(this).find('.cart__product-name').text();
+        var prodcutId = $(this).find('.cart__product-name').attr('data-id');
+        var prodcutPrice = $(this).find('.cart__product-name').attr('data-price');
+        var currentPosition = cartProdcutPosition++;
+
+        if(prodcutId != undefined){
+          var x = {
+            'productInfo' :{
+              'productID':prodcutId,
+              'productName':prodcutName,
+              'price':prodcutPrice,
+              'brand':'Lakme',
+              'quantity': ''
+            },
+            'category':{
+              'primaryCategory':''
+            },
+            'pCAT':
+            {
+              name:prodcutName,
+              level:prodcutId
+            },
+            'attributes':
+            {
+              'productVariants':'',
+              'listPosition':currentPosition
+            }
+        }
+
+
+          digitalData.component.push({'componentInfo' :{
+            'componentID':prodcutName
+          },
+          'attributes':
+          {
+            'position':'',
+            'listPosition':currentPosition
+          }
+        });
+
+        digitalData.product.push({
+            'productInfo' :{
+              'productID':prodcutId,
+              'productName':prodcutName,
+              'price':prodcutPrice,
+              'brand':'Lakme',
+              'quantity': ''
+            },
+            'category':{
+              'primaryCategory':'PRODUCT CATEGORY'
+            },
+            'pCAT':
+            {
+              name:prodcutName,
+              level:prodcutId
+            },
+            'attributes':
+            {
+              'productVariants':'',
+              'listPosition':currentPosition
+            }
+
+          });
+        }
+
+        console.log(
+          "Prodcut Name : " + prodcutName + "\n" +
+          "Prodcut Id : " + prodcutId + "\n" +
+          "Prodcut Price : " + prodcutPrice + "\n" +
+          "Prodcut Postion : " + currentPosition
+        );
+
+
+    });
+
+
+    digitalData.cart.item.push(x);
+
+    ev.eventInfo={
+     'type':ctConstants.checkoutenhanced,
+    };
+    ev.category={'primaryCategory': ctConstants.conversion}
+    ev.subcategory = 'Win';
+    digitalData.event.push(ev);
+  });
+
+  {% endif %}
+
+  {% if template contains 'page.contact' %}
+  var whatis = "contains+contact";
+  {% endif %}
+
+  {% if template contains 'register' %}
+    setTimeout(function(){
+
+      $(window).on('load',function(){
+        var ev = {};
+        ev.eventInfo={
+          'type':ctConstants.trackEvent,
+          'eventAction': ctConstants.RegistrationStart,
+          'eventLabel' : window.location.href,
+          'eventValue' :1
+        };
+        ev.category ={'primaryCategory':ctConstants.other};
+        ev.subcategory = 'Lead';
+        digitalData.event.push(ev);
+
+        $('.register--button').click(function(){
+          //error case
+          setTimeout(function(){
+            if($('#create-account #create_customer').find('.form-error').length > 0){
+              var errormsgs = "";
+              $('#create-account #create_customer .form-error').each(function(){
+                errormsgs += $(this).text()+' ';
+
+                  if($(this).is(':empty')){
+
+                  }else {
+                    // event32
+                    var ev = {};
+                    ev.eventInfo={
+                      'type':ctConstants.trackEvent,
+                      'eventAction': ctConstants.inputerror,
+                      'eventLabel' :errormsgs,
+                      'eventValue' :1
+                    };
+                    ev.category ={'primaryCategory':ctConstants.custom};
+                    ev.subcategory = 'Error';
+                    digitalData.event.push(ev);
+
+                  }
+              });
+
+            }
+          },1000);
+        });
+
+
+        //error case
+        if($('#create_customer').find('.errors').length > 0){
+          var errormsgs = "";
+          $('#create_customer .errors ul li').each(function(){
+            errormsgs += $(this).text()+' ';
+          });
+          var ev = {};
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.inputerror,
+            'eventLabel' :errormsgs,
+            'eventValue' :1
+          };
+          ev.category ={'primaryCategory':ctConstants.custom};
+          ev.subcategory = 'Error';
+          digitalData.event.push(ev);
+        }
+      });
+
+    },1000);
+
+  $('.login-reg a').click(function(){
+    var linkName_URL = $(this).text()+'-'+aaRemakeURL($(this).attr('href'));
+    aaEvent2Call(linkName_URL, aaRemakeURL($(this).attr('href')));
+  })
+  {% endif %}
+
+  {% if template contains 'login' %}
+  $('.login-reg a').click(function(){
+    var linkName_URL = $(this).text()+'-'+aaRemakeURL($(this).attr('href'));
+    aaEvent2Call(linkName_URL, aaRemakeURL($(this).attr('href')));
+  });
+
+  $('.login-sign a').click(function(){
+    var linkName_URL = $(this).text()+'-'+aaRemakeURL($(this).attr('href'));
+    aaEvent2Call(linkName_URL, aaRemakeURL($(this).attr('href')));
+  });
+
+  $('.login-forgot a').click(function(){
+    aaEvent3Call('Forgot your password?');
+  });
+
+  $('#account .login--button').click(function(){
+    //error case
+    setTimeout(function(){
+      if($('#account #customer_login').find('.form-error').length > 0){
+        var errormsgs = "";
+        $('#account #customer_login .form-error').each(function(){
+          errormsgs += $(this).text()+' ';
+
+
+            if($(this).is(':empty')){
+
+            }else {
+              // event32
+              var ev = {};
+              ev.eventInfo={
+                'type':ctConstants.trackEvent,
+                'eventAction': ctConstants.inputerror,
+                'eventLabel' :errormsgs,
+                'eventValue' :1
+              };
+              ev.category ={'primaryCategory':ctConstants.custom};
+              ev.subcategory = 'Error';
+              digitalData.event.push(ev);
+
+            }
+        });
+
+      }
+    },1000);
+
+  });
+
+  {% endif %}
+
+  {% if template contains 'account' %}
+  $(window).on('load',function(){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.signIns,
+      'eventLabel' : 'Successfully logged in',
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.other};
+    ev.subcategory = 'Lead';
+    digitalData.event.push(ev);
+
+    $('.mobile-nav__item--secondary a, .section-header a').click(function(){
+      var link_URL = aaRemakeURL($(this).attr('href'));
+      var link_name = ($(this).text()).trim();
+      if(link_name == "Log Out"){
+        var ev = {};
+        ev.eventInfo={
+          'type':ctConstants.trackEvent,
+          'eventAction': ctConstants.SignOut,
+          'eventLabel' : link_URL,
+          'eventValue' :1
+        };
+        ev.category ={'primaryCategory':ctConstants.Custom};
+        ev.subcategory = 'Interest';
+        digitalData.event.push(ev);
+      }else{
+        var linkName_URL = link_name+'-'+link_URL;
+        aaEvent2Call(linkName_URL, link_URL);
+      }
+    });
+
+
+  });
+
+  $('.text-link').click(function(){
+    var linkName_URL = $(this).text()+'-'+aaRemakeURL($(this).attr('href'));
+    aaEvent2Call(linkName_URL, aaRemakeURL($(this).attr('href')));
+  });
+
+  {% endif %}
+
+  {% if page.title == 'Order History' %}
+  $('.mobile-nav__item--secondary a, .section-header a').click(function(){
+    var link_URL = aaRemakeURL($(this).attr('href'));
+    var link_name = ($(this).text()).trim();
+    if(link_name == "Log Out"){
+      var ev = {};
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction': ctConstants.SignOut,
+        'eventLabel' : link_URL,
+        'eventValue' :1
+      };
+      ev.category ={'primaryCategory':ctConstants.Custom};
+      ev.subcategory = 'Interest';
+      digitalData.event.push(ev);
+    }else{
+      var linkName_URL = link_name+'-'+link_URL;
+      aaEvent2Call(linkName_URL, link_URL);
+    }
+  });
+  {% endif %}
+
+
+  {% if template contains 'address' %}
+  $('.return-link').click(function(){
+    var link_URL = aaRemakeURL($(this).attr('href'));
+    var link_name = ($(this).text()).trim();
+    var linkName_URL = link_name+'-'+link_URL;
+    aaEvent2Call(linkName_URL, link_URL);
+  });
+
+  $('.grid__item.one-third.medium-down--one-whole.medium-down--text-center p a').not('.return-link').click(function(){
+    var linkName_URL = ($(this).text()).trim();
+    aaEvent3Call(linkName_URL);
+  });
+
+  $('.form-vertical form').submit(function(){
+    var this_address_form_type = $(this).find('h2').text();
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.profileEdit,
+      'eventLabel' : this_address_form_type,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.subcategory = 'Others';
+    digitalData.event.push(ev);
+  });
+
+  $('#addresses a').click(function(){
+      if($(this).text() === "Delete"){
+        var ev = {};
+        ev.eventInfo={
+          'type':ctConstants.trackEvent,
+          'eventAction': ctConstants.profileEdit,
+          'eventLabel' : "Delete button clicked",
+          'eventValue' :1
+        };
+        ev.category ={'primaryCategory':ctConstants.custom};
+        ev.subcategory = 'Others';
+        digitalData.event.push(ev);
+      }
+  });
+
+  $('.mobile-nav__item--secondary a, .section-header a').click(function(){
+    var link_URL = aaRemakeURL($(this).attr('href'));
+    var link_name = ($(this).text()).trim();
+    if(link_name == "Log Out"){
+      var ev = {};
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction': ctConstants.SignOut,
+        'eventLabel' : link_URL,
+        'eventValue' :1
+      };
+      ev.category ={'primaryCategory':ctConstants.Custom};
+      ev.subcategory = 'Interest';
+      digitalData.event.push(ev);
+    }else{
+      var linkName_URL = link_name+'-'+link_URL;
+      aaEvent2Call(linkName_URL, link_URL);
+    }
+  });
+  {% endif %}
+
+  {% if page.title == 'Privacy Policy' %}
+  $(window).on('load',function(){
+    $('.text-link').click(function(){
+      if(($(this).attr('href')).indexOf('mailto:') > -1){
+        var linkName_URL = "Email-"+$(this).attr('href');
+        aaEvent3Call(linkName_URL);
+      }else if($(this).attr('href') == "https://www.unileverprivacypolicy.com/PolicyKeyTerms.aspx"){
+        var linkName_URL = "Key terms-"+$(this).attr('href');
+        aaEvent3Call(linkName_URL);
+      }else{
+        var linkName_URL = $(this).text()+'-'+aaRemakeURL($(this).attr('href'));
+        aaEvent2Call(linkName_URL, aaRemakeURL($(this).attr('href')));
+      }
+    });
+
+    $('#accordion > li > span').click(function(){
+      var this_question = $(this).text();
+      var linkName_URL = 'Questions-'+this_question;
+      aaEvent3Call(linkName_URL);
+    });
+  });
+
+  {% endif %}
+
+  {% if page.title == 'Contact Us' %}
+  $(window).on('load',function(){
+
+    if(aaGetUrlParameter('contact_posted') == "true"){
+      var ev = {};
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction': ctConstants.contactus,
+        'eventLabel' : 'Contact us for submitted',
+        'eventValue' :1 };
+      ev.category ={'primaryCategory':ctConstants.other};
+      digitalData.event.push(ev);
+    }
+
+    $('p.content a').click(function(){
+      var linkName_URL = "Email-"+$(this).attr('href');
+      aaEvent3Call(linkName_URL);
+    });
+  });
+  {% endif %}
+
+  {% if template contains 'search' %}
+  $(window).on('load',function(){
+    var keyword = aaGetUrlParameter('q');
+    var number_of_result = $('.grid > div').length-1;
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.siteSearch,
+      'eventLabel' : keyword+'-'+number_of_result,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.other};
+    ev.subcategory = 'Interest';
+    digitalData.page.attributes.contentType='products'
+    digitalData.event.push(ev);
+  });
+  {% endif %}
+
+
+  {% if template contains 'checkouts' %}
+  console.log('checkout asdasda')
+  {% endif %}
+
+  if(document.getElementById("absolute-nudes-collection")) {
+
+    var ev = {};
+    $(window).on('load',function(){
+      var product_position_index = 1;
+      $('.grid-product').each(function(){
+        var product_id = $(this).find('.grid-product__inner').attr('data-id');
+        var product_name = $(this).find('.grid-product__title').text();
+        var product_position = product_position_index++;
+
+        var listing_product_data = {
+          'productInfo' :{
+            'productID':product_id,
+            'productName':product_name,
+            'brand':'Lakme'
+          },
+          'attributes': {
+            'listPosition':product_position
+          }
+        };
+
+        var listing_component_data = {
+          'componentInfo' :{
+            'componentID':product_name
+          },
+          'attributes':{
+            'position':product_position,
+            'listPosition':product_position
+          }
+        };
+
+        digitalData.product.push(listing_product_data);
+        digitalData.component.push(listing_component_data);
+      });
+      ev.eventInfo={
+        'type':ctConstants.productImpression
+      };
+      ev.category ={'primaryCategory':ctConstants.custom};
+      ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+      ev.subcategory = 'Lead';
+      digitalData.event.push(ev);
+    });
+
+    $('.grid-product-section a').click(function(){
+        var product_id = $(this).closest('.grid-product__inner').attr('data-id');
+      var product_name = $(this).closest('.grid-product__inner').find('.grid-product__title').text();
+      if($(this).closest('.grid-product__inner').find('.on-sale').text() == ''){
+        var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.grid-product__price').text());
+      }else{
+        var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.on-sale').text());
+      }
+      var product_variant_count = parseInt($(this).closest('.grid-product__inner').find('.shades_count').text());
+      var product_list_position = parseInt($(this).closest('.grid-product').index());
+      product_list_position = (product_list_position == 0) ? 1 : (parseInt(product_list_position/2)+1);
+      product_variant_count = (isNaN(product_variant_count)) ? 0 : product_variant_count;
+      var primary_category = $('.breadcrumb span:last-child').text();
+
+      digitalData.product = [];
+      digitalData.product.push({
+        'productInfo' :{
+          'productID':product_id,
+          'productName':product_name,
+          'price':product_price,
+          'brand':'Lakme',
+          'quantity':'',
+          'componentName':''
+        },
+        'category':{
+          'primaryCategory':primary_category
+        },
+        'attributes':{
+          'productVariants':product_variant_count,
+          'listPosition':product_list_position
+        }
+      });
+      ev.eventInfo = {
+        'type':ctConstants.productclick,
+      };
+
+      ev.subcategory = 'Interest';
+      digitalData.event.push(ev);
+    });
+  }
+
+  // Kareeena Page
+  if(document.getElementById("kareena")) {
+    var ev = {};
+    $(window).on('load',function(){
+      var product_position_index = 1;
+      $('.grid-product').each(function(){
+        var product_id = $(this).find('.grid-product__inner').attr('data-id');
+        var product_name = $(this).find('.grid-product__title').text();
+        var product_position = product_position_index++;
+
+        var listing_product_data = {
+          'productInfo' :{
+            'productID':product_id,
+            'productName':product_name,
+            'brand':'Lakme'
+          },
+          'attributes': {
+            'listPosition':product_position
+          }
+        };
+
+        var listing_component_data = {
+          'componentInfo' :{
+            'componentID':product_name
+          },
+          'attributes':{
+            'position':product_position,
+            'listPosition':product_position
+          }
+        };
+
+        digitalData.product.push(listing_product_data);
+        digitalData.component.push(listing_component_data);
+      });
+      ev.eventInfo={
+        'type':ctConstants.productImpression
+      };
+      ev.category ={'primaryCategory':ctConstants.custom};
+      ev.attributes={'nonInteractive':{'nonInteraction': 1}};
+      ev.subcategory = 'Lead';
+      digitalData.event.push(ev);
+    });
+
+    $('.grid-product-section a').click(function(){
+      var product_id = $(this).closest('.grid-product__inner').attr('data-id');
+      var product_name = $(this).closest('.grid-product__inner').find('.grid-product__title').text();
+      if($(this).closest('.grid-product__inner').find('.on-sale').text() == ''){
+        var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.grid-product__price').text());
+      }else{
+        var product_price = priceRecreator($(this).closest('.grid-product__inner').find('.on-sale').text());
+      }
+      var product_variant_count = parseInt($(this).closest('.grid-product__inner').find('.shades_count').text());
+      var product_list_position = parseInt($(this).closest('.grid-product').index());
+      product_list_position = (product_list_position == 0) ? 1 : (parseInt(product_list_position/2)+1);
+      product_variant_count = (isNaN(product_variant_count)) ? 0 : product_variant_count;
+      var primary_category = $('.breadcrumb span:last-child').text();
+
+      digitalData.product = [];
+      digitalData.product.push({
+        'productInfo' :{
+          'productID':product_id,
+          'productName':product_name,
+          'price':product_price,
+          'brand':'Lakme',
+          'quantity':'',
+          'componentName':''
+        },
+        'category':{
+          'primaryCategory':primary_category
+        },
+        'attributes':{
+          'productVariants':product_variant_count,
+          'listPosition':product_list_position
+        }
+      });
+      ev.eventInfo = {
+        'type':ctConstants.productclick,
+      };
+
+      ev.subcategory = 'Interest';
+      digitalData.event.push(ev);
+    });
+
+    // onload add the id
+    // $('.video-section .for-desktop').attr('id','existing-iframe');
+    //
+    // setTimeout(function(){
+    //   // set attr enablejsapi
+    //   var exiSrc = $('#existing-iframe').attr('src');
+    //   $('#existing-iframe').attr('src', exiSrc+'?enablejsapi=1');
+    // },500);
+
+
+
+    // video event start
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+
+      var player;
+       function onYouTubeIframeAPIReady() {
+         player = new YT.Player('player', {
+             events: {
+               'onStateChange': onPlayerStateChange
+             }
+         });
+       }
+
+     var videotime = 0;
+     var timeupdater;
+
+
+
+      function onPlayerStateChange(event){
+        var VidTitle = player.l.videoData.title;
+
+          if(event.data == -1){
+            console.log('video is unstarted');
+          }else if(event.data == 0){
+
+            // event 42
+            var ev = {};
+            digitalData.video=[];
+            digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+            ev.eventInfo={
+              'type':ctConstants.trackEvent,
+              'eventAction': ctConstants.videoCompletes,
+              'eventLabel' : 'Youtube - 100% - ',
+              'eventValue' :1
+            };
+            ev.category ={'primaryCategory':ctConstants.custom};
+            ev.subcategory = 'Interest';
+            digitalData.event.push(ev);
+
+            console.log('video is ended');
+          }else if(event.data == 1){
+
+            // event41
+            var ev = {};
+            digitalData.video=[];
+            digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+            ev.eventInfo={
+              'type':ctConstants.trackEvent,
+              'eventAction': ctConstants.videoPlays,
+              'eventLabel' : 'Youtube - 0% - ',
+              'eventValue' :1  };
+            ev.category ={'primaryCategory':ctConstants.other};
+            ev.subcategory = 'Interest';
+            digitalData.event.push(ev);
+
+
+            // video process function
+            function updateTime() {
+                var oldTime = videotime;
+                if(player && player.getCurrentTime) {
+                  videotime = player.getCurrentTime();
+                }
+                if(videotime !== oldTime) {
+                    onProgress(videotime);
+                }
+              }
+
+              timeupdater = setInterval(updateTime, 100);
+
+              var totalDurection = player.getDuration();
+              var getPercentage25Val = (totalDurection*0.25);
+              var getPercentage50Val = (totalDurection*0.50);
+              var getPercentage75Val = (totalDurection*0.75);
+              var per25done = true;
+              var per50done = true;
+              var per75done = true;
+
+              function onProgress(currentTime) {
+                if(currentTime > getPercentage25Val && per25done){
+                  per25done = false;
+
+                  console.log('user video seen 25%');
+
+                  // videoPercentageEvent(VidTitle,'25%');
+                  aaVideoPercentageEvent(VidTitle,player,'25%')
+               }else if(currentTime > getPercentage50Val && per50done){
+                 per50done = false;
+                 console.log('user video seen 50%');
+                 // videoPercentageEvent(VidTitle,'50%')
+                 aaVideoPercentageEvent(VidTitle,player,'50%');
+               }else if(currentTime > getPercentage75Val && per75done){
+                  per75done = false;
+                   console.log('user video seen 75%');
+                   // videoPercentageEvent(VidTitle,'75%');
+                   aaVideoPercentageEvent(VidTitle,player,'75%');
+               }
+
+              }
+
+            console.log('video is playing');
+          }else if(event.data == 2){
+            console.log('video is paused');
+          }else if(event.data == 3){
+            console.log('video is buffering');
+          }else {
+            console.log('video is video cued');
+          }
+      }
+
+      // video event end
+  }
+
+
+  if(document.getElementById('argan')){
+    // video event start globaly
+
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+
+      var player;
+       function onYouTubeIframeAPIReady() {
+         player = new YT.Player('player', {
+             events: {
+               'onStateChange': onPlayerStateChange
+             }
+         });
+       }
+
+     var videotime = 0;
+     var timeupdater;
+
+
+
+      function onPlayerStateChange(event){
+        var VidTitle = player.l.videoData.title;
+
+          if(event.data == -1){
+            console.log('video is unstarted');
+          }else if(event.data == 0){
+
+            // event 42
+            var ev = {};
+            digitalData.video=[];
+            digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+            ev.eventInfo={
+              'type':ctConstants.trackEvent,
+              'eventAction': ctConstants.videoCompletes,
+              'eventLabel' : 'Youtube - 100% - ',
+              'eventValue' :1
+            };
+            ev.category ={'primaryCategory':ctConstants.custom};
+            ev.subcategory = 'Interest';
+            digitalData.event.push(ev);
+
+            console.log('video is ended');
+          }else if(event.data == 1){
+
+            // event41
+            var ev = {};
+            digitalData.video=[];
+            digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+            ev.eventInfo={
+              'type':ctConstants.trackEvent,
+              'eventAction': ctConstants.videoPlays,
+              'eventLabel' : 'Youtube - 0% - ',
+              'eventValue' :1  };
+            ev.category ={'primaryCategory':ctConstants.other};
+            ev.subcategory = 'Interest';
+            digitalData.event.push(ev);
+
+
+            // video process function
+            function updateTime() {
+                var oldTime = videotime;
+                if(player && player.getCurrentTime) {
+                  videotime = player.getCurrentTime();
+                }
+                if(videotime !== oldTime) {
+                    onProgress(videotime);
+                }
+              }
+
+              timeupdater = setInterval(updateTime, 100);
+
+              var totalDurection = player.getDuration();
+              var getPercentage25Val = (totalDurection*0.25);
+              var getPercentage50Val = (totalDurection*0.50);
+              var getPercentage75Val = (totalDurection*0.75);
+              var per25done = true;
+              var per50done = true;
+              var per75done = true;
+
+              function onProgress(currentTime) {
+                if(currentTime > getPercentage25Val && per25done){
+                  per25done = false;
+
+                  console.log('user video seen 25%');
+
+                  // videoPercentageEvent(VidTitle,'25%');
+                  aaVideoPercentageEvent(VidTitle,player,'25%')
+               }else if(currentTime > getPercentage50Val && per50done){
+                 per50done = false;
+                 console.log('user video seen 50%');
+                 // videoPercentageEvent(VidTitle,'50%')
+                 aaVideoPercentageEvent(VidTitle,player,'50%');
+               }else if(currentTime > getPercentage75Val && per75done){
+                  per75done = false;
+                   console.log('user video seen 75%');
+                   // videoPercentageEvent(VidTitle,'75%');
+                   aaVideoPercentageEvent(VidTitle,player,'75%');
+               }
+
+              }
+
+            console.log('video is playing');
+          }else if(event.data == 2){
+            console.log('video is paused');
+          }else if(event.data == 3){
+            console.log('video is buffering');
+          }else {
+            console.log('video is video cued');
+          }
+      }
+
+      // video event end
+
+      // video event end globaly
+  }
+
+
+  if(document.getElementById('naturale')){
+  // video event start globaly
+
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+
+    var player;
+     function onYouTubeIframeAPIReady() {
+       player = new YT.Player('player', {
+           events: {
+             'onStateChange': onPlayerStateChange
+           }
+       });
+     }
+
+   var videotime = 0;
+   var timeupdater;
+
+
+
+    function onPlayerStateChange(event){
+      var VidTitle = player.l.videoData.title;
+
+        if(event.data == -1){
+          console.log('video is unstarted');
+        }else if(event.data == 0){
+
+          // event 42
+          var ev = {};
+          digitalData.video=[];
+          digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.videoCompletes,
+            'eventLabel' : 'Youtube - 100% - ',
+            'eventValue' :1
+          };
+          ev.category ={'primaryCategory':ctConstants.custom};
+          ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+          console.log('video is ended');
+        }else if(event.data == 1){
+
+          // event41
+          var ev = {};
+          digitalData.video=[];
+          digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.videoPlays,
+            'eventLabel' : 'Youtube - 0% - ',
+            'eventValue' :1  };
+          ev.category ={'primaryCategory':ctConstants.other};
+          ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+
+          // video process function
+          function updateTime() {
+              var oldTime = videotime;
+              if(player && player.getCurrentTime) {
+                videotime = player.getCurrentTime();
+              }
+              if(videotime !== oldTime) {
+                  onProgress(videotime);
+              }
+            }
+
+            timeupdater = setInterval(updateTime, 100);
+
+            var totalDurection = player.getDuration();
+            var getPercentage25Val = (totalDurection*0.25);
+            var getPercentage50Val = (totalDurection*0.50);
+            var getPercentage75Val = (totalDurection*0.75);
+            var per25done = true;
+            var per50done = true;
+            var per75done = true;
+
+            function onProgress(currentTime) {
+              if(currentTime > getPercentage25Val && per25done){
+                per25done = false;
+
+                console.log('user video seen 25%');
+
+                // videoPercentageEvent(VidTitle,'25%');
+                aaVideoPercentageEvent(VidTitle,player,'25%')
+             }else if(currentTime > getPercentage50Val && per50done){
+               per50done = false;
+               console.log('user video seen 50%');
+               // videoPercentageEvent(VidTitle,'50%')
+               aaVideoPercentageEvent(VidTitle,player,'50%');
+             }else if(currentTime > getPercentage75Val && per75done){
+                per75done = false;
+                 console.log('user video seen 75%');
+                 // videoPercentageEvent(VidTitle,'75%');
+                 aaVideoPercentageEvent(VidTitle,player,'75%');
+             }
+
+            }
+
+          console.log('video is playing');
+        }else if(event.data == 2){
+          console.log('video is paused');
+        }else if(event.data == 3){
+          console.log('video is buffering');
+        }else {
+          console.log('video is video cued');
+        }
+    }
+
+    // video event end
+
+    // video event end globaly
+}
+
+
+
+
+  function aaRemakeURL(url){
+    if(!/^(f|ht)tps?:\/\//i.test(url)){
+      url = baseURL+url;
+    }
+    return url;
+  }
+
+  function aaRemakeHypenlessText(text){
+    if(text.includes('-')){
+      text = text.replace(/-/g,' ');
+      text = text.replace(/–/g,' ');
+    }
+    return text.trim();
+  }
+
+  function priceRecreator(price){
+    var new_price = parseInt(((price.trim()).replace(',','')).replace("\u20b9",''));
+    return new_price;
+  }
+
+  function aaEvent2Call(linkNameURL, linkURL){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction':ctConstants.linkClick,
+      'eventLabel':linkNameURL,
+      'eventValue':1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    digitalData.event.push(ev);
+  }
+
+  function aaEvent3Call(linkName){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.anchorLinkClicked,
+      'eventLabel' : linkName,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    digitalData.event.push(ev);
+  }
+
+  function aaEvent4Call(linkURL, linkCTA, articleName){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction':ctConstants.articleClick,
+      'eventLabel':linkURL+' / '+linkCTA+' / '+articleName,
+      'eventValue':1
+    };
+    ev.category ={'primaryCategory':ctConstants.other}; ev.subcategory = 'Read';
+    digitalData.event.push(ev);
+  }
+
+  function articelEvent4(articleName){
+			var ev = {};
+			ev.eventInfo={
+				'type':ctConstants.trackEvent,
+				'eventAction':ctConstants.articleClick,
+				'eventLabel':articleName,
+				'eventValue':1
+			};
+			ev.category ={'primaryCategory':ctConstants.other}; ev.subcategory = 'Read';
+				digitalData.event.push(ev);
+		}
+
+    function specificarticelNameEvent4(specificArticleName){
+      var ev = {};
+			ev.eventInfo={
+				'type':ctConstants.trackEvent,
+				'eventAction':ctConstants.articleClick,
+				'eventLabel':specificArticleName,
+				'eventValue':1
+			};
+			ev.category ={'primaryCategory':ctConstants.other}; ev.subcategory = 'Read';
+				digitalData.event.push(ev);
+    }
+
+
+  function aaVideoStartsEvent(videoTitle,videoId){
+				digitalData.video=[];
+		    digitalData.video.push({videoName: videoTitle, videoId:videoId});
+		    ev.eventInfo={
+		      'type':ctConstants.trackEvent,
+		      'eventAction': ctConstants.videoPlays,
+		      'eventLabel' : 'Youtube - 0% - '+videoId,
+		      'eventValue' :1
+		    };
+		    ev.category ={'primaryCategory':ctConstants.other};
+		    ev.subcategory = 'Interest';
+		    digitalData.event.push(ev);
+  }
+
+  function aaVideoEndsEvent(videoTitle,videoId){
+				digitalData.video=[];
+		    digitalData.video.push({videoName: videoTitle, videoId:videoId});
+		    ev.eventInfo={
+		      'type':ctConstants.trackEvent,
+		      'eventAction': ctConstants.videoCompletes,
+		      'eventLabel' : 'Youtube - 100% - '+videoId,
+		      'eventValue' :1
+		    };
+		    ev.category ={'primaryCategory':ctConstants.custom};
+		    ev.subcategory = 'Interest';
+		    digitalData.event.push(ev);
+    }
+
+
+  function aaVideoPercentageEvent(videoTitle,videoId,videoPercentage){
+    var ev = {};
+    digitalData.video=[];
+    digitalData.video.push({videoName: videoTitle, videoId:videoId});
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.videoProgress,
+      'eventLabel' : videoPercentage,
+      'eventValue':1
+     };
+      ev.attributes = {'nonInteractive': {'nonInteraction': 1}};
+      ev.category ={'primaryCategory':ctConstants.custom};      ev.subcategory = 'Read';
+      digitalData.event.push(ev);
+  }
+
+  function aaEvent47Call(social_platform){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.share,
+      'eventLabel' : social_platform,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.referral};
+    ev.subcategory = 'Lead';
+    digitalData.event.push(ev);
+  }
+
+  function aaEvent48Call(destination_url){
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.clickstosocialplatforms,
+      'eventLabel' :destination_url,
+      'eventValue' :1
+    };
+    ev.category ={'primaryCategory':ctConstants.referral};
+    digitalData.event.push(ev);
+  }
+
+  function checkoutEvent(productId,prodcutName,prodcutPrice,prodcutQuantity,prodcutCategory,prodcutName,productId,prodcutVariant,currentPosition){
+    digitalData.product.push({
+        'productInfo' :{
+          'productID':productId,
+          'productName':prodcutName,
+          'price':prodcutPrice,
+          'brand':'Lakme',
+          'quantity': prodcutQuantity
+        },
+        'category':{
+          'primaryCategory':prodcutCategory
+        },
+        'pCAT':{
+          name:prodcutName,
+          level:productId
+        },
+        'attributes':{
+          'productVariants':prodcutVariant,
+          'listPosition':currentPosition
+        }
+      });
+  }
+
+  // function aaEventAddToCartCall(product_id,product_name,product_price,product_quantity,product_category,product_variants,product_position){
+  //   product_variants = (isNaN(product_variants)) ? 0 : product_variants;
+  //
+  //   var ev = {};
+  //   digitalData.cart={};
+  //   digitalData.cart.item=[];
+  //   var a = {
+  //     'productInfo' :{
+  //       'productID':product_id,
+  //       'productName':product_name,
+  //       'price':product_price,
+  //       'brand':'Lakme',
+  //       'quantity':product_quantity
+  //     },
+  //     'category':{
+  //       'primaryCategory':product_category
+  //     },
+  //     'pCAT':{
+  //       name:product_name,
+  //       level:product_id
+  //     },
+  //     'attributes':{
+  //       'productVariants':product_variants,
+  //       'listPosition':product_position
+  //     }
+  //   };
+  //
+  //
+  //   digitalData.product=[];
+  //   digitalData.product.push({
+  //     'productInfo' :{
+  //       'productID':product_id,
+  //       'productName':product_name,
+  //       'price':product_price,
+  //       'brand':'Lakme',
+  //       'quantity':product_quantity
+  //     },
+  //     'category':{
+  //       'primaryCategory':product_category
+  //     },
+  //     'pCAT':{
+  //       name:product_name,
+  //       level:product_id
+  //     },
+  //     'attributes':{
+  //       'productVariants':product_variants,
+  //       'listPosition':product_position
+  //     }
+  //   });
+  //
+  //   digitalData.cart.item.push(a);
+  //   ev.eventInfo={
+  //     'type':ctConstants.addtocart,
+  //   };
+  //   ev.category={'primaryCategory': ctConstants.custom}
+  //   ev.subcategory = 'Lead';
+  //   digitalData.event.push(ev);
+  //
+  //   ev.eventInfo={
+  //     'type':ctConstants.trackEvent,
+  //     'eventAction': ctConstants.purchase,
+  //     'eventLabel' : 'Online - '+product_name,
+  //     'eventValue' :1
+  //   };
+  //   ev.category ={'primaryCategory':ctConstants.conversion};
+  //   ev.subcategory = 'Lead';
+  //   digitalData.event.push(ev);
+  // }
+
+  function aaRemoveFromCartCall(product_id,product_name,product_price,product_quantity,product_position){
+    var ev = {};
+    digitalData.cart={}
+    digitalData.cart.item=[];
+    digitalData.cart.item.push({
+      'productInfo' :{
+        'productID':product_id,
+        'productName':product_name,
+        'price':product_price,
+        'brand':'Lakme',
+        'quantity': product_quantity
+      },
+      'category':{
+        'primaryCategory':''
+      },
+      'pCAT':{
+        name:product_name,
+        level:product_id
+      },
+      'attributes':{
+        'productVariants':'',
+        'listPosition':product_position
+      }
+    });
+    digitalData.component.push({
+      'componentInfo' :{
+        'componentID':product_name
+      },
+      'attributes':{
+        'position':'',
+        'listPosition':product_position
+      }
+    });
+
+    digitalData.product=[];
+    digitalData.product.push({
+      'productInfo' :{
+        'productID':product_id,
+        'productName':product_name,
+        'price':product_price,
+        'brand':'Lakme',
+        'quantity':product_quantity
+      },
+      'category':{
+        'primaryCategory':''
+      },
+      'pCAT':{
+        name:product_name,
+        level:product_id
+      },
+      'attributes':{
+        'productVariants':'',
+        'listPosition':product_position
+      }
+    });
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.removecart,
+    };
+    ev.category={'primaryCategory': ctConstants.conversion}
+    ev.subcategory = 'Diversion';
+    digitalData.event.push(ev);
+  }
+
+  function aaGetUrlParameter(sParam){
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+      sParameterName = sURLVariables[i].split('=');
+      if(sParameterName[0] === sParam){
+        return sParameterName[1] === undefined ? true : sParameterName[1];
+      }
+    }
+  };
+
+  function getYoutubeIdFromURL(str){
+    return str;
+  }
+
+  // Thank you page
+  if($('html').hasClass('page--thank-you')){
+      console.log('This is a thank you page!');
+
+      setTimeout(function(){
+
+        var ev = {};
+        // digitalData.transaction={};
+        // digitalData.transaction.item=[];
+
+
+        var  orderIdText = $('.os-header__heading .os-order-number').text().trim().split(' ')[1];
+        var  orderId = orderIdText.split('#')[1];
+        var prodcutShipping = $('.order-summary__section--total-lines .total-line--shipping .total-line__price span').text().trim();
+        var prodcutBasePrice = $('.order-summary__section--total-lines .total-line--subtotal span').text().split('.')[1];;
+        var prodcutTax = $('.order-summary__section--total-lines .total-line--taxes .total-line__price span').text().split('.')[1];
+
+        var prodcutPosition = 1;
+        $('.order-summary__sections .product-table .product').each(function(){
+
+            var productId = $(this).attr('data-product-id');
+            var prodcutName = $(this).find('.product__description__name').text();
+            var prodcutCategory = $(this).attr('data-product-type');
+            var prodcutVariant = $(this).attr('data-variant-id');
+            var prodcutQuantity = $(this).find('.product__quantity').text().trim();
+            var prodcutTotalPrice = $(this).find('.product__price span').text().split('.')[1];
+            var prodcutPrice = (prodcutTotalPrice/prodcutQuantity);
+
+
+            var currentPosition = prodcutPosition++;
+
+
+            console.log(
+              "prodcut Order ID = " + orderId + "," + "\n" +
+              "prodcut ID  = " + productId + "," + "\n" +
+              "prodcut Name = " + prodcutName + "," + "\n" +
+              "prodcut Quantity = " + prodcutQuantity + "," + "\n" +
+              "prodcut Price = " + prodcutPrice + "," + "\n" +
+              "prodcut Category = " + prodcutCategory + "," + "\n" +
+              "prodcut Variant = " + prodcutVariant + "," + "\n" +
+              "prodcut Shipping = " + prodcutShipping + "," + "\n" +
+              "prodcut BasePrice = " + prodcutBasePrice + "," + "\n" +
+              "prodcut Tax = " + prodcutTax + "," + "\n"
+            );
+
+
+            // var x = {
+            //   'productInfo' :{
+            //     'productID':productId,
+            //     'productName':prodcutName,
+            //     'price':prodcutPrice,
+            //     'brand':'Lakme',
+            //     'quantity': prodcutQuantity,
+            //   },
+            //   'category':{
+            //     'primaryCategory':prodcutCategory
+            //   },
+            //   'attributes':
+            //   {
+            //     'productVariants':prodcutVariant,
+            //     'listPosition':currentPosition,
+            //     'productRetailer':''
+            //   }
+            // }
+            //
+            // digitalData.transaction.item.push(x);
+            //
+            // var y = {
+            //   'transactionID':orderId,
+            //   'total':{
+            //     'basePrice': prodcutBasePrice,
+            //     'taxRate': prodcutTax,
+            //     'shipping': prodcutShipping
+            //   },
+            //   'attributes':
+            //   {
+            //     'affiliation': '',
+            //     'coupon': ''
+            //   }
+            // }
+            //
+            //  digitalData.transaction.push(y);
+
+            digitalData.transaction={};
+
+            digitalData.transaction = {
+               'transactionID':orderId,
+               'total':{
+                  'basePrice': prodcutBasePrice,
+                  'taxRate': prodcutTax,
+                  'shipping': prodcutShipping
+               },
+               'coupon Discount':'',
+               'shipMethod':'Delivery',
+               'shipCountry':'',
+               'shipCity':'',
+               'attributes':
+               {
+                  'affiliation': '',
+                  'coupon': ''
+               }
+            }
+
+
+            digitalData.transaction.item=[];
+            var x = {
+              'productInfo' :{
+                'productID':productId,
+                'productName':prodcutName,
+                'price':prodcutPrice,
+                'brand':'Lakme',
+                'quantity': prodcutQuantity,
+              },
+              'category':{
+                'primaryCategory':prodcutCategory
+              },
+              'attributes':
+              {
+                'productVariants':prodcutVariant,
+                'listPosition':currentPosition,
+                'productRetailer':''
+              }
+            }
+
+            digitalData.transaction.item.push(x);
+
+
+
+
+
+        });
+
+        ev.eventInfo={
+          'type':ctConstants.purchaseenhanced,
+        };
+        ev.category ={'primaryCategory':ctConstants.conversion};
+        ev.subcategory = 'Win';
+        digitalData.event.push(ev);
+
+      },2000);
+  }
+
+
+// checkout 1 - Adobe
+  if($(".main .main__content .step").attr("data-step") === "contact_information"){
+
+
+
+
+      setTimeout(function(){
+          var ev = {};
+          digitalData.product=[];
+
+
+          if($(window).width() > 767){
+            console.log('this is a desktop');
+            $('.order-summary__sections .custom_btn.step__footer__continue-btn.btn').click(function(){
+              var prodcutPosition = 1;
+              $('.order-summary__sections .product-table .product').each(function(){
+                  var productId = $(this).attr('data-product-id');
+                  var prodcutName = $(this).find('.product__description__name').text();
+                  var prodcutPrice = $(this).find('.product__price span').text().split('.')[1];
+                  var prodcutCategory = $(this).attr('data-product-type');
+                  var prodcutVariant = $(this).attr('data-variant-id');
+                  var prodcutQuantity = $(this).find('.product__quantity').text().trim();
+                  var currentPosition = prodcutPosition++;
+
+                  console.log(
+                    "Check out Step - 1" + "\n" +
+                    "prodcut ID  = " + productId + "," + "\n" +
+                    "prodcut Name = " + prodcutName + "," + "\n" +
+                    "prodcut Quantity = " + prodcutQuantity + "," + "\n" +
+                    "prodcut Price = " + prodcutPrice + "," + "\n" +
+                    "prodcut Category = " + prodcutCategory + "," + "\n" +
+                    "prodcut Variant = " + prodcutVariant + "," + "\n"
+                  );
+
+                   checkoutEvent(productId,prodcutName,prodcutPrice,prodcutQuantity,prodcutCategory,prodcutName,productId,prodcutVariant,currentPosition);
+
+                  });
+
+                  ev.eventInfo={
+                    'type':ctConstants.checkoutenhancedsteps,
+                    'eventAction': 'Checkout Step 1',
+                    'eventLabel' : 'Checkout - Proceed to pay'
+                  };
+                  ev.category ={'primaryCategory':ctConstants.custom};
+                  digitalData.event.push(ev);
+            });
+
+          }else {
+            console.log('this is a mobile');
+
+            $('.step__footer .step__footer__continue-btn.btn').click(function(){
+              var prodcutPosition = 1;
+              $('.order-summary__sections .product-table .product').each(function(){
+                  var productId = $(this).attr('data-product-id');
+                  var prodcutName = $(this).find('.product__description__name').text();
+                  var prodcutPrice = $(this).find('.product__price span').text().split('.')[1];
+                  var prodcutCategory = $(this).attr('data-product-type');
+                  var prodcutVariant = $(this).attr('data-variant-id');
+                  var prodcutQuantity = $(this).find('.product__quantity').text().trim();
+                  var currentPosition = prodcutPosition++;
+
+                  console.log(
+                    "Check out Step - 1" + "\n" +
+                    "prodcut ID  = " + productId + "," + "\n" +
+                    "prodcut Name = " + prodcutName + "," + "\n" +
+                    "prodcut Quantity = " + prodcutQuantity + "," + "\n" +
+                    "prodcut Price = " + prodcutPrice + "," + "\n" +
+                    "prodcut Category = " + prodcutCategory + "," + "\n" +
+                    "prodcut Variant = " + prodcutVariant + "," + "\n"
+                  );
+
+                   checkoutEvent(productId,prodcutName,prodcutPrice,prodcutQuantity,prodcutCategory,prodcutName,productId,prodcutVariant,currentPosition);
+
+                  });
+
+                  ev.eventInfo={
+                    'type':ctConstants.checkoutenhancedsteps,
+                    'eventAction': 'Checkout Step 1',
+                    'eventLabel' : 'Checkout - Proceed to pay'
+                  };
+                  ev.category ={'primaryCategory':ctConstants.custom};
+                  digitalData.event.push(ev);
+            });
+          }
+
+
+
+
+          $('#checkout_buyer_accepts_marketing').change(function(){
+            if ($(this).is(':checked')){
+              // event50
+              var ev = {};
+              ev.eventInfo={
+                'type':ctConstants.trackEvent,
+                'eventAction': ctConstants.Acquisition,
+                'eventLabel' : 'Opt-in for News & Exclusive Offers',
+                'eventValue' :1
+              };
+              ev.category ={'primaryCategory':ctConstants.conversion};
+              ev.subcategory = 'Lead';
+              digitalData.event.push(ev);
+            }
+          });
+    },2000);
+
+
+  }
+
+  // checkout 1 - Adobe
+
+// checkout 2 - Adobe
+if($(".main .main__content .step").attr("data-step") === "payment_method"){
+      console.log("This a Payment method page.");
+
+      setTimeout(function(){
+          var ev = {};
+          digitalData.product=[];
+
+          if($(window).width() > 767){
+            console.log('this is a desktop');
+            $('.custom_btn.step__footer__continue-btn.btn').click(function(){
+
+              var prodcutPosition = 1;
+              $('.order-summary__sections .product-table .product').each(function(){
+                  var productId = $(this).attr('data-product-id');
+                  var prodcutName = $(this).find('.product__description__name').text();
+                  var prodcutPrice = $(this).find('.product__price span').text().split('.')[1];
+                  var prodcutCategory = $(this).attr('data-product-type');
+                  var prodcutVariant = $(this).attr('data-variant-id');
+                  var prodcutQuantity = $(this).find('.product__quantity').text().trim();
+                  var currentPosition = prodcutPosition++;
+
+                  console.log(
+                    "Check out Step - 1" + "\n" +
+                    "prodcut ID  = " + productId + "," + "\n" +
+                    "prodcut Name = " + prodcutName + "," + "\n" +
+                    "prodcut Quantity = " + prodcutQuantity + "," + "\n" +
+                    "prodcut Price = " + prodcutPrice + "," + "\n" +
+                    "prodcut Category = " + prodcutCategory + "," + "\n" +
+                    "prodcut Variant = " + prodcutVariant + "," + "\n"
+                  );
+
+                   checkoutEvent(productId,prodcutName,prodcutPrice,prodcutQuantity,prodcutCategory,prodcutName,productId,prodcutVariant,currentPosition);
+
+                  });
+
+                  ev.eventInfo={
+                    'type':ctConstants.checkoutenhancedsteps,
+                   'eventAction': 'Checkout Step 2',
+                   'eventLabel' : 'Checkout - Complete Order'
+                  };
+                  ev.category ={'primaryCategory':ctConstants.custom};
+                  digitalData.event.push(ev);
+            });
+
+          }else {
+            console.log('this is a Mobile');
+            $('.step__footer .step__footer__continue-btn.btn').click(function(){
+
+              var prodcutPosition = 1;
+              $('.order-summary__sections .product-table .product').each(function(){
+                  var productId = $(this).attr('data-product-id');
+                  var prodcutName = $(this).find('.product__description__name').text();
+                  var prodcutPrice = $(this).find('.product__price span').text().split('.')[1];
+                  var prodcutCategory = $(this).attr('data-product-type');
+                  var prodcutVariant = $(this).attr('data-variant-id');
+                  var prodcutQuantity = $(this).find('.product__quantity').text().trim();
+                  var currentPosition = prodcutPosition++;
+
+                  console.log(
+                    "Check out Step - 1" + "\n" +
+                    "prodcut ID  = " + productId + "," + "\n" +
+                    "prodcut Name = " + prodcutName + "," + "\n" +
+                    "prodcut Quantity = " + prodcutQuantity + "," + "\n" +
+                    "prodcut Price = " + prodcutPrice + "," + "\n" +
+                    "prodcut Category = " + prodcutCategory + "," + "\n" +
+                    "prodcut Variant = " + prodcutVariant + "," + "\n"
+                  );
+
+                   checkoutEvent(productId,prodcutName,prodcutPrice,prodcutQuantity,prodcutCategory,prodcutName,productId,prodcutVariant,currentPosition);
+
+                  });
+
+                  ev.eventInfo={
+                    'type':ctConstants.checkoutenhancedsteps,
+                   'eventAction': 'Checkout Step 2',
+                   'eventLabel' : 'Checkout - Complete Order'
+                  };
+                  ev.category ={'primaryCategory':ctConstants.custom};
+                  digitalData.event.push(ev);
+            });
+          }
+
+
+
+    },2000);
+}
+  // checkout 2 - Adobe
+
+  // video event start
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+
+    var player;
+     function onYouTubeIframeAPIReady() {
+       player = new YT.Player('player', {
+           events: {
+             'onStateChange': onPlayerStateChange
+           }
+       });
+     }
+
+   var videotime = 0;
+   var timeupdater;
+
+
+
+    function onPlayerStateChange(event){
+      var VidTitle = player.l.videoData.title;
+
+        if(event.data == -1){
+          console.log('video is unstarted');
+        }else if(event.data == 0){
+
+          // event 42
+          var ev = {};
+          digitalData.video=[];
+          digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.videoCompletes,
+            'eventLabel' : 'Youtube - 100% - ',
+            'eventValue' :1
+          };
+          ev.category ={'primaryCategory':ctConstants.custom};
+          ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+          console.log('video is ended');
+        }else if(event.data == 1){
+
+          // event41
+          var ev = {};
+          digitalData.video=[];
+          digitalData.video.push({videoName: VidTitle, videoId:'VIDEO ID'});
+          ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.videoPlays,
+            'eventLabel' : 'Youtube - 0% - ',
+            'eventValue' :1  };
+          ev.category ={'primaryCategory':ctConstants.other};
+          ev.subcategory = 'Interest';
+          digitalData.event.push(ev);
+
+
+          // video process function
+          function updateTime() {
+              var oldTime = videotime;
+              if(player && player.getCurrentTime) {
+                videotime = player.getCurrentTime();
+              }
+              if(videotime !== oldTime) {
+                  onProgress(videotime);
+              }
+            }
+
+            timeupdater = setInterval(updateTime, 100);
+
+            var totalDurection = player.getDuration();
+            var getPercentage25Val = (totalDurection*0.25);
+            var getPercentage50Val = (totalDurection*0.50);
+            var getPercentage75Val = (totalDurection*0.75);
+            var per25done = true;
+            var per50done = true;
+            var per75done = true;
+
+            function onProgress(currentTime) {
+              if(currentTime > getPercentage25Val && per25done){
+                per25done = false;
+
+                console.log('user video seen 25%');
+
+                // videoPercentageEvent(VidTitle,'25%');
+                aaVideoPercentageEvent(VidTitle,player,'25%')
+             }else if(currentTime > getPercentage50Val && per50done){
+               per50done = false;
+               console.log('user video seen 50%');
+               // videoPercentageEvent(VidTitle,'50%')
+               aaVideoPercentageEvent(VidTitle,player,'50%');
+             }else if(currentTime > getPercentage75Val && per75done){
+                per75done = false;
+                 console.log('user video seen 75%');
+                 // videoPercentageEvent(VidTitle,'75%');
+                 aaVideoPercentageEvent(VidTitle,player,'75%');
+             }
+
+            }
+
+          console.log('video is playing');
+        }else if(event.data == 2){
+          console.log('video is paused');
+        }else if(event.data == 3){
+          console.log('video is buffering');
+        }else {
+          console.log('video is video cued');
+        }
+    }
+
+    // video event end
+
+    setTimeout(function(){
+      if(window.location.href == "https://lakmeindia.com/collections/sun-protection-catalog") {
+          promotionView('sun protection catalog');
+      }
+
+      if(window.location.href == "https://lakmeindia.com/products/lakme-absolute-matte-melt-liquid-lip-color") {
+          promotionView('Lakmé Absolute Matte Melt Liquid Lip Color');
+      }
+
+      if(window.location.href == "https://lakmeindia.com/blogs/how-tos/eyeliner-styles-for-the-bold-and-the-beautiful") {
+          promotionView('Eyeliner Styles for the Bold and the Beautiful');
+      }
+
+      if(window.location.href == "https://lakmeindia.com/pages/bridal-collection-page") {
+          promotionView('bridal collection page');
+      }
+
+      if(window.location.href == "https://lakmeindia.com/products/lakme-absolute-matte-ultimate-argan-oil-lipstick") {
+          promotionView('Lakmé Absolute Matte Ultimate Lip Color with Argan Oil');
+      }
+
+    },1000);
+
+
+    // event14
+    function  promotionView(promoName){
+      var ev = {};
+      digitalData.promotion=[];
+      digitalData.promotion.push({
+        'promotionInfo': {
+          'promotionId':'',
+          'promotionName':promoName,
+          'promotionCreative':'',
+          'position':''
+        }}
+
+      );
+      ev.eventInfo={
+        'type':ctConstants.promotionView,
+      };
+      ev.attributes = {'nonInteractive': {'nonInteraction': 1}};
+      ev.category ={'primaryCategory':ctConstants.custom};
+      ev.subcategory = 'Load';
+      digitalData.event.push(ev);
+    }
+</script>
+<script type="text/javascript">_satellite.pageBottom()</script>

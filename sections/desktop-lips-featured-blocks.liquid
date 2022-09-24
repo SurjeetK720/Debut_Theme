@@ -1,0 +1,112 @@
+{% if section.blocks != blank %}
+<div class="featured-desktop">
+  {% if section.settings.heading != blank %}
+  <div class="lips-heading lip-collection">
+    {{section.settings.heading}}
+  </div>
+  {% endif%}
+  <div class="grid pro-desk">
+    {% for block in section.blocks %}
+    <div class="inner-desktop">
+    {% if block.type == 'product' %}
+    {%- assign product = all_products[block.settings.product] -%}
+    {% include 'product-grid-item-desktop-lips' %}
+    {% else %}
+    <div class="custom-block-content grid__item grid-product large--one-third medium--one-third">
+      {% if block.settings.url != blank %}
+      <a href="{{block.settings.url}}">
+        {% endif %}
+        <div class="custom-block-inner">
+        {% if block.settings.image != blank %}
+        <img src="{{ block.settings.image | img_url : '600x1000' }}" alt="{{ block.settings.image.alt }}" />
+        {% endif %}
+        <div class="custom-content-wrapper">
+          <div class="custom-lips-inner display-table">
+            <div class="display-table-cell">
+            {% if block.settings.heading != blank %}
+            <div class="content-heading">
+              {{block.settings.heading}}
+            </div>
+            {% endif %}
+            {% if block.settings.content != blank %}
+            <div class="custom-content1">
+              {{block.settings.content}}
+            </div>
+            {% endif %}
+          </div>
+          </div>
+        </div>
+      </div>
+        {% if block.settings.url != blank %}
+      </a>
+        {% endif %}
+    </div>
+    {% endif %}
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+{% endif %}
+{% schema %}
+{
+"name": "Desktop Featured Blocks",
+"class":"custom-desktop-blocks",
+"settings": [
+{
+"type" : "html",
+"id" : "heading",
+"label" : "Enter Heading"
+}
+],
+"blocks": [
+{
+"type": "product",
+"name": {
+"en": "Lip Blocks"
+},
+"settings": [
+{
+"type" : "product",
+"id" : "product",
+"label" : "Choose Product"
+}
+]
+},
+{
+"type": "content",
+"name": {
+"en": "Lip Blocks Content"
+},
+"settings": [
+{
+"type" : "image_picker",
+"id" : "image",
+"label" : "Block Image"
+},
+{
+"type" : "html",
+"id" : "heading",
+"label" : "Enter Heading"
+},
+{
+"type" : "textarea",
+"id" : "content",
+"label" : "Enter Content"
+},
+{
+"type" : "url",
+"id" : "url",
+"label" : "Choose Link"
+}
+]
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

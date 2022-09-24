@@ -1,0 +1,23 @@
+{% if section.settings.banner != blank %}
+  <div class="banner-wrapper">
+  <img src="{{section.settings.banner | img_url:'original'}}" class="banner-img"/>
+  </div>
+  {% endif %}
+{% schema %}
+  {
+    "name": "Lips Mobile Banner",
+    "settings": [
+    {
+    "type" : "image_picker",
+    "id" : "banner",
+    "label" : "Mobile Banner"
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

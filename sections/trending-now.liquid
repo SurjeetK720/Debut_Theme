@@ -1,0 +1,122 @@
+<div data-section-id="{{ section.id }}" data-section-type="featured-content-section">
+  <div class="rich-text wrapper">
+    <div class="grid">
+      <div class="grid__item one-whole">
+        {% if section.settings.section_title != blank %}
+        <div class="section-header text-left">
+          <h2 class="section-header__title h1"><span>{{ section.settings.section_title }}</span></h2>
+        </div>
+        {% endif %}
+        {% if section.settings.text != blank %}
+        <div class="section-subheader text-left">
+          <h3 class="section-subheader__title h3">{{ section.settings.text }}</h3>
+        </div>
+        {% endif %}
+      </div>
+       <div class="grid display-table">
+      {% if section.settings.left_image != blank %}
+      <div class="grid__item one-half  display-table-cell small--one-whole trendnow-left">
+        <div class="trending__now-image_on_left">
+          <img src="{{ section.settings.left_image | img_url : '473x727' }}" alt="{{ section.settings.left_image.alt }}" />
+        </div>
+      </div>
+      {% endif %}
+      <div class="grid__item  display-table-cell content_on_right-wrapper {% if section.settings.left_image != blank %}one-half{% else %}one-whole{% endif %}  small--one-whole">
+        {% if section.settings.heading_on_right != blank %}
+        <h2 class="text-left section-header__title1" style="color: {{ section.settings.heading_color }};">{{ section.settings.heading_on_right }}</h2>
+        {% endif %}
+        {% if section.settings.content_on_right != blank %}
+        <p>
+          {{ section.settings.content_on_right }}
+          {% if section.settings.button_text != blank and section.settings.btn_url != blank %}
+        </p>
+        {% endif %}
+        <a class="content_on_right--link text-left" href="{{ section.settings.btn_url }}">
+          {{ section.settings.button_text }}
+        </a>
+        {% endif %}
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+"name": {
+"en": "Trending Now"
+},
+"class": "index-section trending__now-section",
+"settings": [
+{
+"type": "text",
+"id": "section_title",
+"label": {
+"en": "Heading"
+},
+"default": {
+"en": "Talk about your brand"
+}
+},
+{
+"type": "richtext",
+"id": "text",
+"label": {
+"en": "Sub Heading"
+}
+},
+{
+"type" : "image_picker",
+"id" : "left_image",
+"label" : "Main Image"
+},
+{
+"type" : "header",
+"content" : "Content on right side"
+},
+{
+"type": "text",
+"id": "heading_on_right",
+"label":"Heading"
+},
+{
+"type" : "color",
+"id" : "heading_color",
+"label": "Heading Color",
+"default" : "#db927d"
+},
+{
+"type": "html",
+"id": "content_on_right",
+"label": {
+"en": "Content"
+}
+},
+{
+"type" : "text",
+"id" : "button_text",
+"label" : "Button Text"
+},
+{
+"type" : "url",
+"id" : "btn_url",
+"label" : "URL"
+}
+],
+"presets": [
+{
+"name": {
+"en": "Trending Now"
+},
+"category": {
+"pt-BR": "Texto",
+"es": "Texto",
+"de": "Text",
+"it": "Testo",
+"en": "Text",
+"ja": "テキスト",
+"fr": "Texte"
+}
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,86 @@
+{% if section.settings.image != blank or section.settings.client_id != blank or section.settings.tag != blank %}
+<div class="grid instagram-posts-wrapper">
+  <div class="grid__item one-whole">
+    <div class="instagram-post-bg" {% if section.settings.image != blank %} style="background:url('{{ section.settings.image | img_url : '1920x'}}');" {% endif %}>
+<!--       <div id="instafeed" class="grid"></div>
+      <div class="load-more-insta text-center">
+      <a href="javascript:void(0)">
+       {% include 'down-arrow' %}
+      </a>
+      </div> -->
+      <div class='embedsocial-hashtag' data-ref="64b663a66f27c2fc583cb1d3d9a7212982c6436b" ></div><script>(function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));</script>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% if section.settings.client_id != blank %}
+<!-- <script type="text/javascript">
+  var feed = new Instafeed({
+    get: 'user',
+     //get: 'tagged',
+    userId: {{ section.settings.user_id }},
+    resolution: 'standard_resolution',
+    accessToken: '{{ section.settings.access_token }}',
+    tagName: '{{section.settings.tag}}',
+    clientId: '{{section.settings.client_id}}',
+    limit:60,
+    sortBy:'most-recent',
+    template: '<div class="grid__item one-third medium--one-half small--one-whole insta-post-grids"><a class="animation" href="{% raw %}{{link}} {% endraw %}"><img src="{% raw %}{{image}}{% endraw %}" /><div class="captions">{% raw%}{{caption}}{% endraw %}</div></a></div>',
+    after:function(){
+    setTimeout(function(){
+    $('.insta-post-grids').each(function(i){
+    $(this).find('img').css('height',$(this).find('img').width()) 
+    if(i>8){
+    $(this).addClass('hide');
+  }                   
+   })
+ },300)
+  $('.load-more-insta a').click(function(){
+    $('.insta-post-grids').removeClass('hide');
+    $(this).parent().remove();
+  })
+  }
+  });
+  feed.run();
+</script> -->
+{% endif %}
+{% schema %}
+{
+"name": "Instagram Posts",
+"class":"instagram-posts",
+"settings": [
+{
+"type" : "image_picker",
+"id" : "image",
+"label" : "Background Image"
+},
+{
+"type" : "text",
+"id" : "client_id",
+"label" : "Client ID"
+},
+{
+"type" : "text",
+"id" : "access_token",
+"label" : "Access Token"
+},
+{
+"type" : "text",
+"id" : "user_id",
+"label" : "User Id"
+},
+{
+"type" : "text",
+"id" : "tag",
+"label" : "Tag"
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

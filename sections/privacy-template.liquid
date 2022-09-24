@@ -1,0 +1,48 @@
+{% if section.blocks.size > 0 %}
+<ul id="accordion">
+  {% for block in section.blocks %}
+  {% if block.settings.question != blank and block.settings.answer != blank %}
+  <li>
+    <span>{{ block.settings.question }}</span>
+    <div class="custom-field custom-field__description custom-field__type--html" style="display:none">
+      <div class="custom-field--value">
+        {{ block.settings.answer }}
+      </div>
+    </div>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+{% endif %}
+{% schema %}
+{
+"name": "Privacy Policy",
+"class":"privacy-policy__accordion",
+"settings": [
+],
+"blocks": [
+{
+"type": "html",
+"name": {
+"en": "Privacy Policy Content"
+},
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": {
+"en": "Question"
+}
+},
+{
+"type": "html",
+"id": "answer",
+"label": {
+"en": "Answer"
+}
+}
+]
+}
+]
+}
+{% endschema %}

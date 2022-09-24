@@ -1,0 +1,18 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/articles/edit-field/48579
+{% endcomment %}
+{% if article.metafields.custom_fields["hair_attributes"] != blank %}
+  <div class="custom-field custom-field__hair-attributes custom-field__type--text-list">
+    <h3 class="custom-field--title">Hair attributes</h3>
+    <div class="custom-field--value">  
+      {% assign values = article.metafields.custom_fields["hair_attributes"] | split: "|" %}
+      <ul>
+      {% for value in values %}
+        <li>{{ value }}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}

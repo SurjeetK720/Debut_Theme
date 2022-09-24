@@ -1,0 +1,41 @@
+<!-- /templates/product.liquid -->
+{% comment %}
+The contents of the product.liquid template can be found in /sections/product-template.liquid
+{% endcomment %}
+<style>
+    @media only screen and (max-width : 600px) {
+        .product-single__thumbnails {
+            display  : nonse;
+            height   : 0px;
+            overflow : hidden;
+        }
+    }
+
+    .txt-left {
+        text-align    : left;
+        padding-left  : 20px;
+        padding-right : 20px;
+    }
+
+    .web-read-reviews-section {
+        display       : block;
+        margin-bottom : 30px;
+    }
+
+    .content-after-product p, .custom-field--value p {
+        font-family : 'HelveticaNeueLTStd-Cn' !important
+    }
+</style>
+
+{% section 'product-template' %}
+{% section 'product-lakmeContent' %}
+{% section 'related-products' %}
+{% section 'product-relatedStories' %}
+{% section 'product-relatedVideos' %}
+<div class="product__reviews" id="product__reviews">
+    <div class="grid">
+        <div class="grid__item one-whole">
+            <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+        </div>
+    </div>
+</div>

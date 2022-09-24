@@ -1,0 +1,325 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  {% if settings.favicon %}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {% endif %}
+
+  <!-- Title and description ================================================== -->
+  <title>
+    {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+<meta name="google-site-verification" content="1yjnl-_7-K6osflUoI2zvzQ7byZzfhB3Td9mq6fFlA8" />
+  <!-- Helpers ================================================== -->
+  {% include 'social-meta-tags' %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+<script src="https://dataprivacy.unileversolutions.com/etc/clientlibs/gdpr-global/v1.0/head-top.js"></script>
+
+  <!-- CSS ================================================== -->
+  {{ 'timber.scss.css' | asset_url | stylesheet_tag }} 
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+  <!-- Sections ================================================== -->
+  <script>
+    window.theme = window.theme || {}; 
+    theme.strings = {
+      zoomClose: {{ "products.zoom.close" | t | json }},
+      zoomPrev: {{ "products.zoom.prev" | t | json }},
+      zoomNext: {{ "products.zoom.next" | t | json }},
+      moneyFormat: {{ shop.money_format | json }},
+      addressError: {{ 'home_page.map.address_error' | t | json }},
+      addressNoResults: {{ 'home_page.map.address_no_results' | t | json }},
+      addressQueryLimit: {{ 'home_page.map.address_query_limit_html' | t | json }},
+      authError: {{ 'home_page.map.auth_error_html' | t | json }},
+      cartEmpty: {{ 'cart.general.empty' | t | json }},
+      cartCookie: {{ 'cart.general.cookies_required' | t | json }},
+      cartSavings: {{ 'cart.general.savings_html' | t: price: '[savings]' | json }}
+    };
+    theme.settings = {
+      cartType: {{ settings.cart_type | json }},
+      gridType: {{ settings.collection_products_grid | json }}
+    };
+  </script>
+
+  {{ 'jquery-2.2.3.min.js' | asset_url | script_tag }}
+  {{ 'instafeed.min.js' | asset_url | script_tag }}
+  {% comment %}{{ '//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js' | script_tag }}{% endcomment %}
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script><!--<![endif]-->
+  <!--[if lte IE 9]><script src="{{ 'lazysizes.min.js' | asset_url }}"></script><![endif]-->
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'theme.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+  <!--[if lte IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
+  <script src="{{ 'custom.js' | asset_url }}"></script>
+
+  <!-- Header hook for plugins ================================================== -->
+  {{ content_for_header }}
+  {% include 'oldIE-js' %}
+
+  {{ 'modernizr.min.js' | asset_url | script_tag }}
+
+  {% comment %}
+  If you store has customer accounts disabled, you can remove the following JS file
+  {% endcomment %}
+  {% if template.directory == 'customers' %}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+  <script type="text/javascript" src="https://variant-image-automator.starapps.studio/product_variants.js?shop={{shop.permanent_domain}}"></script>
+  {% include 'adobe-analytics-head' %}
+  {{ 'autocomplete.js' | asset_url | script_tag }}
+
+
+  <style>
+    .product-wrap
+    {
+      opacity:0;
+    }
+    .ucam-hide
+    {
+    display:none!important;
+    }
+    {% if template contains 'product' %}
+    .main-content .grid
+    {
+      opacity:0;
+    }
+    {% endif %}
+  </style>
+<script src="https://dataprivacy.unileversolutions.com/etc/clientlibs/gdpr-global/v1.0/head-bottom.js"></script>
+</head>
+
+{% comment %}
+Add the page template as a class for easy page or template specific styling.
+{% endcomment %}
+<body id="{{ page_title | handle }}" class="{% if template contains 'page.page.custom_html' %} kareena--kapoor_collection {% endif %}{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}  {% if collection.handle == 'skincare' or collection.handle == 'discover-skincare'  %} skincare-template {% endif %}  {% if collection.handle == 'makeup' or collection.handle == 'discover-makeup'  %}makeup-template{% endif %} {% if template contains 'page.pincode-filter'%} store-locator {% endif %}">
+  {%- if template contains 'collection' or settings.pt_show_only_on_collections != true -%}
+  {% section 'filter-menu-settings' %}
+  {% endif %}
+  <div class="se-pre-con"></div>
+  <div id="NavDrawer" class="drawer drawer--left">
+    {% section 'drawer-menu' %}
+  </div>
+  <div id="CartDrawer" class="drawer drawer--right drawer--has-fixed-footer">
+    <div class="drawer__fixed-header">
+      <div class="drawer__header">
+        <div class="drawer__title">{{ 'cart.general.title' | t }}</div>
+        <div class="drawer__close">
+          <button type="button" class="icon-fallback-text drawer__close-button js-drawer-close">
+            <span class="icon icon-x" aria-hidden="true"></span>
+            <span class="fallback-text">{{ 'cart.general.close_cart' | t }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="drawer__inner">
+      <div id="CartContainer" class="drawer__cart"></div>
+    </div>
+  </div>
+  <div id="PageContainer" class="page-container">
+    {% section 'header' %}
+    {% if template.name == "index" %}
+    {% section 'slideshow' %}
+    {% endif %}
+    {% if template.name == 'collection' and template != 'collection.routine' and  template != 'collection.lips'%}
+    {% if collection.metafields.custom_fields["collection_image"] != blank %}
+    <div class="hero-collection-slideshow custom-field__collection-image small--hide">
+      {{ collection.metafields.custom_fields["collection_image"] }}
+    </div>
+    {% elsif template contains 'collection.lips' %}
+    <div class="hero-collection-slideshow custom-field__collection-image small--hide large--hide">
+      {{ collection.metafields.custom_fields["collection_image"] }}
+    </div>
+    {% else %}
+    {% section 'collection-slideshow' %}
+    {% endif %}
+    {% if collection.metafields.custom_fields["collection_image_mobile"] != blank %}
+    <div class="hero-collection-slideshow custom-field__collection-image large--hide medium--hide">
+      {{ collection.metafields.custom_fields["collection_image_mobile"] }}
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+
+    <main class="main-content" role="main">
+      {% if template contains 'article' %}
+      <div class="wrapper">
+        <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+          <a href="/" title="Home">Home</a>
+          {% for tag in article.tags %}
+          {% if tag contains 'Main:' %}
+          {% assign tag_parts = tag | split: 'Main:' %}
+          <span aria-hidden="true">&rsaquo;</span>
+          <a href="/pages/{{ tag_parts[1] | handleize }}">{{ tag_parts[1] }}</a>
+          {% endif %}
+          {% if tag contains 'Sub:' %}
+          {% assign tag_parts1 = tag | split: 'Sub:' %}
+          <span aria-hidden="true">&rsaquo;</span>
+          <a href="/pages/{{ tag_parts1[1] | handleize }}">{{ tag_parts1[1] }}</a>
+          {% endif %}
+          {% endfor %}
+        </nav>
+      </div>
+      {% if article.metafields.custom_fields["banner_video"] != blank %}
+      <div class="custom-field custom-field__banner-video custom-field__type--url">
+        {{ article.metafields.custom_fields["banner_video"] }}
+      </div>
+      {% elsif article.metafields.custom_fields["banner_image"] != blank %}
+      <div class="custom-field custom-field__banner-image custom-field__type--image">
+        {{ article.metafields.custom_fields["banner_image"] }}
+      </div>
+      {% endif %}
+      {% endif %}
+      {% unless template.name == "index" or template == "collection.image" %}
+      <div class="{% if template contains 'page.trends' or template contains 'page.drenched-in-dew' or template contains 'page.absolute' %} wrapper {% else  %}{% if template == 'collection.routine' or template contains 'page.absolute' or template contains 'page.kareena1' or template contains 'page.instagram' %}{% else %}wrapper{%endif%}{% endif %}">
+        {% if template contains 'article' or   template contains 'page.contact' or template contains 'collection.lips'%}
+        {% else %}
+		{% if template contains 'page.kareena1' %}
+        <div class="wrapper">
+        {% include 'breadcrumbs' %}
+        </div>
+		{% else %}
+        {% include 'breadcrumbs' %}
+        {% endif %}
+        {% endif %}
+        {% endunless %}
+        {{ content_for_layout }}
+        {% unless template.name == "index" or template == "collection.image" %}
+        {% if template contains 'customers/login' or template contains 'customers/register' %}
+        <p  class="login-reg"> <a href="{{ shop.url }}">{{ 'customer.login.cancel' | t }}</a></p>
+        {% endif %}
+      </div>
+      {% endunless %}
+    </main>
+
+    {% section 'footer' %}
+    <a href="#" class="scrollup" style="display: none;">Scroll</a>
+  </div>
+
+  {% comment %}
+  Template-specific js
+  {% endcomment %}
+  <script>
+    {% if resetPassword %}
+    $(function() {
+      timber.resetPasswordSuccess();
+    });
+    {% endif %}
+  </script>
+
+  {% comment %}
+  Ajaxify your cart with this plugin.
+  Documentation:
+  - http://shopify.com/timber#ajax-cart
+  {% endcomment %}
+  {% if settings.cart_type == 'drawer' %}
+  {% include 'ajax-cart-template' %}
+  {% endif %}
+
+  {% if template.name == 'product' or template.name == 'index' %}
+  <script>
+
+    // Override default values of shop.strings for each template.
+    // Alternate product templates can change values of
+    // add to cart button, sold out, and unavailable states here.
+    theme.productStrings = {
+      addToCart: {{ 'products.product.add_to_cart' | t | json }},
+      soldOut: {{ 'products.product.sold_out' | t | json }},
+      unavailable: {{ 'products.product.unavailable' | t | json }}
+    }
+  </script>
+  {% endif %}
+
+  <div id="SearchModal" class="mfp-hide">
+    {% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--modal' %}
+  </div>
+  {% if template contains 'index' %}
+  {% if settings.popup != blank %}
+  <div id="myModal" class="modal homepage-modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close close_modal"><svg class="bx-close-xsvg" viewBox="240 240 20 20"><g class="bx-close-xstroke bx-close-x-adaptive"><path class="bx-close-x-adaptive-1" d="M255.6 255.6l-11.2-11.2" vector-effect="non-scaling-stroke"></path><path class="bx-close-x-adaptive-2" d="M255.6 244.4l-11.2 11.2" vector-effect="non-scaling-stroke"></path></g></svg></span>
+      <div class="popup-img">
+        <img src="{{settings.popup | img_url: 'original' }}"/>
+      </div>
+    </div>
+
+  </div>
+  {% endif %}
+  {% endif %}
+  <script type="text/javascript" src="{{ 'jquery-equal-height.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'jquery.floatit.js' | asset_url }}"></script>
+  {{ 'jquery.cookie.js' | asset_url | script_tag }}
+  {{ 'bootstrap.js' | asset_url | script_tag }}
+  {{ 'owl-carousel.js' | asset_url | script_tag }}
+  {% include 'custom-theme' %}
+
+  
+  {% include 'back-in-stock-helper' %}
+  {% include 'adobe-analytics' %}
+  {% include 'login-validation' %}
+
+  <script>
+    jQuery(document).ready(function(){
+      $('.header-slider__start').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+      });
+    })
+    //alert($.cookie('header-slider'));
+    $('.section--header_slider .close').click(function(){
+      $.cookie('header-slider','close');
+      $('.section--header_slider').remove();
+    })
+    if($.cookie('header-slider') == 'close'){
+    $('.section--header_slider').remove();
+    }
+    {% if template contains 'index' %}
+    {% if settings.popup != blank %}
+    // Get the modal
+    var modal = document.getElementById('myModal');
+    $(document).ready(function(){
+      modal.style.display = "block";
+    })
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close_modal")[0];
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    {% endif %}
+    {% endif %}
+        // js for select frist swatch product page 
+    $(document).ready(function(){
+      setTimeout(function(){
+      $('.radio-wrapper .swatch input:checked').trigger('click');
+      }, 500);
+    });
+  </script>
+  <script src="//cdn.codeblackbelt.com/js/modules/cool-image-magnifier/main.min.js?shop=hul-lakme.myshopify.com"></script>
+{% include 'social-login' %}</body>
+</html>

@@ -1,0 +1,63 @@
+<!-- sections/product-relatedVideos.liquid -->
+<style>
+    .contentWidget-heading {
+        font-size      : 36px;
+        font-weight    : bold;
+        letter-spacing : 2px;
+        margin-bottom  : 0px;
+    }
+
+    @media screen and (max-width : 480px) {
+        .contentWidget-heading {
+            font-size : 28px;
+        }
+    }
+</style>
+
+{% if product.metafields.lakmeContent.relatedVideos != blank %}
+<div class="product-template__container page-width" id="ProductSection-{{ section.id }}"
+     data-section-id="{{ section.id }}">
+    {% if product.metafields.lakmeContent.relatedVideos.heading != blank %}
+    <div class="hr-custom-discover">
+        <hr class="first-hr">
+        <div class="hr-h3">
+            <span class="h3">{{ product.metafields.lakmeContent.relatedVideos.heading }}</span>
+        </div>
+        <hr class="last-hr">
+    </div>
+    {% endif %}
+
+    {% unless product.metafields.lakmeContent.relatedVideos == blank %}
+    {% for contentWidget in product.metafields.lakmeContent.relatedVideos.videos %}
+        <div class="grid text-center contentWidget">
+            <div class="grid__item contentWidget-heading">
+                {% if contentWidget.heading != blank %}
+                    <span class="h5 contentWidget-heading abcd">{{ contentWidget.heading }}</span>
+                {% endif %}
+            </div>
+            <div class="contentWidget-content">
+                <div class="grid__item">
+                    <iframe src="https://www.youtube.com/embed/{{ contentWidget.videoId }}" frameborder="0"
+                            allow="encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid text-left contentWidget hr-custom-widget">
+            <div class="grid__item contentWidget-heading hr-pt-10">
+                {% if contentWidget.videoSubheading != blank %}
+                    <span class="h5 contentWidget-heading hr-custom-heading">{{ contentWidget.videoSubheading }}</span>
+                {% endif %}
+            </div>
+            <div class="contentWidget-content">
+                <div class="grid__item hr-custom-banner-p">
+                    {{ contentWidget.html }}
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    {% endunless %}
+
+</div>
+{% endif %}

@@ -1,0 +1,33 @@
+{% if section.settings.banner != blank %}
+  <div class="banner-wrapper">
+  <img src="{{section.settings.banner | img_url:'original'}}" class="banner-img"/>
+    {% if section.settings.heading != blank %}
+    <div class="heading-wrapper">
+      {{section.settings.heading}}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+{% schema %}
+  {
+    "name": "Lips Desktop Banner",
+    "settings": [
+    {
+    "type" : "image_picker",
+    "id" : "banner",
+    "label" : "Desktop Banner"
+    },
+    {
+    "type" : "html",
+    "id" : "heading",
+    "label" : "Enter Heading"
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

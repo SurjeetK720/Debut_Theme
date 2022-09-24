@@ -1,0 +1,8 @@
+	<!--Adobe analytics script-->
+	<script src="//assets.adobedtm.com/e21dfb008dab7987a37e05e0ce8e8f311baa4a2a/satelliteLib-2edb81462c041537c6a7bdf2ae1c246a8dc095f2.js"></script>
+	<script>
+      var all_tags = [];
+     {% for tag in blog.all_tags %}
+      	all_tags.push('{{ tag }}');
+	 {% endfor %} 
+	</script>

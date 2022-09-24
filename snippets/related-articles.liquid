@@ -1,0 +1,48 @@
+{% assign related_posts = "" %}
+
+{% for article1 in blogs[blog_handle].articles %}
+{% if article1.handle != article.handle %}
+{% capture post %}
+<div class="grid__item large--one-third small--one-whole blog_post">
+  {% if article1.image != blank and article1.metafields.custom_fields["featured--instagram_desktop"] == blank %}
+  <a href="{{ article1.url }}">  
+    <div class="article__featured-wrapper text-center">
+      <img src="{{ article1.image | img_url: '300x300' }}"
+           alt="{{ article1.title | escape }}" />
+    </div>
+  </a>
+  {% endif %}
+  {% if article1.metafields.custom_fields["featured--instagram_desktop"] != blank %}
+  <div class="article__featured-wrapper text-center small--hide">
+    <div class="insta--feed">
+      {{ article1.metafields.custom_fields["featured--instagram_desktop"] }}
+      <div class="insta-wrapper"><a href="{{ article1.url }}"></a></div>
+    </div>
+  </div>
+  {% endif %}
+  {% if article1.metafields.custom_fields["featured--instagram_mobile"] != blank %}
+  <div class="article__featured-wrapper text-center large--hide medium--hide">
+    <div class="insta--feed">
+      {{ article1.metafields.custom_fields["featured--instagram_mobile"] }}
+      <div class="insta-wrapper"><a href="{{ article1.url }}"></a></div>
+    </div>
+  </div>
+  {% endif %}
+  {% if article1.excerpt != blank %}
+  <div class="related__article-content">
+    <a href="{{ article1.url }}">
+      {{ article1.excerpt }}
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+{% endcapture %}
+{% assign related_posts = related_posts | append:post %}
+{% endif %}
+{% endfor %}
+
+{% if related_posts.size > 0 %}
+<div class="related--articles">
+  <div class="grid"> {{ related_posts }} </div></div>
+{% endif %}

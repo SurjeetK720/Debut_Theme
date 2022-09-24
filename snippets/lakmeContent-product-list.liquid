@@ -1,0 +1,19 @@
+<!-- snippets/lakmeContent-product-list.liquid -->
+<div class="grid text-center contentWidget hr-ml-custom">
+    <div class="grid__item contentWidget-heading">
+        {% if contentWidget.heading != blank %}
+            <span class="h5 contentWidget-heading">{{ contentWidget.heading }}</span>
+        {% endif %}
+    </div>
+    <div class="contentWidget-content">
+        {% if contentWidget.products != blank %}
+            <div class="grid__item small--one-whole hr-custom-grid-img">
+                {% for productWidget in contentWidget.products %}
+
+                    {% assign product = all_products[productWidget.productHandle] %}
+                    {% include 'product-grid-item' %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

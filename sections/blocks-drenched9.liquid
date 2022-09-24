@@ -1,0 +1,229 @@
+<div class="grid blocks-drenched">
+
+  {% for block in section.blocks %}
+
+  {% assign mod = forloop.index | modulo: 2 %}
+  {% if mod == 0 %}
+  <div class="grid__item row-wrap row-wrap-{{forloop.index}} even-{{forloop.index}} right-padding {% if block.settings.bg_image == blank or block.settings.bg_image_mobile == blank %} swatch--none {% endif %}">
+    {% comment %}Mobile Image Starts{% endcomment%}
+    {% if block.settings.block_image_mobile!=blank and block.settings.show_insta == false %}
+    <div class="grid__item large--three-eighths large--hide right-padding-img medium--one-whole small--one-whole">
+      <img src="{{ block.settings.block_image_mobile | img_url: 'original' }}" alt="{{ block.settings.block_image_mobile.alt }}" />
+    </div>
+    {% else %}
+    {% if block.settings.block_image!=blank and block.settings.show_insta == false %}
+    <div class="grid__item large-three-eighths right-padding-img medium--one-whole small--one-whole large--hide ">
+      <img src="{{ block.settings.block_image | img_url: 'original' }}" alt="{{ block.settings.block_image.alt }}" />
+    </div>
+    {% endif%}
+    {% endif%}
+    {% if block.settings.show_insta %}
+    {% if block.settings.mob_insta != blank %}
+    <div class="grid__item large--three-eighths large--hide right-padding-img medium--one-whole small--one-whole insta--feed large--hide">
+      {{block.settings.mob_insta}}
+    </div>
+    {% endif %}
+    {% endif%}
+    {% comment %}Mobile Image Ends {% endcomment%}
+    <div class="grid__item large--five-eighths medium--one-whole small--one-whole right-content trend-even-{{forloop.index}}">
+      <div class="trends-inner-content trend-even-section-{{forloop.index}}">
+      {% if block.settings.shadow_heading != blank %}
+      <div class="background_text text-left" style="color:{{ block.settings.color_text }}">
+        {{ block.settings.shadow_heading }}
+      </div>
+      {% endif %} 
+      {% if block.settings.heading!=blank%}
+      <h1 style="color:{{ block.settings.color_text }}">{{block.settings.heading}}</h1>
+      {% endif%}
+      {%if block.settings.content_area!=blank%}
+      <div class="content">{{block.settings.content_area}}</div>
+      {% endif %}
+      </div>
+    </div>
+    {% if block.settings.block_image!=blank and block.settings.show_insta == false%}
+    <div class="grid__item large--three-eighths right-padding-img medium--one-whole small--one-whole small--hide medium--hide ">
+      <img src="{{ block.settings.block_image | img_url: 'original' }}" alt="{{ block.settings.block_image.alt }}" />
+    </div>
+    {% endif%}
+    {% if block.settings.show_insta %}
+    <div class="grid__item large--three-eighths insta--feed right-padding-img medium--one-whole small--one-whole small--hide medium--hide ">
+      {{block.settings.insta}}
+      <div class="insta-wrapper"><a href="{{ block.settings.insta_link }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"/></a></div>
+    </div>
+    
+    {% endif%}
+  </div>
+  {% else%}
+  <div class="row-wrap row-wrap-{{forloop.index}}  left-padding odd-{{forloop.index}}{% if block.settings.bg_image == blank or block.settings.bg_image_mobile == blank %} swatch--none {% endif %}">
+    {% comment %}Mobile Image Starts{% endcomment%}
+    {% if block.settings.block_image_mobile!=blank and block.settings.show_insta == false %}
+    <div class="grid__item large--three-eighths large--hide right-padding-img medium--one-whole small--one-whole">
+      <img src="{{ block.settings.block_image_mobile | img_url: 'original' }}" alt="{{ block.settings.block_image_mobile.alt }}" />
+    </div>
+    {% else %}
+    {% if block.settings.block_image!=blank and block.settings.show_insta == false %}
+    <div class="grid__item large--three-eighths right-padding-img medium--one-whole small--one-whole large--hide ">
+      <img src="{{ block.settings.block_image | img_url: 'original' }}" alt="{{ block.settings.block_image.alt }}" />
+    </div>
+    {% endif%}
+    {% endif %}
+    {% if block.settings.show_insta %}
+    <div class="grid__item large--three-eighths large--hide right-padding-img medium--one-whole small--one-whole insta--feed small--hide medium--hide">
+      {{block.settings.insta}}
+      <div class="insta-wrapper"><a href="{{ block.settings.insta_link }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"/></a></div>
+    </div>
+    {% if block.settings.mob_insta != blank %}
+    <div class="grid__item large--three-eighths large--hide right-padding-img medium--one-whole small--one-whole insta--feed large--hide">
+      {{block.settings.mob_insta}}
+    </div>
+    {% endif %}
+    {% endif%}
+    {% comment %}Mobile Image Ends {% endcomment%}
+
+    {% if block.settings.block_image != blank and block.settings.show_insta == false %}
+    <div class="grid__item large--three-eighths right-padding-img medium--one-whole small--one-whole small--hide medium--hide ">
+      <img src="{{ block.settings.block_image | img_url: 'original' }}" alt="{{ block.settings.block_image.alt }}" />
+    </div>
+    {% endif%}
+    {% if block.settings.insta!=blank and block.settings.show_insta==true%}
+    <div class="grid__item large--three-eighths {% if block.settings.insta!=blank %}insta--feed {% endif %}right-padding-img medium--one-whole small--one-whole small--hide medium--hide ">
+      {{block.settings.insta}}
+      <div class="insta-wrapper"><a href="{{ block.settings.insta_link }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"/></a></div>
+    </div>
+    {% endif%}
+
+    <div class="grid__item  large--five-eighths medium--one-whole small--one-whole left-content {% if block.settings.shadow_heading == blank %} trend--no_heading {% endif %}trend-inner-content-{{forloop.index}}">
+      <div class="trends-inner-content trend-inner-section-{{forloop.index}}">
+      {% if block.settings.shadow_heading != blank %}
+      <div class="background_text text-left" style="color:{{ block.settings.color_text }}">
+        {{ block.settings.shadow_heading }}
+      </div>
+      {% endif %}
+      {% if block.settings.heading!=blank%}
+      <h1 style="color:{{ block.settings.color_text }}">{{block.settings.heading}}</h1>
+      {% endif%}
+      {%if block.settings.content_area!=blank%}
+      <div class="content">{{block.settings.content_area}}</div>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif%}
+  {% endfor%}
+
+</div>
+{% for block in section.blocks %}
+{% assign mod1 = forloop.index | modulo: 2 %}
+{% if mod1 == 0 %}
+<style>
+
+  .trend-even-{{ forloop.index}}:after, .trend-even-section-{{ forloop.index}}:before{content:"";{% if block.settings.bg_image != blank %}background-image:url({{ block.settings.bg_image | img_url : '992x520'}});{% endif %}}
+
+  @media (max-width:768px){
+    .trend-even-{{ forloop.index}}:after, .trend-even-section-{{ forloop.index}}:before{content:"";{% if block.settings.bg_image_mobile != blank %}background-image:url({{ block.settings.bg_image_mobile | img_url : '992x520'}});{% endif %}}
+  }
+
+
+
+</style>
+{% else %}
+<style>
+
+  .trend-inner-content-{{ forloop.index}}:after, .trend-inner-section-{{ forloop.index}}:before{content:"";{% if block.settings.bg_image != blank %}background-image:url({{ block.settings.bg_image | img_url : '992x520'}});{% endif %}}
+
+  @media (max-width:768px){
+    .trend-inner-content-{{ forloop.index}}:after, .trend-inner-section-{{ forloop.index}}:before{content:"";{% if block.settings.bg_image_mobile != blank %}background-image:url({{ block.settings.bg_image_mobile | img_url : '992x520'}});{% endif %}}
+  }
+
+
+
+</style>
+{% endif %}
+{% endfor %}
+
+{% schema %}
+{
+"name": "Add Drenched Block",
+"settings": [],
+"blocks": [
+{
+"type":"drenched_block",
+"name": "Drenched Blocks",
+"settings": [
+{
+"id": "heading",
+"type": "text",
+"label": "Enter Heading"
+},
+{
+"id": "shadow_heading",
+"type": "text",
+"label": "Shadow Heading"
+},
+{
+"type": "checkbox",
+"id": "show_insta",
+"default": false,
+"label": "Enable Instagram"
+},
+{
+"id": "insta",
+"type": "textarea",
+"label": "Instagram Code"
+},
+{
+"type" : "text",
+"id" : "insta_link",
+"label" : "Instagram hover link"
+},
+{
+"id": "mob_insta",
+"type": "textarea",
+"label": "Mobile Instagram Code"
+},
+{
+"type": "image_picker",
+"id": "bg_image",
+"label": "Desktop Background Image"
+},
+{
+"type": "image_picker",
+"id": "bg_image_mobile",
+"label": "Mobile Background Image"
+},
+{
+"type": "image_picker",
+"id": "block_image",
+"label": "Desktop Block Image"
+},
+{
+"type": "image_picker",
+"id": "block_image_mobile",
+"label": "Mobile Block Image"
+},
+{
+"type": "html",
+"id": "content_area",
+"label": "Custom Content",
+"default": "<div><p>Some content</p></div>"
+},
+{
+"type": "color",
+"id": "color_text",
+"label": "Heading color",
+"default": "#333333"
+}
+]
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+
+

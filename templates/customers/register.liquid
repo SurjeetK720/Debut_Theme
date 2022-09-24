@@ -1,0 +1,60 @@
+<!-- /templates/customers/register.liquid -->
+<div class="grid">
+
+  <div class="grid__item large--two-fifths push--large--three-tenths">
+
+    <header class="section-header inner-heading">
+      <h1>{{ 'customer.register.title' | t }}</h1>
+      <hr class="hr--small">
+    </header>
+
+    <div class="form-vertical">
+      {% form 'create_customer' %}
+
+      {{ form.errors | default_errors }}
+
+      <label for="FirstName" class="hidden-label">{{ 'customer.register.first_name' | t }}</label>
+      <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+      <span class="firstname__error form-error"></span>
+      
+      <label for="LastName" class="hidden-label">{{ 'customer.register.last_name' | t }}</label>
+      <input type="text" name="customer[last_name]" id="LastName" class="input-full" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+      <span class="lastname__error form-error"></span>
+      
+      <label for="Email" class="hidden-label">{{ 'customer.register.email' | t }}</label>
+      <input type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'customer.register.email' | t }}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+      <span class="email__error form-error"></span>
+
+      <label for="CreatePassword" class="hidden-label">{{ 'customer.register.password' | t }}</label>
+      <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
+      <span class="password__error form-error"></span>
+      <p class="msg-recieve">
+        Signup and be the first to know about exciting offers, product updates and more from Lakmé and other Unilever <span>brands</span>. For furthur information, please refer to our <a href="https://lakmeindia.com/pages/privacy-policy">Privacy Policy</a> 
+      </p>
+      <div class="msg-sec">
+        <span class="msg-checkbox"> <input type="radio" name="customer[note][Receive Updates]" id="recieve" class="input-full" value="I would like to receive such offers"></span>
+        <span class="msg-text"><label for="recieve">Yes, I would like to recieve such offers.</label></span>
+      </div>
+      <span class="recieve__error form-error"></span>
+      <div class="msg-sec">
+        <span class="msg-checkbox"><input type="radio" name="customer[note][Receive Updates]" id="recievepond" class="input-full" value="I would like to receive these news and offers from brand Lakmé"></span>
+        <span class="msg-text"> <label for="recievepond">Yes, I would like to recieve these news and offers from brand Lakmé.</label></span>
+      </div>
+      <span class="recievepond__error form-error"></span>
+<!--       <label for="recieve">Yes, I would like to recieve such offers.</label>
+      <input type="radio" name="customer[note][Receive Updates]" id="recieve" class="input-full" value="I would like to receive such offers">
+      <span class="recieve__error form-error"></span>
+      <label for="recievepond">Yes, I would like to recieve these news and offers from brand Lakme.</label>
+      <input type="radio" name="customer[note][Receive Updates]" id="recievepond" class="input-full" value="I would like to receive these news and offers from brand Ponds"> -->
+<!--       <span class="recievepond__error form-error"></span> -->
+      <p>
+        <button type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn--full register--button">{{ 'customer.register.submit' | t }}</button>
+      </p>
+
+      {% endform %}
+    </div>
+
+  </div>
+
+</div>
+

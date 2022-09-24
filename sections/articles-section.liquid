@@ -1,0 +1,202 @@
+<div class="wrapper">
+  {% if section.settings.section_title != blank %}
+  <div class="section-header text-center">
+    <h2 class="section-header__title h1 text-center"><span>{{ section.settings.section_title }}</span></h2>
+  </div>
+  {% endif %}
+  <div class="articles-section display-table">
+    <div class="grid">
+      {% for block in section.blocks %}
+      {% case block.settings.width %}
+      {% when '25%' %}
+      {%- assign block_width = 'small--one-whole medium--one-whole  one-quarter' -%}
+      {% when '33%' %}
+      {%- assign block_width = 'small--one-whole medium--one-whole one-third' -%}
+      {% when '50%' %}
+      {%- assign block_width = 'small--one-whole medium--one-whole one-half' -%}
+      {% when '66%' %}
+      {%- assign block_width = 'small--one-whole medium--one-whole two-thirds' -%}
+      {% when '75%' %}
+      {%- assign block_width = 'small--one-whole medium--one-whole three-quarters' -%}
+      {% when '100%' %}
+      {%- assign block_width = 'one-whole' -%}
+      {% endcase %}
+      <div class="grid__item {{ block_width }}" {{ block.shopify_attributes }}>
+        {% case block.type %}
+        {% when 'html' %}
+        {% if block.settings.image != blank and block.settings.head != blank %}
+        <div class=" display-table">
+          <div class="grid">
+            <div class="grid__item one-half display-table-cell article-left-section medium--one-third small--one-third">
+              <img src="{{ block.settings.image | img_url : 'original' }}" alt="{{ block.settings.image.alt }}" />
+              {% if block.settings.subhead != blank %}<p class="article--subhead">{{ block.settings.subhead }}</p>{% endif %}
+            </div>
+            <div class="grid__item one-half display-table-cell article-right-section medium--two-thirds small--two-third">
+              <div class="article--head">{{ block.settings.head }}
+                {% if block.settings.btn_text != blank and block.settings.url != blank %}
+                <a class="content_on_right--link text-left" href="{{ block.settings.url }}">
+                  {{ block.settings.btn_text }}
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endcase %}
+      </div>
+      {% endfor %}
+    </div>
+    {% if section.settings.view_btn_text != blank and section.settings.view_url != blank %}
+    <div class="view_all_stories text-center">
+      <a class="btn" href="{{ section.settings.view_url }}">{{ section.settings.view_btn_text }}</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+"name": {
+"en": "Articles Section"
+},
+"class" : "articles--section",
+"max_blocks": 9,
+"settings":[
+{
+"type": "text",
+"id": "section_title",
+"label": {
+"en": "Heading"
+},
+"default": {
+"en": "Discover"
+}
+},
+{
+"type" : "header",
+"content" : "View all stories button"
+},
+{
+"type": "text",
+"id": "view_btn_text",
+"label": {
+"en": "Button Text"
+},
+"default": {
+"en": "View all stories"
+}
+},
+{
+"type": "url",
+"id": "view_url",
+"label": {
+"en": "Url"
+}
+}
+],
+"blocks": [
+{
+"type": "html",
+"name": {
+"en": "Add Article"
+},
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": {
+"en": "Image"
+}
+},
+{
+"type": "text",
+"id": "subhead",
+"label": {
+"en": "Sub heading"
+}
+},
+{
+"type": "richtext",
+"id": "head",
+"label": {
+"en": "Heading"
+}
+},
+{
+"type": "text",
+"id": "btn_text",
+"label": {
+"en": "Button Text"
+}
+},
+{
+"type": "url",
+"id": "url",
+"label": {
+"en": "Url"
+}
+},
+{
+"type": "select",
+"id": "width",
+"label": {
+"en": "Container width"
+},
+"default": "33%",
+"options": [
+{
+"value": "25%",
+"label": {
+"en": "25%"
+}
+},
+{
+"value": "33%",
+"label": {
+"en": "33%"
+}
+},
+{
+"value": "50%",
+"label": {
+"en": "50%"
+}
+},
+{
+"value": "66%",
+"label": {
+"en": "66%"
+}
+},
+{
+"value": "75%",
+"label": {
+"en": "75%"
+}
+},
+{
+"value": "100%",
+"label": {
+"en": "100%"
+}
+}
+]
+}
+]
+}
+],
+"presets": [
+{
+"name": {
+"en": "Articles Section"
+},
+"blocks": [
+{
+"type": "html"
+}
+]
+}
+]
+}
+{% endschema %}

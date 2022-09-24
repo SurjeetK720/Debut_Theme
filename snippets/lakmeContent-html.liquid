@@ -1,0 +1,42 @@
+<!-- snippets/lakmeContent-html.liquid -->
+<style>
+    .hr-custom-heading {
+        margin         : 0 0 0;
+        line-height    : 1;
+        letter-spacing : 0px;
+        font-size      : 1em;
+        font-weight    : 600;
+    }
+
+    .hr-pt-10 {
+        padding-top : 10px;
+    }
+
+    @media screen and (max-width : 640px) {
+        .hr-custom-heading {
+            font-size     : 0.6em;
+            font-weight   : bold;
+            margin-bottom : 5px;
+        }
+
+        .hr-custom-banner-p {
+            font-size : 18px;
+        }
+
+        .hr-custom-widget {
+            padding : 10px;
+        }
+    }
+</style>
+<div class="grid text-left contentWidget hr-custom-widget">
+    <div class="grid__item contentWidget-heading hr-pt-10">
+        {% if contentWidget.heading != blank %}
+            <span class="h5 contentWidget-heading hr-custom-heading">{{ contentWidget.heading }}</span>
+        {% endif %}
+    </div>
+    <div class="contentWidget-content">
+        <div class="grid__item hr-custom-banner-p">
+            {{ contentWidget.html }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/articles/edit-field/48549
+{% endcomment %}
+{% if article.metafields.custom_fields["image5_link"] != blank %}
+  <div class="custom-field custom-field__image5-link custom-field__type--text">
+    <h3 class="custom-field--title">Image5 Link</h3>
+    <div class="custom-field--value">
+      {{ article.metafields.custom_fields["image5_link"] }}
+    </div>
+  </div>
+{% endif %}

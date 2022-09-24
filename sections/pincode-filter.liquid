@@ -1,0 +1,94 @@
+<header class="section-header text-center">
+  <h1 class="text-center">{{page.title}}</h1>
+ 
+  <hr class="hr--small">
+</header>
+<div class="pincode-filter">
+   <p class="text-center p-filter-text"> Walk in to discover your favourite lakme products and get expert tips from our beauty advisors.</p>
+  <div class="pincode-input-field">
+    <div class="filter-search-bar">
+      <input type="text" class="pincode-field input-group-field" placeholder="Enter your pincode here"/>
+      <span class="error hide">Invalid Pincode</span>
+      <span class="input-group-btn">
+<!--         <input type="button" class="search-pincode" /> -->
+        <button type="submit" class="search-pincode btn-submit icon-fallback-text1" value="Search">
+          <span class="icon icon-arrow-right"></span>
+        </button>
+      </span>
+    </div>
+  </div>
+  <div class="results-wrapper grid">
+    <ul class="results-list"></ul>
+  </div>
+  <div class="no-results text-center hide">No results found. !</div>
+</div>
+<script>
+  $(document).ready(function(){
+    var store_array = [];
+    var input_field;
+    jQuery.getJSON('https://cdn.shopify.com/s/files/1/0014/3514/0183/files/new_data.json?1544', function(product) {
+      console.log(product)
+      for(var i=0; i < product.Sheet1.length;i++)
+      {
+        store_array.push(product.Sheet1[i]);
+      }
+    });
+    $('.pincode-field').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        search();
+      }
+    });
+    $('.search-pincode').click(function(e){
+      search();
+    })
+    function search(){
+      $('.results-wrapper').html('');
+      $('.no-results').addClass('hide');
+      $('.error').addClass('hide');
+      input_field =	$('.pincode-field').val();
+      if(input_field == '' || input_field.length != 6)
+      {
+        $('.error').removeClass('hide');
+        return false;
+      }
+      for(var j=0;j<store_array.length;j++) 
+      {
+        if(store_array[j].PinCode == input_field)
+        {
+          if(store_array[j].OUTLET_NAME != undefined && store_array[j].ADDRESS != undefined)
+          {
+            $('.results-wrapper').append('<li class="grid__item grid-product small--one-half medium--one-half large--one-third"><div class="store-details"><div class="store-name">'+store_array[j].OUTLET_NAME+'</div><div class="store-address">'+store_array[j].ADDRESS+'</div></div></li>')
+          }
+          else if(store_array[j]['NAME OF THE OUTLET'] != undefined && store_array[j]["ADDRESS 1 MENTION COMPLETE POSTAL ADDRESS"] != undefined)
+          {
+            $('.results-wrapper').append('<li class="grid__item grid-product small--one-half medium--one-half large--one-third"><div class="store-details"><div class="store-name">'+store_array[j]['NAME OF THE OUTLET']+'</div><div class="store-address">'+store_array[j]["ADDRESS 1 MENTION COMPLETE POSTAL ADDRESS"]+'</div></div></li>')
+          }
+        }
+        //console.log(store_array[j].PinCode)
+      }
+      if($('.results-wrapper li').length == 0)
+      {
+        $('.no-results').removeClass('hide');
+      }
+      var heights =   $('.results-wrapper').find(".store-details").map(function ()                                                                   {
+        return $(this).height();
+      }).get();
+      var maxHeight = Math.max.apply(null, heights);
+      $('.results-wrapper').find(".store-details").css('height',maxHeight+50);
+
+    }
+  })
+</script>
+{% schema %}
+{
+"name": "Section name",
+"settings": []
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

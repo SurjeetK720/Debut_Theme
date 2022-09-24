@@ -1,0 +1,959 @@
+<style>
+  .site-header__logo img {
+    max-width: {{ section.settings.logo_max_width | escape | default: '180' | remove: 'px' | append: 'px' }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .site-header__logo img {
+      max-width: 100%;
+    }
+  }
+</style>
+
+{% assign hero_full_height = true %}
+<div data-section-id="{{ section.id }}" data-section-type="header-section" data-template="{{ template.name }}">
+  <div class="header-container header-container__sticky">
+    {% if section.blocks != blank %}
+    <div class="section--header_slider">
+      <a href="javascript:void(0)" class="close">
+        <svg class="bx-close-xsvg" viewBox="240 240 20 20"><g class="bx-close-xstroke bx-close-x-adaptive"><path class="bx-close-x-adaptive-1" d="M255.6 255.6l-11.2-11.2" vector-effect="non-scaling-stroke"></path><path class="bx-close-x-adaptive-2" d="M255.6 244.4l-11.2 11.2" vector-effect="non-scaling-stroke"></path></g></svg>
+      </a>
+      <div class="header-slider__start">
+        {% for block in section.blocks %}
+        <div class="header_slider--content">
+          {% if block.settings.content != blank %}
+          <div class="header-slider_content">
+            {{ block.settings.content }}
+            {% if block.settings.code_head != blank and block.settings.code != blank %}
+            <span class="header_slider-code_head">
+              {{ block.settings.code_head }}
+              <span class="header_slider-code">
+                {{ block.settings.code }}
+              </span>
+            </span>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    <div class="header-wrapper{% unless hero_full_height %} header-wrapper--over-hero{% endunless %}">
+      {% if section.settings.show_announcement %}
+      {% if section.settings.home_page_only == false or template.name == 'index' %}
+      <style>
+        .announcement-bar {
+          background-color: {{ section.settings.color_bg }};
+        }
+
+        .announcement-bar--link:hover {
+          {% assign brightness = section.settings.color_bg | color_brightness %}
+
+          {% if brightness <= 192 %}
+          {% assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 %}
+          background-color: {{ section.settings.color_bg | color_lighten: lightenAmount }};
+          {% else %}
+          {% assign darkenAmount = 255 | divided_by: brightness | times: 8 %}
+          background-color: {{ section.settings.color_bg | color_darken: darkenAmount }};
+          {% endif %}
+        }
+
+        .announcement-bar__message {
+          color: {{ section.settings.color_text }};
+        }
+      </style>
+
+      {% if section.settings.link == blank %}
+      <div class="announcement-bar">
+        {% else %}
+        <a href="{{ section.settings.link }}" class="announcement-bar announcement-bar--link">
+          {% endif %}
+
+          <p class="announcement-bar__message">{{ section.settings.text | escape }}</p>
+
+          {% if section.settings.link == blank %}
+          </div>
+        {% else %}
+        </a>
+      {% endif %}
+
+      {% endif %}
+      {% endif %}
+
+      <header class="site-header" role="banner">
+        <div class="wrapper">
+          <div class="grid--full grid--table">
+            <div class="grid__item large--hide large--one-sixth one-quarter">
+              <div class="site-nav--open site-nav--mobile">
+                <button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
+                  <span class="burger-icon burger-icon--top"></span>
+                  <span class="burger-icon burger-icon--mid"></span>
+                  <span class="burger-icon burger-icon--bottom"></span>
+                  <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+                </button>
+              </div>
+            </div>
+            <div class="grid__item large--one-sixth medium-down--one-half">
+              {% comment %}
+              Use the uploaded logo from theme settings if enabled.
+              Site name gets precedence with H1 tag on homepage, div on other pages.
+              {% endcomment %}
+              {% if template.name == 'index' %}
+              <h1 class="site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                {% else %}
+                <div class="h1 site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                  {% endif %}
+                  {% if section.settings.logo_max_width != blank %}
+                  {% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
+                  {% else %}
+                  {% assign image_size = "180x" %}
+                  {% endif %}
+
+                  {% if section.settings.logo-inverted and template.name == 'index' %}
+                  <a href="/" itemprop="url" class="site-header__logo-link">
+                    <img src="{{ section.settings.logo-inverted | img_url: image_size }}"
+                         srcset="{{ section.settings.logo-inverted | img_url: image_size }} 1x, {{ section.settings.logo-inverted | img_url: image_size, scale: 2 }} 2x"
+                         alt="{{ section.settings.logo-inverted.alt | default: shop.name }}"
+                         itemprop="logo">
+                  </a>
+                  {% elsif section.settings.logo %}
+                  <a href="/" itemprop="url" class="site-header__logo-link">
+                    <img src="{{ section.settings.logo | img_url: image_size }}"
+                         srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 1x"
+                         alt="{{ section.settings.logo.alt | default: shop.name }}"
+                         itemprop="logo">
+                  </a>
+                  {% else %}
+                  <a href="/" itemprop="url">{{ shop.name }}</a>
+                  {% endif %}
+                  {% if template.name == 'index' %}
+                  </h1>
+                {% else %}
+                </div>
+              {% endif %}
+            </div>
+            <nav class="grid__item large--five-sixths large--text-right medium-down--hide" role="navigation">
+              {% comment %}
+              List out your main-menu linklist (default)
+
+              More info on linklists:
+              - http://docs.shopify.com/themes/liquid-variables/linklists
+              {% endcomment %}
+              <!-- begin site-nav -->
+              <ul class="site-nav" id="AccessibleNav">
+                {% assign count = 0 %}
+                {% for link in linklists[section.settings.main_menu_link_list].links %}
+                {% if link.links != blank %}
+                {% assign parent_index = forloop.index %}
+                <li
+                    class="site-nav__item site-nav--has-dropdown {% if link.active %}site-nav--active{% endif %}"
+                    aria-haspopup="true"
+                    data-meganav-type="parent">
+                  <a
+                     href="{{ link.url }}"
+                     class="site-nav__link"
+                     data-meganav-type="parent"
+                     aria-controls="MenuParent-{{ parent_index }}"
+                     aria-expanded="false"
+                     {% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>
+                    <span class="link-text">{{ link.title | escape }} <span class="hover-effect"></span></span>
+                    <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                  </a>
+                  <ul
+                      id="MenuParent-{{ parent_index }}"
+                      class="site-nav__dropdown {% if link.levels == 2 %}site-nav--has-grandchildren{% endif %}"
+                      data-meganav-dropdown>
+                    {% for childlink in link.links %}
+                    {% if childlink.links != blank %}
+                    {% assign count = count | plus : 1 %}
+                    {% assign child_index = forloop.index %}
+                    <li
+                        class="site-nav__item site-nav--has-dropdown {% if count <=2 %}site-nav--has-dropdown-grandchild-link {% endif %}site-nav--has-dropdown-grandchild {% if childlink.active %}site-nav--active{% endif %}"
+                        aria-haspopup="true">
+                      <a
+                         href="{% if count <=2 %}{{ childlink.url }}{% else %}javascript:void(0){% endif %}"
+                         class="site-nav__dropdown-link"
+                         aria-controls="MenuChildren-{{ parent_index }}-{{ child_index }}"
+                         data-meganav-type="parent"
+                         {% unless template.name == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless%}
+                         tabindex="-1">
+                        <span class="link-text">{{ childlink.title | escape }} <span class="hover-effect1"></span></span>
+                        <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                      </a>
+                      <div class="site-nav__dropdown-grandchild">
+                        <ul
+                            id="MenuChildren-{{ parent_index }}-{{ child_index }}"
+                            data-meganav-dropdown>
+                          {% for grandchildlink in childlink.links %}
+                          <li{% if grandchildlink.active %} class="site-nav--active"{% endif %}>
+                            {% if grandchildlink.type == 'collection_link' %}
+                            {% assign linkCollection = grandchildlink.object %}
+                            {% if linkCollection.image %}
+                            <div class="featured-prod-item">
+                              <a href="{{ grandchildlink.url }}">
+                                <img src="{{ linkCollection.image.src | collection_img_url: '100x100' }}" alt="{{ linkCollection.title | escape  }}" />
+
+                              </a>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            <a
+                               href="{{ grandchildlink.url }}"
+                               class="site-nav__dropdown-link"
+                               data-meganav-type="child"
+                               {% unless template.name == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}
+                               tabindex="-1">
+                              {{ grandchildlink.title | escape }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% else %}
+                    <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+                      <a
+                         href="{{ childlink.url }}"
+                         class="site-nav__dropdown-link"
+                         data-meganav-type="child"
+                         {% if childlink.active %}aria-current="page"{% endif %}
+                         tabindex="-1">
+                        <span class="link-text">{{ childlink.title | escape }} <span class="hover-effect"></span></span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% else %}
+                <li class="site-nav__item{% if link.active %} site-nav--active{% endif %}">
+                  <a
+                     href="{{ link.url }}"
+                     class="site-nav__link"
+                     data-meganav-type="child"
+                     {% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>
+                    <span class="link-text"> {{ link.title | escape }} <span class="hover-effect"></span></span>
+                  </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                {% comment %}
+                Remove comment tags below to add a search box to your header, visible on screens where your header menu
+                is displayed inline.
+                <li class="site-nav__item site-nav--search__bar medium-down--hide">
+                  {% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
+                </li>
+                {% endcomment %}
+
+                <li class="site-nav__item site-nav__item--compressed">
+                  <a href="/cart" class="site-nav__link site-nav__link--icon cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-cart" aria-hidden="true">
+                      </span>
+                      <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+                    </span>
+                    <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+                  </a>
+                </li>
+                {% if shop.customer_accounts_enabled %}
+                <li class="site-nav__item site-nav__expanded-item site-nav__item--compressed">
+                  <a class="site-nav__link site-nav__link--icon account__link" href="/account">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-customer" aria-hidden="true">
+                      </span>
+                      <span class="fallback-text">
+                        {% if customer %}
+                        {{ 'layout.customer.account' | t }}
+                        {% else %}
+                        {{ 'layout.customer.log_in' | t }}
+                        {% endif %}
+                      </span>
+                    </span>
+                  </a>
+                  {% if customer %}
+                  <ul class="account--links" style="display:none">
+                    {% for link in linklists.account.links %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </li>
+                {% endif %}
+                {% if section.settings.search == 'page' or section.settings.search == 'modal' %}
+                {% assign search_modal = true %}
+                {% if section.settings.search == 'page' %}
+                {% assign search_modal = false %}
+                {% endif %}
+                <li class="site-nav__item site-nav__item--compressed">
+                  <a href="/search" class="site-nav__link site-nav__link--icon header--search_link{% if search_modal %} js-toggle-search-modal{% endif %}{% if section.settings.search == 'page' %} js-toggle-search-page{% endif %}" data-mfp-src="#SearchModal">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-search" aria-hidden="true">
+                      </span>
+                      <span class="fallback-text">{{ 'general.search.title' | t }}</span>
+                    </span>
+                  </a>
+                  {% if section.settings.search == 'page' %}
+                  <form action="/search" method="get" class="search-header search search-bar--modal" role="search" style="display:none">
+                    <input type="hidden" name="type" value="product" />
+                    <input class="search-header__input search__input"
+                           type="search"
+                           name="q"
+                           placeholder="{{ 'general.search.placeholder' | t }}"
+                           aria-label="{{ 'general.search.placeholder' | t }}">
+                    <button class="search-header__submit search__submit btn--link site-header__icon btn-submit icon-fallback-text1" type="submit">
+                      <span class="icon icon-arrow-right"></span>
+                    </button>
+                  </form>
+                  {% endif %}
+                </li>
+                {% endif %}
+
+              </ul>
+              <!-- //site-nav -->
+            </nav>
+            <div class="grid__item large--hide one-quarter">
+              <div class="site-nav--mobile text-right">
+                {% if section.settings.search == 'page' or section.settings.search == 'modal' %}
+                {% assign search_modal = true %}
+                {% if section.settings.search == 'page' %}
+                {% assign search_modal = false %}
+                {% endif %}
+                <a href="/search" class="site-nav__link header--search_link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}{% if section.settings.search == 'page' %} js-toggle-search-page{% endif %}" data-mfp-src="#SearchModal">
+                  <span class="icon-fallback-text">
+                    <span class="" aria-hidden="true">
+                      <img src="{{ 'wsearch-icon.png' | asset_url }}" alt="Search-icon"/>
+                    </span>
+                    <!--                     <span class="fallback-text">{{ 'general.search.title' | t }}</span> -->
+                  </span>
+                </a>
+                {% endif %}
+                {% if section.settings.search == 'page' %}
+                <form action="/search" method="get" class="search-header search" role="search" style="display:none">
+                  <input class="search-header__input search__input"
+                         type="search"
+                         name="q"
+                         placeholder="{{ 'general.search.placeholder' | t }}"
+                         aria-label="{{ 'general.search.placeholder' | t }}">
+                  <button class="search-header__submit search__submit btn--link site-header__icon btn-submit" type="submit">
+                    <span class="icon icon-arrow-right"></span>
+                  </button>
+                </form>
+                {% endif %}
+                <a href="/cart" class="site-nav__link cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+                  <span class="icon-fallback-text">
+                    <span class="" aria-hidden="true">
+                      <img src="{{ 'wcart-icon.png' | asset_url }}" alt="Search-icon"/>
+                    </span>
+                    <!--                     <span class="fallback-text">{{ 'layout.cart.title' | t }}</span> -->
+                  </span>
+                  <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+    </div>
+  </div>
+  <div class="header-container">
+    {% if section.blocks != blank %}
+    <div class="section--header_slider">
+      <a href="javascript:void(0)" class="close">
+        <svg class="bx-close-xsvg" viewBox="240 240 20 20"><g class="bx-close-xstroke bx-close-x-adaptive"><path class="bx-close-x-adaptive-1" d="M255.6 255.6l-11.2-11.2" vector-effect="non-scaling-stroke"></path><path class="bx-close-x-adaptive-2" d="M255.6 244.4l-11.2 11.2" vector-effect="non-scaling-stroke"></path></g></svg>
+      </a>
+      <div class="header-slider__start">
+        {% for block in section.blocks %}
+        <div class="header_slider--content">
+          {% if block.settings.content != blank %}
+          <div class="header-slider_content">
+            {{ block.settings.content }}
+            {% if block.settings.code_head != blank and block.settings.code != blank %}
+            <span class="header_slider-code_head">
+              {{ block.settings.code_head }}
+              <span class="header_slider-code">
+                {{ block.settings.code }}
+              </span>
+            </span>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    <div class="header-wrapper{% unless hero_full_height %} header-wrapper--over-hero{% endunless %}">
+      {% if section.settings.show_announcement %}
+      {% if section.settings.home_page_only == false or template.name == 'index' %}
+      <style>
+        .announcement-bar {
+          background-color: {{ section.settings.color_bg }};
+        }
+
+        .announcement-bar--link:hover {
+          {% assign brightness = section.settings.color_bg | color_brightness %}
+
+          {% if brightness <= 192 %}
+          {% assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 %}
+          background-color: {{ section.settings.color_bg | color_lighten: lightenAmount }};
+          {% else %}
+          {% assign darkenAmount = 255 | divided_by: brightness | times: 8 %}
+          background-color: {{ section.settings.color_bg | color_darken: darkenAmount }};
+          {% endif %}
+        }
+
+        .announcement-bar__message {
+          color: {{ section.settings.color_text }};
+        }
+      </style>
+
+      {% if section.settings.link == blank %}
+      <div class="announcement-bar">
+        {% else %}
+        <a href="{{ section.settings.link }}" class="announcement-bar announcement-bar--link">
+          {% endif %}
+
+          <p class="announcement-bar__message">{{ section.settings.text | escape }}</p>
+
+          {% if section.settings.link == blank %}
+          </div>
+        {% else %}
+        </a>
+      {% endif %}
+
+      {% endif %}
+      {% endif %}
+
+      <header class="site-header" role="banner">
+        <div class="wrapper">
+          <div class="grid--full grid--table">
+            <div class="grid__item large--hide large--one-sixth one-quarter">
+              <div class="site-nav--open site-nav--mobile">
+                <button type="button" class="icon-fallback-text site-nav__link site-nav__link--burger js-drawer-open-button-left" aria-controls="NavDrawer">
+                  <span class="burger-icon burger-icon--top"></span>
+                  <span class="burger-icon burger-icon--mid"></span>
+                  <span class="burger-icon burger-icon--bottom"></span>
+                  <span class="fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+                </button>
+              </div>
+            </div>
+            <div class="grid__item large--one-sixth medium-down--one-half">
+              {% comment %}
+              Use the uploaded logo from theme settings if enabled.
+              Site name gets precedence with H1 tag on homepage, div on other pages.
+              {% endcomment %}
+              {% if template.name == 'index' %}
+              <h1 class="site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                {% else %}
+                <div class="h1 site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                  {% endif %}
+                  {% if section.settings.logo_max_width != blank %}
+                  {% capture image_size %}{{ section.settings.logo_max_width | escape }}x{% endcapture %}
+                  {% else %}
+                  {% assign image_size = "180x" %}
+                  {% endif %}
+
+                  {% if section.settings.logo-inverted and template.name == 'index' %}
+                  <a href="/" itemprop="url" class="site-header__logo-link">
+                    <img src="{{ section.settings.logo-inverted | img_url: image_size }}"
+                         srcset="{{ section.settings.logo-inverted | img_url: image_size }} 1x, {{ section.settings.logo-inverted | img_url: image_size, scale: 2 }} 2x"
+                         alt="{{ section.settings.logo-inverted.alt | default: shop.name }}"
+                         itemprop="logo">
+                  </a>
+                  {% elsif section.settings.logo %}
+                  <a href="/" itemprop="url" class="site-header__logo-link">
+                    <img src="{{ section.settings.logo | img_url: image_size }}"
+                         srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 1x"
+                         alt="{{ section.settings.logo.alt | default: shop.name }}"
+                         itemprop="logo">
+                  </a>
+                  {% else %}
+                  <a href="/" itemprop="url">{{ shop.name }}</a>
+                  {% endif %}
+                  {% if template.name == 'index' %}
+                  </h1>
+                {% else %}
+                </div>
+              {% endif %}
+            </div>
+            <nav class="grid__item large--five-sixths large--text-right medium-down--hide" role="navigation">
+              {% comment %}
+              List out your main-menu linklist (default)
+
+              More info on linklists:
+              - http://docs.shopify.com/themes/liquid-variables/linklists
+              {% endcomment %}
+              <!-- begin site-nav -->
+              <ul class="site-nav" id="AccessibleNav">
+                {% assign count1 = 0 %}
+                {% for link in linklists[section.settings.main_menu_link_list].links %}
+                {% if link.links != blank %}
+                {% assign parent_index = forloop.index %}
+                <li
+                    class="site-nav__item site-nav--has-dropdown {% if link.active %}site-nav--active{% endif %}"
+                    aria-haspopup="true"
+                    data-meganav-type="parent">
+                  <a
+                     href="{{ link.url }}"
+                     class="site-nav__link"
+                     data-meganav-type="parent"
+                     aria-controls="MenuParent-{{ parent_index }}"
+                     aria-expanded="false"
+                     {% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>
+                    <span class="link-text">{{ link.title | escape }} <span class="hover-effect"></span></span>
+                    <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                  </a>
+                  <ul
+                      id="MenuParent-{{ parent_index }}"
+                      class="site-nav__dropdown {% if link.levels == 2 %}site-nav--has-grandchildren{% endif %}"
+                      data-meganav-dropdown>
+                    {% for childlink in link.links %}
+                    {% if childlink.links != blank %}
+                    {% assign count1 = count1 | plus : 1 %}
+                    {% assign child_index = forloop.index %}
+                    <li
+                        class="site-nav__item site-nav--has-dropdown {% if count1 <= 2 %} site-nav--has-dropdown-grandchild-link {% endif %}site-nav--has-dropdown-grandchild {% if childlink.active %}site-nav--active{% endif %}"
+                        aria-haspopup="true">
+                      <a
+                         href="{% if count1 <= 2 %}{{ childlink.url }}{% else %}javascript:void(0){% endif %}"
+                         class="site-nav__dropdown-link"
+                         aria-controls="MenuChildren-{{ parent_index }}-{{ child_index }}"
+                         data-meganav-type="parent"
+                         {% unless template.name == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless%}
+                         tabindex="-1">
+                        <span class="link-text">{{ childlink.title | escape }} <span class="hover-effect1"></span></span>
+                        <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                      </a>
+                      <div class="site-nav__dropdown-grandchild">
+                        <ul
+                            id="MenuChildren-{{ parent_index }}-{{ child_index }}"
+                            data-meganav-dropdown>
+                          {% for grandchildlink in childlink.links %}
+                          <li{% if grandchildlink.active %} class="site-nav--active"{% endif %}>
+                            {% if grandchildlink.type == 'collection_link' %}
+                            {% assign linkCollection = grandchildlink.object %}
+                            {% if linkCollection.image %}
+                            <div class="featured-prod-item">
+                              <a href="{{ grandchildlink.url }}">
+                                <img src="{{ linkCollection.image.src | collection_img_url: 'small' }}" alt="{{ linkCollection.title | escape  }}" />
+
+                              </a>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            <a
+                               href="{{ grandchildlink.url }}"
+                               class="site-nav__dropdown-link"
+                               data-meganav-type="child"
+                               {% unless template.name == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}
+                               tabindex="-1">
+                              {{ grandchildlink.title | escape }}
+                            </a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                    {% else %}
+                    <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+                      <a
+                         href="{{ childlink.url }}"
+                         class="site-nav__dropdown-link"
+                         data-meganav-type="child"
+                         {% if childlink.active %}aria-current="page"{% endif %}
+                         tabindex="-1">
+                        <span class="link-text">{{ childlink.title | escape }} <span class="hover-effect"></span></span>
+                      </a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% else %}
+                <li class="site-nav__item{% if link.active %} site-nav--active{% endif %}">
+                  <a
+                     href="{{ link.url }}"
+                     {% if link.title  contains 'Lakmé Salon' %}
+                     target='_blank'
+                     {% endif %}
+                     class="site-nav__link"
+                     data-meganav-type="child"
+                     {% unless template.name == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>
+                    <span class="link-text"> {{ link.title | escape }} <span class="hover-effect"></span></span>
+                  </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                {% comment %}
+                Remove comment tags below to add a search box to your header, visible on screens where your header menu
+                is displayed inline.
+                <li class="site-nav__item site-nav--search__bar medium-down--hide">
+                  {% include 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--header' %}
+                </li>
+                {% endcomment %}
+
+                <li class="site-nav__item site-nav__item--compressed">
+                  <a href="/cart" class="site-nav__link site-nav__link--icon cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-cart" aria-hidden="true">
+                      </span>
+                      <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
+                    </span>
+                    <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+                  </a>
+                </li>
+                {% if shop.customer_accounts_enabled %}
+                <li class="site-nav__item site-nav__expanded-item site-nav__item--compressed">
+                  <a class="site-nav__link site-nav__link--icon account__link" href="/account">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-customer" aria-hidden="true">
+                      </span>
+                      <span class="fallback-text">
+                        {% if customer %}
+                        {{ 'layout.customer.account' | t }}
+                        {% else %}
+                        {{ 'layout.customer.log_in' | t }}
+                        {% endif %}
+                      </span>
+                    </span>
+                  </a>
+                  {% if customer %}
+                  <ul class="account--links" style="display:none">
+                    {% for link in linklists.account.links %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </li>
+                {% endif %}
+                {% if section.settings.search == 'page' or section.settings.search == 'modal' %}
+                {% assign search_modal = true %}
+                {% if section.settings.search == 'page' %}
+                {% assign search_modal = false %}
+                {% endif %}
+                <li class="site-nav__item site-nav__item--compressed">
+                  <a href="/search" class="site-nav__link site-nav__link--icon header--search_link{% if search_modal %} js-toggle-search-modal{% endif %}{% if section.settings.search == 'page' %} js-toggle-search-page{% endif %}" data-mfp-src="#SearchModal">
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-search" aria-hidden="true">
+                      </span>
+                      <span class="fallback-text">{{ 'general.search.title' | t }}</span>
+                    </span>
+                  </a>
+                  {% if section.settings.search == 'page' %}
+                  <form action="/search" method="get" class="search-header search search-bar--modal" role="search" style="display:none">
+                    <input type="hidden" name="type" value="product" />
+                    <input class="search-header__input search__input"
+                           type="search"
+                           name="q"
+                           placeholder="{{ 'general.search.placeholder' | t }}"
+                           aria-label="{{ 'general.search.placeholder' | t }}">
+                    <button class="search-header__submit search__submit btn--link site-header__icon btn-submit icon-fallback-text1" type="submit">
+                      <span class="icon icon-arrow-right"></span>
+                    </button>
+                  </form>
+                  {% endif %}
+                </li>
+                {% endif %}
+
+              </ul>
+              <!-- //site-nav -->
+            </nav>
+            <div class="grid__item large--hide one-quarter">
+              <div class="site-nav--mobile text-right">
+                {% if section.settings.search == 'page' or section.settings.search == 'modal' %}
+                {% assign search_modal = true %}
+                {% if section.settings.search == 'page' %}
+                {% assign search_modal = false %}
+                {% endif %}
+                <a href="/search" class="site-nav__link header--search_link site-nav__link--icon{% if search_modal %} js-toggle-search-modal{% endif %}{% if section.settings.search == 'page' %} js-toggle-search-page{% endif %}" data-mfp-src="#SearchModal">
+                  <span class="icon-fallback-text">
+                    <span class="" aria-hidden="true">
+                      <img src="{{ 'wsearch-icon.png' | asset_url }}" alt="Search-icon"/>
+                    </span>
+                    <!--                     <span class="fallback-text">{{ 'general.search.title' | t }}</span> -->
+                  </span>
+                </a>
+                {% endif %}
+                {% if section.settings.search == 'page' %}
+                <form action="/search" method="get" class="search-header search" role="search" style="display:none">
+                  <input class="search-header__input search__input"
+                         type="search"
+                         name="q"
+                         placeholder="{{ 'general.search.placeholder' | t }}"
+                         aria-label="{{ 'general.search.placeholder' | t }}">
+                  <button class="search-header__submit search__submit btn--link site-header__icon btn-submit" type="submit">
+                    <span class="icon icon-arrow-right"></span>
+                  </button>
+                </form>
+                {% endif %}
+                <a href="/cart" class="site-nav__link cart-link js-drawer-open-button-right" aria-controls="CartDrawer">
+                  <span class="icon-fallback-text">
+                    <span class="" aria-hidden="true">
+                      <img src="{{ 'wcart-icon.png' | asset_url }}" alt="Search-icon"/>
+                    </span>
+                    <!--                     <span class="fallback-text">{{ 'layout.cart.title' | t }}</span> -->
+                  </span>
+                  <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </header>
+    </div>
+  </div>
+  <div class="addtocartAddedText" style="display:none">
+    <span class="product--addtocart">Product added to bag</span>
+    <span class="addtocartAddedText-cross icon icon-x"></span>
+  </div>
+</div>
+
+{% schema %}
+{
+"name": {
+"pt-BR": "Cabeçalho",
+"es": "Encabezado",
+"de": "Header",
+"it": "header",
+"en": "Header",
+"ja": "ヘッダー",
+"fr": "En-tête"
+},
+"settings": [
+{
+"type": "link_list",
+"id": "main_menu_link_list",
+"label": {
+"pt-BR": "Menu",
+"es": "Menú",
+"de": "Menü",
+"it": "Menu",
+"en": "Menu",
+"ja": "メニュー",
+"fr": "Menu"
+},
+"default": "main-menu",
+"info": {
+"pt-BR": "A navegação ficará oculta em um botão de menu se os links forem muito longos. [Saiba mais](https://help.shopify.com/manual/using-themes/themes-by-shopify/brooklyn#navigation-tips-tips-specific)",
+"es": "La navegación colapsará en un botón de menú si los enlaces son demasiado largos. [Más información](https://help.shopify.com/manual/using-themes/themes-by-shopify/brooklyn#navigation-tips-tips-specific)",
+"de": "Wenn Links zu lang sind, wird die Navigation eingeklappt und als Menü-Schaltfläche angezeigt. [Mehr Infos](https://help.shopify.com/manual/using-themes/themes-by-shopify/brooklyn#navigation-tips-tips-specific)",
+"it": "La navigazione si riducerà a un pulsante menu se i link sono troppo lunghi. [Maggiori informazioni](https://help.shopify.com/manual/using-themes/themes-by-shopify/brooklyn#navigation-tips-tips-specific)",
+"en": "The navigation will collapse into a menu button if links are too long. [Learn more](https://help.shopify.com/manual/using-themes/themes-by-shopify/brooklyn#navigation-tips-tips-specific)",
+"ja": "リンクが長すぎる場合、ナビゲーションがメニューボタンに折り畳まれます。[もっと詳しく](https://help.shopify.com/manual/using-themes/themes-by-shopify/brooklyn#navigation-tips-tips-specific)",
+"fr": "La navigation sera réduite à un bouton de menu si les liens sont trop longs. [En savoir plus](https://help.shopify.com/manual/using-themes/themes-by-shopify/brooklyn#navigation-tips-tips-specific)"
+}
+},
+{
+"type": "image_picker",
+"id": "logo",
+"label": {
+"pt-BR": "Logotipo",
+"es": "Logo",
+"de": "Logo",
+"it": "Logo",
+"en": "Logo",
+"ja": "ロゴ",
+"fr": "Logo"
+}
+},
+{
+"type": "text",
+"id": "logo_max_width",
+"label": {
+"pt-BR": "Largura do logotipo personalizado (em pixels)",
+"es": "Ancho del logotipo personalizado (en píxeles)",
+"de": "Benutzerdefinierte Logobreite (Pixel)",
+"it": "Larghezza logo personalizzato (in pixel)",
+"en": "Custom logo width (in pixels)",
+"ja": "ロゴの幅をカスタムする（ピクセルで）",
+"fr": "Largeur personnalisée du logo (en pixels)"
+},
+"default": {
+"pt-BR": "180",
+"es": "180",
+"de": "180",
+"it": "180",
+"en": "180",
+"ja": "180",
+"fr": "180"
+}
+},
+{
+"type": "select",
+"id": "search",
+"options": [
+{
+"value": "modal",
+"label": {
+"pt-BR": "Modal",
+"es": "Modal",
+"de": "Modal",
+"it": "Modal",
+"en": "Modal",
+"ja": "モーダル",
+"fr": "Fenêtre modale"
+}
+},
+{
+"value": "page",
+"label": {
+"en": "Box"
+}
+},
+{
+"value": "none",
+"label": {
+"pt-BR": "Nenhum",
+"es": "Ninguno",
+"de": "Keine",
+"it": "Nessuno",
+"en": "None",
+"ja": "なし",
+"fr": "Aucun"
+}
+}
+],
+"label": {
+"pt-BR": "Tipo de pesquisa",
+"es": "Tipo de búsqueda",
+"de": "Suchtyp",
+"it": "Tipo di ricerca",
+"en": "Search type",
+"ja": "検索タイプ",
+"fr": "Type de recherche"
+}
+},
+{
+"type": "header",
+"content": {
+"pt-BR": "Barra de anúncio",
+"es": "Barra de anuncios",
+"de": "Ankündigungsleiste",
+"it": "Barra degli annunci",
+"en": "Announcement bar",
+"ja": "告知バー",
+"fr": "Barre d'annonces"
+}
+},
+{
+"type": "checkbox",
+"id": "show_announcement",
+"label": {
+"pt-BR": "Exibir anúncio",
+"es": "Mostrar anuncio",
+"de": "Ankündigung anzeigen",
+"it": "Mostra annuncio",
+"en": "Show announcement",
+"ja": "告知を表示する",
+"fr": "Afficher l'annonce"
+},
+"default": false
+},
+{
+"type": "checkbox",
+"id": "home_page_only",
+"label": {
+"pt-BR": "Apenas página inicial",
+"es": "Solo página de inicio",
+"de": "Nur Startseite",
+"it": "Solo home page",
+"en": "Home page only",
+"ja": "ホームページのみ",
+"fr": "Page d'accueil uniquement"
+},
+"default": true
+},
+{
+"type": "text",
+"id": "text",
+"label": {
+"pt-BR": "Texto",
+"es": "texto",
+"de": "Text",
+"it": "Testo",
+"en": "Text",
+"ja": "テキスト",
+"fr": "Texte"
+},
+"default": {
+"pt-BR": "Anuncie algo aqui",
+"es": "Anuncia algo aquí",
+"de": "Hier Ankündigung platzieren",
+"it": "Annuncia qualcosa qui",
+"en": "Announce something here",
+"ja": "ここで告知してください",
+"fr": "Annoncer quelque chose ici"
+}
+},
+{
+"type": "url",
+"id": "link",
+"label": {
+"pt-BR": "Link",
+"es": "Enlace",
+"de": "Link",
+"it": "Link",
+"en": "Link",
+"ja": "リンク",
+"fr": "Lien"
+}
+},
+{
+"type": "color",
+"id": "color_bg",
+"label": {
+"pt-BR": "Barra",
+"es": "Barra",
+"de": "Leiste",
+"it": "Barra",
+"en": "Bar",
+"ja": "バー",
+"fr": "Barre"
+},
+"default": "#1c1d1d"
+},
+{
+"type": "color",
+"id": "color_text",
+"label": {
+"pt-BR": "Texto",
+"es": "texto",
+"de": "Text",
+"it": "Testo",
+"en": "Text",
+"ja": "テキスト",
+"fr": "Texte"
+},
+"default": "#fff"
+}
+],
+"blocks": [
+{
+"type":"html",
+"name": "Text",
+"settings": [
+{
+"type": "html",
+"id": "content",
+"label": "Add Content"
+},
+{
+"type" : "text",
+"id" : "code_head",
+"label" : "Code Heading"
+},
+{
+"type" : "text",
+"id" : "code",
+"label" : "Code"
+}
+]
+}
+]
+}
+{% endschema %}

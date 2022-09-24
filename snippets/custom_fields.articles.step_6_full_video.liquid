@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/articles/configure/69865/edit
+{% endcomment %}
+{% if article.metafields.custom_fields["step_6_full_video"] != blank %}
+  <div class="custom-field custom-field__step-6-full-video custom-field__type--embed">
+    <h3 class="custom-field--title">Step 6 full video</h3>
+    <div class="custom-field--value">
+      {{ article.metafields.custom_fields["step_6_full_video"] }}
+    </div>
+  </div>
+{% endif %}

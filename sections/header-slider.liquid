@@ -1,0 +1,63 @@
+{% if section.blocks != blank %}
+<div class="section--header_slider">
+  <a href="javascript:void(0)" class="close">
+    <svg class="bx-close-xsvg" viewBox="240 240 20 20"><g class="bx-close-xstroke bx-close-x-adaptive"><path class="bx-close-x-adaptive-1" d="M255.6 255.6l-11.2-11.2" vector-effect="non-scaling-stroke"></path><path class="bx-close-x-adaptive-2" d="M255.6 244.4l-11.2 11.2" vector-effect="non-scaling-stroke"></path></g></svg>
+  </a>
+  <div class="header-slider__start">
+  {% for block in section.blocks %}
+  <div class="header_slider--content">
+    {% if block.settings.content != blank %}
+    <div class="header-slider_content">
+      {{ block.settings.content }}
+      {% if block.settings.code_head != blank and block.settings.code != blank %}
+      <span class="header_slider-code_head">
+        {{ block.settings.code_head }}
+        <span class="header_slider-code">
+         {{ block.settings.code }}
+        </span>
+      </span>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+{
+"name": "Header Slider",
+"class":"header--slider",
+"settings": [
+],
+"blocks": [
+{
+"type":"html",
+"name": "Add Text",
+"settings": [
+{
+"type": "html",
+"id": "content",
+"label": "Add Content"
+},
+{
+"type" : "text",
+"id" : "code_head",
+"label" : "Code Heading"
+},
+{
+"type" : "text",
+"id" : "code",
+"label" : "Code"
+}
+]
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

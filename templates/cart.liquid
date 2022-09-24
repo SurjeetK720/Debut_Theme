@@ -1,0 +1,289 @@
+<!-- /templates/cart.liquid -->
+{% comment %}
+
+For info on test orders:
+- General http://docs.shopify.com/manual/your-store/orders/test-orders
+- Shopify Payments - http://docs.shopify.com/manual/more/shopify-payments/testing-shopify-payments
+
+{% endcomment %}
+<div class="grid">
+  <div class="grid__item large--five-sixths push--large--one-twelfth">
+    {% if cart.item_count > 0 %}
+    <header class="section-header text-center">
+      <h1 class="text-center">{{ 'cart.general.title' | t }}</h1>
+      <hr class="hr--small">
+    </header>
+
+    <form action="/cart" method="post" novalidate class="cart">
+
+      <div class="cart__row medium-down--hide cart__header-labels">
+        <div class="grid--full">
+          <div class="grid__item large--two-fifths push--large--three-fifths">
+            <div class="grid--full">
+              <div class="grid__item one-third medium-down--half text-center">
+                {{ 'cart.label.quantity' | t }}
+              </div>
+              <div class="grid__item two-thirds medium-down--half text-right">
+                {{ 'cart.label.total' | t }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% comment %}
+      Loop through products in the cart
+      {% endcomment %}
+      {% assign count = 0 %}
+      {% for item in cart.items %}
+      {% assign count = count | plus : 1 %}
+      <div class="cart__row">
+        <div class="grid--full cart__row--table-large">
+
+          <div class="grid__item large--three-fifths">
+            <div class="grid">
+
+              <div class="grid__item one-third">
+                <a href="{{ item.url | within: collections.all }}" class="cart__image">
+
+                  {% comment %}
+                  More image size options at:
+                  - http://docs.shopify.com/themes/filters/product-img-url
+                  {% endcomment %}
+                  <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                </a>
+              </div>
+
+              <div class="grid__item two-thirds">
+                <a href="{{ item.url }}" class="h4 cart__product-name" data-id="{{ item.product.id }}" data-price="{{ item.product.price | divided_by: 100.00 }}" >
+                  {{ item.product.title }}
+                </a>
+                {% unless item.variant.title contains 'Default' %}
+                <p class="cart__product-meta">
+                  {{ item.variant.title }}
+                </p>
+                {% endunless %}
+
+                {% if settings.product_vendor_enable %}
+                <p class="cart__product-meta">{{ item.vendor }}</p>
+                {% endif %}
+
+                {% assign property_size = item.properties | size %}
+                {% if property_size > 0 %}
+
+                {% for p in item.properties %}
+                <p style="display:none">
+                  {% assign first_character_in_key = p.first | truncate: 1, '' %}
+                  {% unless p.last == blank or first_character_in_key == '_' %}
+                  {{ p.first }}:
+
+                  {% if p.last contains '/uploads/' %}
+                  <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                  {% else %}
+                  {{ p.last }}
+                  <input type="hidden" value="{{ p.last }}" class="{{ p:first }}-{{ count }}" />
+                  {% endif %}
+                  {% endunless %}
+                </p>
+                {% endfor %}
+                {% endif %}
+
+                <p class="cart__product-meta">
+                  <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="remove">
+                    {{ 'cart.general.remove' | t }}
+                  </a>
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="grid__item large--two-fifths">
+            <div class="grid--full cart__row--table">
+              <div class="grid__item one-third text-center">
+                {% if item.variant.inventory_quantity <= item.quantity %}
+                <div class="sp-quantity">
+                  <div class="sp-minus fff"> <a class="ddd ddd-{{ count }}" href="javascript:void(0)">-</a>
+                  </div>
+                  <div class="sp-input">
+                    <input onkeydown="return false;" readonly type="text" name="updates[]" id="updates_{{ item.key }}" class="quntity-input cart__product-qty-{{ count }}" value="{{ item.variant.inventory_quantity }}" />
+                  </div>
+                  <div class="sp-plus fff"> <a class=' msg-{{ count }}' href="javascript:void(0)">+</a>
+                  </div>
+                </div>
+                {% else %}
+                <div class="sp-quantity">
+                  <div class="sp-minus fff"> <a class="ddd ddd-{{ count }}" href="javascript:void(0)">-</a>
+                  </div>
+                  <div class="sp-input">
+                    <input onkeydown="return false;" readonly type="text" name="updates[]" id="updates_{{ item.key }}" class="quntity-input cart__product-qty-{{ count }}" value="{{ item.quantity }}" />
+                  </div>
+                  <div class="sp-plus fff"> <a class="{% if item.quantity == 5 %} msg1-{{ count }} {% else %} ddd ddd-{{ count }}{% endif %}" href="javascript:void(0)">+</a>
+                  </div>
+                </div>
+                {% endif%}
+                <!--                 <input type="number" name="updates[]" id="updates_{{ item.key }}" class="cart__product-qty" value="{{ item.quantity }}" min="0" data-id="{{ item.key }}"> -->
+                <p class="inventory_error-{{ count }} form-error"></p>
+              </div>
+              <div class="grid__item two-thirds text-right">
+                {% if item.original_line_price != item.line_price %}
+                <small class="cart__price cart__price--strikethrough">₹{{ item.original_line_price | money_without_currency }}</small>
+                {% endif %}
+
+                <span class="cart__price">₹{{ item.line_price | money_without_currency }}</span>
+
+                {% assign discounts_size = item.discounts | size %}
+                {% if discounts_size > 0 %}
+                {% for discount in item.discounts %}
+                <small class="cart__discount">{{ discount.title }}</small>
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {% endfor %}
+
+      <div class="cart__row">
+        <div class="grid--full cart__row--table-large posi-top">
+          {% comment %}
+          Optional, add a textarea for special notes
+          - Your theme settings can turn this on or off. Default is on.
+          - Make sure you have name="note" for the message to be submitted properly
+          {% endcomment %}
+          {% assign price = cart.total_price | divided_by: 100 %}
+          <div class="grid__item large--seven-twelfths" {% if settings.cart_notes_enable == false %} style="display:none;" {% endif %}>
+            <div class="cart__note">
+              <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+              <textarea name="note" class="input-full order-notes" id="CartSpecialInstructions">{% if price >= 1500 %} Free Bag {% endif %}</textarea>
+            </div>
+          </div>
+         
+          <div class="grid__item large--five-twelfths text-center large--text-right{% unless settings.cart_notes_enable %} push--large--seven-twelfths{% endunless %}">
+            <div class="grid--full cart__row--table">
+              <div class="grid__item one-half large--two-thirds large--text-center medium-down--text-right">
+                <p class="cart__subtotal">{{ 'cart.general.subtotal' | t }}</p>
+              </div>
+              <div class="grid__item one-half large--one-third medium-down--text-left">
+                <p class="cart__subtotal">₹{{ cart.total_price | money_without_currency }}</p>
+              </div>
+            </div>
+
+            {% if cart.total_discounts > 0 %}
+            {% assign cartTotalDiscounts = cart.total_discounts | money_without_currency %}
+            <p class="cart__savings">{{ 'cart.general.savings_html' | t: savings: cartTotalDiscounts }}</p>
+            {% endif %}
+           {% comment %}  <p>{{ 'cart.general.shipping_at_checkout' | t }}</p> {% endcomment %}
+            {% if settings.enable_shopping %}
+            <a href="{{ settings.shopping_url }}" class="btn continue-btn">{{ settings.shopping_heading }}</a>
+            {% endif %}
+            <button type="submit" name="update" class="btn update-cart" style="display:none">{{ 'cart.general.update' | t }}</button>
+            <button type="submit" name="checkout" class="btn cart__checkout">
+              {{ 'cart.general.checkout' | t }}
+            </button>
+
+            {% if additional_checkout_buttons and settings.cart_type != 'drawer' %}
+            <div class="additional_checkout_buttons">{{ content_for_additional_checkout_buttons }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+
+    {% else %}
+    {% comment %}
+    The cart is empty
+    {% endcomment %}
+    <header class="section-header text-center">
+      <h1 class="text-center">{{ 'cart.general.title' | t }}</h1>
+      <hr class="hr--small">
+      <p class="cart--empty-message">{{ 'cart.general.empty' | t }}</p>
+      <p class="cart--continue-browsing">{{ 'cart.general.continue_browsing_html' | t }}</p>
+      <p class="cookie-message">{{ 'cart.general.cookies_required' | t }}</p>
+    </header>
+
+    {% endif %}
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    {% assign count1 = 0 %}
+//     var total_price = '{{cart.total_price | divided_by: 100}}';
+//     console.log(total_price)
+//     if(total_price >= 1500)
+//     {
+//       console.log('true')
+//       $('.order-notes').html($('.order-notes').val()+ '- Free Bag')
+//     }
+   
+    //console.log('')
+    {% for item in cart.items %}
+    {% assign count1 = count1 | plus : 1 %}
+    $(".ddd-"+{{ count1 }}).on("click", function () {
+      $('.cart__product-qty-'+{{ count1 }}).each(function(){
+        if($(this).val()>=6)
+        {
+          $('.minusqty').css('pointer-events','');
+          $(this).val('5');
+          $('.inventory_error-'+{{ count1 }}).text('');
+          $('.inventory_error-'+{{ count1 }}).text('All quantity has been added'); 
+          $('.inventory_error-'+{{ count1 }}).css('display','block');
+        } 
+        else {
+          $(this).parents().find('.sp-quantity').find('.sp-minus').css('pointer-events','');
+          $('.update-cart').trigger('click');
+        }
+      })
+    })
+    $('.cart__product-qty-'+{{ count1 }}).each(function(){
+      console.log($(this).val());
+      if($(this).val() == 1)
+      {
+        $(this).parent().addClass('addqty');
+        $('.addqty').prev('.sp-minus').addClass('minusqty');
+        $('.minusqty').css('pointer-events','none');
+      }
+    })
+    
+    $(".msg1-"+{{ count1 }}).on("click", function () {
+
+      $('.inventory_error-'+{{ count1 }}).text('');
+      $('.inventory_error-'+{{ count1 }}).text('Maximum limit exceed.');  
+      $('.inventory_error-'+{{ count1 }}).css('display','block'); 
+      return false;
+    })
+    $(".msg-"+{{ count1 }}).on("click", function () {
+
+      $('.inventory_error-'+{{ count1 }}).text('');
+      $('.inventory_error-'+{{ count1 }}).text('All quantity has been added');  
+      $('.inventory_error-'+{{ count1 }}).css('display','block'); 
+      return false;
+    })
+    $('body').click(function(){
+      $('.inventory_error-'+{{ count1 }}).css('display','none');
+    })
+    //$('.ddd').trigger('click');
+    $('.cart__product-qty-'+{{ count1 }}).each(function(){
+      if($(this).val()>5)
+      {
+        $(this).val('5');
+        $('.update-cart').trigger('click');
+      }
+    })
+    var cbu = $('.CBU-'+{{ count1 }}).val();
+    var basepack = $('.Basepack-'+{{ count1 }}).val();
+    var hsn = $('.HSN-'+{{ count1 }}).val();
+    var awbs = $('.AWBs-'+{{ count1 }}).val();
+    $('form').append('<input type="hidden" name="attributes[{{ item.product.title }}-{{ item.variant.title }}-Basepack]" value="'+basepack+'">'
+                     +'<input type="hidden" name="attributes[{{ item.product.title }}-{{ item.variant.title }}-CBU]" value="'+cbu+'">'
+                     +'<input type="hidden" name="attributes[{{ item.product.title }}-{{ item.variant.title }}-HSN]" value="'+hsn+'">'
+                     +'<input type="hidden" name="attributes[{{ item.product.title }}-{{ item.variant.title }}-AWBs]" value="'+awbs+'">');
+                     {% endfor %}
+                     })
+</script>
+

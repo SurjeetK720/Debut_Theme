@@ -1,0 +1,134 @@
+<div class="grid">
+  <div class="grid__item one-whole">
+    {% if section.settings.video != blank %}
+    <div class="video--wrapper" {% if section.settings.image != blank %}style="background-image:url('{{ section.settings.image | img_url: '1350x767' }}')"{% endif %}>
+       <iframe id="player" src="https://www.youtube.com/embed/{{ section.settings.video }}?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  
+    </div>
+    {% endif %}
+    <div class="wrapper">
+      <div class="bottom-section">
+        {% if section.settings.title != blank %}
+        <h2 class="h2">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+        <div class="video_wrapper--subtext">
+          {{ section.settings.text }}
+          {% if section.settings.btn_text != blank and section.settings.btn_url != blank %}
+          <a class="content_on_right--link" href="{{ section.settings.btn_url }}">
+            {{ section.settings.btn_text }}
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% if section.settings.video != blank %}
+<script>
+  //   jQuery(document).ready(function($){
+  //     $('.image_video--section .feature-row__image-wrapper').click(function(ev){
+  //       $(".image_video--section .video--wrapper").css('display','block');
+  //       $('.image_video--section .feature-row__image-wrapper').hide();
+  //       $(".image_video--section .video--wrapper iframe")[0].src += "&autoplay=1";
+  //       $(".image_video--section .video--wrapper iframe").trigger('click');
+  //       ev.preventDefault();
+  //     })
+  //   })
+//     var tag = document.createElement('script');
+
+//     tag.src = "https://www.youtube.com/iframe_api";
+//     var firstScriptTag = document.getElementsByTagName('script')[0];
+//     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+//     // 3. This function creates an <iframe> (and YouTube player)
+//     //    after the API code downloads.
+//     var player;
+//     function onYouTubeIframeAPIReady() {
+//       player = new YT.Player('player', {
+//         height: '630',
+//         width: '560',
+//         videoId: '{{ section.settings.video }}',
+//         events: {
+//         'onReady': onPlayerReady,
+//         'onStateChange': onPlayerStateChange
+//       }
+//                              });
+//     }
+
+//     function onPlayerReady(event) {
+//       //event.target.playVideo();
+//     }
+//     var done = false;
+//     function onPlayerStateChange(event) {
+//       if (event.data == YT.PlayerState.PLAYING && !done) {
+//         setTimeout(stopVideo, 6000);
+//         done = true;
+//       }
+//     }
+//     function stopVideo() {
+//       player.stopVideo();
+//     }
+</script>
+{% endif %}
+{% schema %}
+{
+"name": {
+"en": "Image & Video Section"
+},
+"class": "image_video--section",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": {
+"en": "Background Image"
+}
+},
+{
+"type" : "html",
+"id" : "video",
+"label" : "Youtube Embed Code"
+},
+{
+"type": "text",
+"id": "title",
+"label": {
+"en": "Heading"
+}
+},
+{
+"type": "richtext",
+"id": "text",
+"label": {
+"en": "Text"
+}
+},
+{
+"type" : "header",
+"content" : "Button Content"
+},
+{
+"type" : "text",
+"id" : "btn_text",
+"label" : "Button Text"
+},
+{
+"type" : "url",
+"id" : "btn_url",
+"label" : "Url"
+}
+],
+"presets": [
+{
+"name": {
+"en": "Image & Video Section"
+},
+"category": {
+"en": "Image"
+}
+}
+]
+}
+{% endschema %}

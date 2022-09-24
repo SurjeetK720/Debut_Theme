@@ -1,0 +1,101 @@
+<!-- sections/page-lakmeContent.liquid -->
+
+{% if page.metafields.lakmeContent.content != blank %}
+<style>
+    .contentWidget {
+        margin-bottom: 0.5em;
+    }
+    .contentWidget-heading {
+        font-size: 1.7em;
+    }
+    .contentWidget-content a {
+        white-space: nowrap;
+        color : orangered;
+        text-decoration: underline;
+    }
+    .lakme-debugger {
+        /*display : none;*/
+    }
+
+    .hr-custom-discover {
+        width    : 100%;
+        position : relative;
+    }
+
+    .first-hr {
+        position : absolute;
+        left     : -6%;
+        top      : -30px;
+        border   : 1px solid #000;
+        width    : 14%;
+    }
+
+    .last-hr {
+        position : absolute;
+        right    : -6%;
+        top      : 30px;
+        border   : 1px solid #000;
+        width    : 97%;
+    }
+
+    @media screen and (max-width : 640px) {
+        .first-hr {
+            width : 22%;
+        }
+
+        .last-hr {
+            width : 87%;
+        }
+    }
+
+    @media screen and (min-width : 1400px) {
+        .first-hr {
+            left  : -15%;
+            width : 22%;
+        }
+
+        .last-hr {
+            right : -15%;
+            width : 106%;
+        }
+    }
+
+    @media screen and (min-width : 1700px) {
+        .first-hr {
+            left  : -25%;
+            width : 32%;
+        }
+
+        .last-hr {
+            right : -25%;
+            width : 116%;
+        }
+    }
+</style>
+
+<div class="collection-template__container page-width" id="PageSection-{{ section.id }}"
+     data-section-id="{{ section.id }}">
+    {% if page.metafields.lakmeContent.content.heading != blank %}
+    <div class="hr-custom-discover">
+        <hr class="first-hr">
+        <div class="hr-h3">
+            <span class="h3">{{ page.metafields.lakmeContent.content.heading }}</span>
+        </div>
+        <hr class="last-hr">
+    </div>
+    {% endif %}
+    {% unless page.metafields.lakmeContent.content == blank %}
+    {% assign widgetSerial = 0 %}
+    {% for contentWidget in page.metafields.lakmeContent.content.widgets %}
+        {% assign widgetSerial = widgetSerial | plus: 1 %}
+        {% if contentWidget.snippet == blank %}
+            {% assign snippet = "lakmeContent-" | append: contentWidget.type %}
+        {% else %}
+            {% assign snippet = "lakmeContent-" | append: contentWidget.snippet %}
+        {% endif %}
+        {% include snippet %}
+    {% endfor %}
+    {% endunless %}
+
+</div>
+{% endif %}

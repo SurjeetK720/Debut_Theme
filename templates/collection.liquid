@@ -1,0 +1,18 @@
+<!-- /templates/collection.liquid -->
+{% comment %}
+  The contents of the collection.liquid template can be found in /sections/collection-template.liquid
+{% endcomment %}
+{% if collection.handle contains 'kareena-kapoor-khan' or collection.handle contains 'naturale' or collection.handle contains 'argan' or collection.handle contains 'absolute-nude'  or collection.handle contains 'matte-ultimate' %}
+<div class="overlay"></div>
+
+{% endif %}
+{% section 'collection-template' %}
+<script>
+{% if collection.handle contains 'kareena-kapoor-khan' %}
+window.location.href='{{ shop.url }}/pages/kareena';
+{% elsif  collection.handle contains 'naturale' %}
+window.location.href='{{ shop.url }}/pages/bridal-collection-page';
+{% elsif collection.handle contains 'argan' %}
+window.location.href='{{ shop.url }}/pages/argan';
+{% endif %}
+</script>

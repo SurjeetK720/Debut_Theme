@@ -1,0 +1,111 @@
+{% if section.settings.enable_insta %}
+{% if section.settings.heading != blank %}
+<div class="section-header">
+  <div class="background_text text-center">
+    {{ section.settings.heading }}
+  </div>
+  <h2 class="h1 text-center">
+    {{ section.settings.heading }}
+  </h2>
+</div>
+{% endif %}
+<div id="instafeed" class="carousel instafeed">
+
+</div>
+{{ 'instafeed.min.js' | asset_url | script_tag }}
+<script>
+   $(window).load(function(){
+ 
+  var feed = new Instafeed({
+    get: 'user',
+    userId: {{ section.settings.user_id }},
+    resolution: 'standard_resolution',
+    accessToken: '{{ section.settings.access_token }}',
+    template:'<div class="grid__item"><a href="\{\{link\}\}"><img src="\{\{image\}\}" /></a></div>',
+    sortBy: 'most-recent',
+    limit : 33,
+    after: function () {
+    $('.instafeed').slick({
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    dots:false,
+    draggable:true,
+    arrows : true,
+    responsive: [
+    {
+    breakpoint: 1025,
+    settings: {
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    arrows:true,
+  }
+                           },
+                           {
+                           breakpoint: 767,
+                           settings: {
+                           slidesToShow: 1,
+                           slidesToScroll: 1,
+                           arrows:true
+                           }
+                           }
+                           ]
+                           });
+  }
+  });
+  feed.run();
+ 
+  })
+
+</script>
+{% endif %}
+{% schema %}
+{
+"name": {
+"en": "Instagram"
+},
+"class": "instagram-section",
+"settings" : [
+{
+"type" : "checkbox",
+"id" : "enable_insta",
+"label" : "Enable Instagram"
+},
+{
+"type"  : "text",
+"id" : "heading",
+"label" : "Heading"
+},
+{
+"type"  : "text",
+"id" : "subheading",
+"label" : "Sub Heading",
+"default" : "Live from our Instagram feed"
+},
+{
+"type" : "header",
+"content" : "Follow us button"
+},
+{
+"type" : "header",
+"content" : "Instagram token"
+},
+{
+"type" : "text",
+"id" : "access_token",
+"label" : "Access Token"
+},
+{
+"type" : "text",
+"id" : "user_id",
+"label" : "User Id"
+}
+], 
+"presets": [
+{
+"name": {
+"en": "Instagram"
+}
+}
+]
+}
+{% endschema %}

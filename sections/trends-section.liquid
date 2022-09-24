@@ -1,0 +1,445 @@
+{% if section.blocks.size > 0 %}
+<div class="trends--section">
+  {% assign count = 0 %}
+  {% for block in section.blocks %}
+  {% assign count = count | plus : 1 %}
+  {% if block.settings.text_align == 'left' %}
+  <div class="text-alignment__left display-table{% if block.settings.collection != blank %} trends-slider {% endif %}{% if block.settings.right_image != blank or block.settings.m_right_image != blank %}{% else %} swatch--none {%  endif %}">
+    <div class="grid__item three-eighths medium--one-half medium-down--one-whole trend-inner display-table-cell">
+      {% if block.settings.background_text != blank %}
+      <div class="large--hide  background_text text-left" style="color:{{ block.settings.color_text }}">
+        {{ block.settings.background_text }}
+      </div>
+      {% endif %}
+      {% if block.settings.heading1 != blank and block.settings.large_heading == blank %}
+      <div class="large--hide trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+        {% if block.settings.text_link != blank %}
+        <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+          {% endif %}
+          {% if block.settings.heading1 != blank %}
+          <sup>{{ block.settings.heading1 }}</sup> 
+          {% endif %}
+          {% if block.settings.heading2 != blank %}
+          {{ block.settings.heading2 }}
+          {% endif %}
+          {% if block.settings.heading3 != blank %}
+          <sub>{{ block.settings.heading3 }}</sub>
+          {% endif %}
+          {% if block.settings.text_link != blank %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if block.settings.large_heading != blank %}
+      <div class="large--hide large__heading trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+        {% if block.settings.text_link != blank %}
+        <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+          {% endif %}
+          {{ block.settings.large_heading }}
+          {% if block.settings.text_link != blank %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if block.settings.left_image != blank and block.settings.enable_insta == false %}
+      <div class=" trends--left_image  left-padding-img">
+        {% if block.settings.text_link != blank %}
+        <a href="{{ block.settings.text_link }}">
+          {% endif %}
+          <img class="medium--hide small--hide" src="{{ block.settings.left_image | img_url : '576x666'}}" alt="{{ block.settings.left_image.alt | escape }}" />
+          <img class="large--hide" src="{{ block.settings.m_left_image | img_url : '576x666'}}" alt="{{ block.settings.m_left_image.alt | escape }}" />
+          {% if block.settings.text_link != blank %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if block.settings.enable_insta %}
+      <div class="trends--left_image  left-padding-img insta--feed small--hide">
+        {{block.settings.insta}}
+        <div class="insta-wrapper"><a href="{{ block.settings.insta_link }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"/></a></div>
+      </div>
+      {% if block.settings.mob_insta != blank %}
+      <div class="trends--left_image  left-padding-img insta--feed large--hide medium--hide">
+        {{block.settings.mob_insta}}
+      </div>
+      {% endif %}
+      {% endif %}
+
+    </div>
+    <div class="grid__item five-eighths medium--one-half small--one-whole display-table-cell trend-content-section">
+      {% if block.settings.collection != blank %}
+      <style>
+        .grid__section-{{ count }}{border-color:{{ block.settings.color_text }};}
+      </style>
+      <div class="trends--product_slider grid__item one-whole">
+        {% for product in collections[block.settings.collection].products %}
+        {% include 'product-grid-item' %}
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if block.settings.background_text != blank %}
+      <div class="small--hide medium--hide background_text text-left" style="color:{{ block.settings.color_text }}">
+        {{ block.settings.background_text }}
+      </div>
+      {% endif %}
+      <div class="trends--right_image trends__right-{{ count }}">
+        <div class="trends--right_image1">
+          {% if block.settings.heading1 != blank and block.settings.large_heading == blank %}
+          <div class="small--hide medium--hide trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+            {% if block.settings.text_link != blank %}
+            <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+              {% endif %}
+              {% if block.settings.heading1 != blank %}
+              <sup>{{ block.settings.heading1 }}</sup>
+              {% endif %}
+              {% if block.settings.heading2 != blank %}
+              {{ block.settings.heading2 }}
+              {% endif %}
+              {% if block.settings.heading3 != blank %}
+              <sub>{{ block.settings.heading3 }}</sub>
+              {% endif %}
+              {% if block.settings.text_link != blank %}
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% if block.settings.large_heading != blank %}
+          <div class="small--hide medium--hide large__heading trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+            {% if block.settings.text_link != blank %}
+            <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+              {% endif %}
+              {{ block.settings.large_heading }}
+              {% if block.settings.text_link != blank %}
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% if block.settings.content != blank %}
+          <div class="trends--content">
+            {% if block.settings.text_link != blank %}
+            <a href="{{ block.settings.text_link }}">
+              {% endif %}
+              {{ block.settings.content }}
+              {% if block.settings.text_link != blank %}
+              <span class="hero__cta">{{ block.settings.read_more }}</span>
+              {% endif %}
+              {% if block.settings.text_link != blank %}
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% if block.settings.text_align == 'right' %}
+  <div class="text-alignment__right display-table{% if block.settings.collection != blank %} trends-slider{% endif %}{% if block.settings.left_image != blank or block.settings.m_right_image != blank %}{% else %} swatch--none {% endif %}">
+    <div class="grid__item five-eighths medium--one-half small--one-whole display-table-cell trend-content-section">
+
+      {% if block.settings.background_text != blank %}
+      <div class="background_text text-left" style="color:{{ block.settings.color_text }}">
+        {{ block.settings.background_text }}
+      </div>
+      {% endif %}
+      {% if block.settings.heading1 != blank and block.settings.large_heading == blank %}
+      <div class="large--hide trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+        {% if block.settings.text_link != blank %}
+        <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+          {% endif %}
+          {% if block.settings.heading1 != blank %}
+          <sup>{{ block.settings.heading1 }}</sup>
+          {% endif %}
+          {% if block.settings.heading2 != blank %}
+          {{ block.settings.heading2 }}
+          {% endif %}
+          {% if block.settings.heading3 != blank %}
+          <sub>{{ block.settings.heading3 }}</sub>
+          {% endif %}
+          {% if block.settings.text_link != blank %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if block.settings.large_heading != blank %}
+      <div class="large--hide large__heading trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+        {% if block.settings.text_link != blank %}
+        <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+          {% endif %}
+          {{ block.settings.large_heading }}
+          {% if block.settings.text_link != blank %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      <div class="grid__item five-twelfths medium--one-half small-one-whole trend-inner display-table-cell large--hide">
+        {% if block.settings.right_image != blank and block.settings.enable_insta == false %}
+        <div class="trends--left_image  right-padding-img">
+          {% if block.settings.text_link != blank %}
+          <a href="{{ block.settings.text_link }}">
+            {% endif %}
+            <img class="medium--hide small--hide" src="{{ block.settings.right_image | img_url : '576x666'}}" alt="{{ block.settings.right_image.alt | escape }}" />
+            <img class="large--hide" src="{{ block.settings.m_left_image | img_url : '576x666'}}" alt="{{ block.settings.m_left_image.alt | escape }}" />
+            {% if block.settings.text_link != blank %}
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% if block.settings.enable_insta %}
+        <div class="trends--left_image right-padding-img insta--feed small--hide">
+          {{block.settings.insta}}
+          <div class="insta-wrapper"><a href="{{ block.settings.insta_link }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"/></a></div>
+        </div>
+        {% if block.settings.mob_insta != blank %}
+        <div class="trends--left_image  left-padding-img insta--feed large--hide medium--hide">
+          {{block.settings.mob_insta}}
+        </div>
+        {% endif %}
+        {% endif %}
+
+      </div>
+      {% if block.settings.collection != blank %}
+      <style>
+        .grid__section-{{ count }}{border-color:{{ block.settings.color_text }};}
+      </style>
+      <div class="trends--product_slider grid__item one-whole">
+        {% for product in collections[block.settings.collection].products %}
+        {% include 'product-grid-item' %}
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="trends--right_image trends__right-{{ count }}">
+        <div class="trends--right_image1">
+          {% if block.settings.heading1 != blank and block.settings.large_heading == blank %}
+          <div class="small--hide medium--hide trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+            {% if block.settings.text_link != blank %}
+            <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+              {% endif %}
+              {% if block.settings.heading1 != blank %}
+              <sup>{{ block.settings.heading1 }}</sup>
+              {% endif %}
+              {% if block.settings.heading2 != blank %}
+              {{ block.settings.heading2 }}
+              {% endif %}
+              {% if block.settings.heading3 != blank %}
+              <sub>{{ block.settings.heading3 }}</sub>
+              {% endif %}
+              {% if block.settings.text_link != blank %}
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% if block.settings.large_heading != blank %}
+          <div class="small--hide medium--hide large__heading trends--heading{% if block.settings.borders == 'with-border' %} with-border {% else %} no-border {% endif %}{% if block.settings.heading_alignment == 'large-medium-text' %} large-medium-text{% endif %}" {% if block.settings.text_link == blank %}style="color:{{ block.settings.color_text }}"{% endif %}>
+            {% if block.settings.text_link != blank %}
+            <a href="{{ block.settings.text_link }}" style="color:{{ block.settings.color_text }}">
+              {% endif %}
+              {{ block.settings.large_heading }}
+              {% if block.settings.text_link != blank %}
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% if block.settings.content != blank %}
+          <div class="trends--content">
+            {% if block.settings.text_link != blank %}
+            <a href="{{ block.settings.text_link }}">
+              {% endif %}
+              {{ block.settings.content }}
+              {% if block.settings.read_more != blank %}
+              <span class="hero__cta">{{ block.settings.read_more }}</span>
+              {% endif %}
+              {% if block.settings.text_link != blank %}
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+    <div class="grid__item three-eighths medium--one-half small-one-whole trend-inner display-table-cell medium-down--hide">
+      {% if block.settings.right_image != blank and block.settings.enable_insta == false %}
+      <div class="trends--left_image  right-padding-img">
+        {% if block.settings.text_link != blank %}
+        <a href="{{ block.settings.text_link }}">
+          {% endif %}
+          <img src="{{ block.settings.right_image | img_url : '576x666'}}" alt="{{ block.settings.right_image.alt | escape }}" />
+          {% if block.settings.text_link != blank %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if block.settings.enable_insta %}
+      <div class="trends--left_image right-padding-img insta--feed small--hide">
+        {{block.settings.insta}}
+        <div class="insta-wrapper"><a href="{{ block.settings.insta_link }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"/></a></div>
+      </div>
+      {% if block.settings.mob_insta != blank %}
+      <div class="trends--left_image  left-padding-img insta--feed large--hide medium--hide">
+        {{block.settings.mob_insta}}
+      </div>
+      {% endif %}
+      {% endif %}
+
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+{% assign count1 = 0 %}
+{% for block in section.blocks %}
+{% assign count1 = count1 | plus : 1 %}
+
+<style>
+  {% if block.settings.text_align == 'left' %}
+  .trends__right-{{ count1 }}:before{content:"";{% if block.settings.right_image != blank %}background-image:url({{ block.settings.right_image | img_url : '1024x740'}});{% endif %}}
+
+  @media (max-width:768px){
+    .trends__right-{{ count1 }}:before{content:"";{% if block.settings.m_right_image != blank %}background-image:url({{ block.settings.m_right_image | img_url : '1024x740'}});{% endif %}}
+  }
+
+  {% else %}
+  .trends__right-{{ count1 }}:before{content:"";{% if block.settings.left_image != blank %}background-image:url({{ block.settings.left_image | img_url : '1024x740'}});{% endif %}}
+  @media (max-width:768px){
+    .trends__right-{{ count1 }}:before{content:"";{% if block.settings.m_right_image != blank %}background-image:url({{ block.settings.m_right_image | img_url : '1024x740'}});{% endif %}}
+  }
+  {% endif %}
+</style>
+
+{% endfor %}
+{% endif %}
+
+{% schema %}
+{
+"name": "Trends Page",
+"class":"trends-pages",
+"settings": [],
+"blocks": [
+{
+"type":"html",
+"name": "Trends Page",
+"settings": [
+{
+"type": "checkbox",
+"id": "enable_insta",
+"label": "Enable Instagram"
+},
+{
+"type": "html",
+"id": "insta",
+"label": "Instagram embed code"
+},
+{
+"type" : "text",
+"id" : "insta_link",
+"label" : "Instagram hover link"
+},
+{
+"type": "html",
+"id": "mob_insta",
+"label": "Mobile Instagram embed code"
+},
+{
+"type": "image_picker",
+"id": "left_image",
+"label": "Left Image"
+},
+{
+"type": "image_picker",
+"id": "right_image",
+"label": "Right Image"
+},
+{
+"type": "image_picker",
+"id": "m_left_image",
+"label": "Mobile Left Image"
+},
+{
+"type": "image_picker",
+"id": "m_right_image",
+"label": "Mobile Right Image"
+},
+{
+"type": "text",
+"id": "background_text",
+"label": "Background text"
+},
+{
+"type": "text",
+"id": "heading1",
+"label": "Heading part 1"
+},
+{
+"type": "text",
+"id": "heading2",
+"label": "Heading part 2"
+},
+{
+"type": "text",
+"id": "heading3",
+"label": "Heading part 3"
+},
+{
+"type": "textarea",
+"id": "large_heading",
+"label": "Heading"
+},
+{
+"type": "html",
+"id": "content",
+"label": "Content"
+},
+{
+"type" : "collection",
+"id" : "collection",
+"label" : "Select Collection"
+},
+{
+"type": "color",
+"id": "color_text",
+"label": "Border and Heading color",
+"default": "#333333"
+},
+{
+"type": "select",
+"id": "text_align",
+"options": [
+{ "value": "right", "label": "Right"},
+{ "value": "left", "label": "Left"}
+],
+"label": "Image Alignment"
+},
+{
+"type": "select",
+"id": "heading_alignment",
+"options": [
+{ "value": "default", "label": "Default"},
+{ "value": "large-medium-text", "label": "Large medium text"}
+],
+"label": "Heading Alignment"
+},
+{
+"type": "select",
+"id": "borders",
+"options": [
+{ "value": "with-border", "label": "Borders"},
+{ "value": "no-border", "label": "No border"}
+],
+"label": "Borders"
+},
+{
+"type" : "text",
+"id" : "read_more",
+"label" : "Read more text"
+},
+{
+"type" : "url",
+"id" : "text_link",
+"label" : "Trends inner page link"
+}
+]
+}
+]
+}
+{% endschema %}

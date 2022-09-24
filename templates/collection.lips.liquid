@@ -1,0 +1,32 @@
+<!-- /templates/collection.liquid -->
+{% comment %}
+  The contents of the collection.liquid template can be found in /sections/collection-template.liquid
+{% endcomment %}
+<div class="desktop-lips small--hide">
+  <div style="display:none;">
+  {% include 'filter-menu'%}
+  </div>
+{% section 'desktop-lips-banner' %}
+  <div class="wrapper">
+  {% section 'desktop-lips-content' %}
+  </div>
+  {% section 'desktop-lips-blocks' %}
+  <div class="wrapper1">
+  {% section 'desktop-lips-featured-blocks' %}
+  </div>
+</div>
+<div class="mobile-lips">
+  {% section 'mobile-lips-banner' %}
+  {% section 'mobile-lips-content' %}
+  {% section 'mobile-lips-blocks' %}
+  {% section 'mobile-lips-featured-blocks' %}
+</div>
+<script>
+{% if collection.handle contains 'kareena-kapoor-khan' %}
+window.location.href='{{ shop.url }}/pages/kareena';
+{% elsif  collection.handle contains 'naturale' %}
+window.location.href='{{ shop.url }}/pages/naturale';
+{% elsif collection.handle contains 'argan' %}
+window.location.href='{{ shop.url }}/pages/argan';
+{% endif %}  
+</script>

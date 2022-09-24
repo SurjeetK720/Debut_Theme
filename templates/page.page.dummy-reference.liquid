@@ -1,0 +1,28 @@
+<!-- /templates/page.liquid -->
+<style>
+	@font-face{
+    	font-family:'HelveticaNeueLTStd-Cn';
+    	src:url('https://cdn.shopify.com/s/files/1/0014/3514/0183/t/11/assets/HelveticaNeueLTStd-Cn.otf');
+	}
+  .content p{font-family:'HelveticaNeueLTStd-Cn' !important;}
+  .trends-inner-page-wrapper .main-content .wrapper .row-wrap .grid__item h1{font-size:34px;bottom:-100px;text-align:center;}
+  .trends-inner-page-wrapper .main-content .wrapper .row-wrap div.content{padding-top:70px}
+</style>
+<div class="grid trendss--inner_page">
+  <div class="grid__item large--one-whole ">
+
+    <header class="section-header text-center">
+      <h1>{{ page.title }}</h1>
+    </header>
+
+    <div class="grid">
+      <div class="grid__item large--four-fifths push--large--one-tenth">
+        <div class="rte rte--nomargin rte--indented-images">
+          {{ page.content }}
+        </div>
+      </div>
+    </div>
+	{% section 'blocks-dummy_reference'%}
+  </div>
+</div>
+

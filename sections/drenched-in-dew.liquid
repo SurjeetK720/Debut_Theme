@@ -1,0 +1,576 @@
+{% assign hero_full_height = false %}
+{% assign hero_parallax = false %}
+
+<style>
+  .hero-slideshow.slick-slider .slick-dots li.slick-active button:before{
+    background: {{ section.settings.slide_text_color }};
+    border-color: transparent;
+  }
+  .hero-slideshow.slick-slider .slick-dots li button:before{
+    background: transparent;
+    border-color: {{ section.settings.slide_text_color }};
+  }
+
+</style>
+
+{% if hero_full_height %}
+{% endif %}
+<div data-section-id="{{ section.id }}" data-section-type="slideshow-section" class="slideshow-section">
+  <!-- for desktop starts -->
+  {% if section.blocks.size > 0 %}
+  <div class="small--hide drenched-in-dew_section" {% if hero_parallax %}data-parallax="true"{% endif %} data-autoplay="{{ section.settings.hero_home_auto }}" data-autoplayspeed="{{ section.settings.home_hero_auto_speed }}">
+    {% for block in section.blocks %}
+
+    <div class="hero__slide1 slider-slide slide--{{ block.id }}{% if block.settings.image == blank %} slide--placeholder{% endif %}" data-color="{{ section.settings.slide_text_color }}" style="color: {{ section.settings.slide_text_color }};" {{ block.shopify_attributes }}>
+      <style>
+        {% if block.settings.bg_image != blank %}
+        .hero__image1-inner:before {
+          background-image:  url('{{ block.settings.bg_image | img_url : 'original'}}');
+            }
+        {% endif %}
+        {% if block.settings.rbg_image != blank %}
+        .hero__image1-inner:after {
+          background-image: url('{{ block.settings.rbg_image | img_url : 'original'}}');
+            }
+        {% endif %}
+      </style>
+      {% if hero_full_height %}
+      {% if block.settings.image == blank %}
+      <div class="placeholder-background">
+        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% else %}
+      <noscript>
+        {% if forloop.first == true %}
+        <div class="hero__image1-no-js"{% if block.settings.image %} style="background-image: url('{{ block.settings.image | img_url: '2048x' }}');"{% endif %}></div>
+        {% endif %}
+      </noscript>
+      {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+      <img class="hero__image1 hero__image--{{ block.id }} lazyload fade-in{% unless forloop.first == true %} lazypreload{% endunless %}"
+           {% if forloop.first == true %}
+           src="{{ block.settings.image | img_url: '976x763' }}"
+           {% endif %}
+           data-src="{{ img_url }}"
+           data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]"
+           data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+           data-sizes="auto"
+           data-parent-fit="cover"
+           alt="{{ block.settings.image.alt | escape }}">
+      {% endif %}
+      {% else %}
+      {% if block.settings.image != blank %}
+      <noscript>
+        {% if forloop.first == true %}
+        <div class="hero__image1-no-js"{% if block.settings.image %} style="background-image: url('{{ block.settings.image | img_url: '2048x' }}');"{% endif %}></div>
+        {% endif %}
+      </noscript>
+      <div class="hero__image1">
+        <div class="hero__image1-inner">
+          <a href="{{ block.settings.slide_link }}">
+            {% comment %}
+            {% if block.settings.bg_image != blank %}<div class="left-bg"><img src="{{ block.settings.bg_image | img_url : 'original'}}" alt=""/></div>{% endif %}
+            {% if block.settings.rbg_image != blank %}<div class="right-bg"><img src="{{ block.settings.rbg_image | img_url : 'original'}}" alt=""/></div>{% endif %}
+            {% endcomment %}
+            {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+            <img class="hero__image1 lazyload fade-in"
+                 src="{{ block.settings.image | img_url: '1000x800' }}"
+                 data-src="{{ img_url }}"
+                 data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                 data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                 data-sizes="auto"
+                 data-parent-fit="contain"
+                 alt="{{ block.settings.image.alt | escape }}">
+            <div class="hero__text-wrap slideshow__overlay">
+              <div class="hero__text-align">
+                <div class="hero__text-content">
+                  {% if block.settings.slide_heading_part != blank %}
+                  <h2 class="h1 hero__title head_title">
+                    {{ block.settings.slide_heading_part }}
+                  </h2>
+                  <br>
+                  {% endif %}
+                  {% unless block.settings.slide_heading == blank %}
+                  <h2 class="h1 hero__title">
+                    {{ block.settings.slide_heading | escape }}
+                  </h2>
+                  {% endunless %}
+                  {% unless block.settings.slide_subheading == blank %}
+                  <p class="hero__subtitle">
+                    {{ block.settings.slide_subheading | escape }}
+                    {% unless block.settings.slide_cta == blank %}
+                    <span class="hero__cta">
+                      {{ block.settings.slide_cta | escape }}
+                    </span>
+                    {% endunless %}
+                  </p>
+                  {% endunless %}
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div class="hero__image1">
+        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+      {% endif %}
+
+      {% comment %}
+      Apply a color overlay on a per-slide basis.
+      {% endcomment %}
+
+
+    </div>
+
+    {% endfor %}
+  </div>
+  <!-- for desktop ends -->
+
+  <!-- for mobile starts -->
+
+  <div class="mobile--homepage__slider medium--hide large--hide hero-{{ section.id }} hero{% if hero_full_height %} hero--full-height{% endif %} hero--first" id="Hero"{% if hero_full_height %} data-fullscreen="true"{% endif %}{% if hero_parallax %}data-parallax="true"{% endif %} data-autoplay="{{ section.settings.hero_home_auto }}" data-autoplayspeed="{{ section.settings.home_hero_auto_speed }}">
+    {% for block in section.blocks %}
+
+    <div class="hero__slide1 slide--{{ block.id }}{% if block.settings.mob_image == blank %} slide--placeholder{% endif %}" data-color="{{ section.settings.mob_slide_text_color }}" style="color: {{ section.settings.mob_slide_text_color }};" {{ block.shopify_attributes }}>
+      <style>
+        {% if block.settings.mob_bg_image != blank %}
+        .mobile--homepage__slider .hero__image1-inner:before {
+          background-image:  url('{{ block.settings.mob_bg_image | img_url : 'original'}}');
+            }
+        {% endif %}
+        {% if block.settings.rmob_bg_image != blank %}
+        .mobile--homepage__slider .hero__image1-inner:after {
+          background-image: url('{{ block.settings.rmob_bg_image | img_url : 'original'}}');
+            }
+        {% endif %}
+      </style>
+      {% if hero_full_height %}
+      {% if block.settings.mob_image == blank %}
+      <div class="placeholder-background">
+        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% else %}
+      <noscript>
+        {% if forloop.first == true %}
+        <div class="hero__image1-no-js"{% if block.settings.mob_image %} style="background-image: url('{{ block.settings.mob_image | img_url: '2048x' }}');"{% endif %}></div>
+        {% endif %}
+      </noscript>
+      {% assign img_url = block.settings.mob_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+      <img class="hero__image1 hero__image--{{ block.id }} lazyload fade-in{% unless forloop.first == true %} lazypreload{% endunless %}"
+           {% if forloop.first == true %}
+           src="{{ block.settings.mob_image | img_url: '1500x600' }}"
+           {% endif %}
+           data-src="{{ img_url }}"
+           data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048, 4472]"
+           data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+           data-sizes="auto"
+           data-parent-fit="cover"
+           alt="{{ block.settings.mob_image.alt | escape }}">
+      {% endif %}
+      {% else %}
+      {% if block.settings.mob_image != blank %}
+      <noscript>
+        {% if forloop.first == true %}
+        <div class="hero__image1-no-js"{% if block.settings.mob_image %} style="background-image: url('{{ block.settings.mob_image | img_url: '2048x' }}');"{% endif %}></div>
+        {% endif %}
+      </noscript>
+      <div class="hero__image1">
+        <div class="hero-slider-img">
+          <div class="hero__image1-inner">
+            <a href="{{ block.settings.mob_slide_link }}">
+              {% assign img_url = block.settings.mob_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+              <img class="hero__image lazyload fade-in"
+                   src="{{ block.settings.mob_image | img_url: '1500x600' }}"
+                   data-src="{{ img_url }}"
+                   data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                   data-aspectratio="{{ block.settings.mob_image.aspect_ratio }}"
+                   data-sizes="auto"
+                   data-parent-fit="contain"
+                   alt="{{ block.settings.mob_image.alt | escape }}">
+              <div class="hero__text-wrap slideshow__overlay">
+                <div class="hero__text-align">
+                  <div class="hero__text-content">
+                    {% if block.settings.mob_slide_heading_part != blank %}
+                    <h2 class="h1 hero__title head_title">
+                      {{ block.settings.mob_slide_heading_part }}
+                    </h2>
+                    <br>
+                    {% endif %}
+                    {% unless block.settings.mob_slide_heading == blank %}
+                    <h2 class="h1 hero__title">
+                      {{ block.settings.mob_slide_heading | escape }}
+                    </h2>
+                    {% endunless %}
+                    {% unless block.settings.mob_slide_subheading == blank %}
+                    <p class="hero__subtitle">
+                      {{ block.settings.mob_slide_subheading | escape }}
+                      {% unless block.settings.mob_slide_cta == blank %}
+                      <span class="hero__cta">
+                        {{ block.settings.mob_slide_cta | escape }}
+                      </span>
+                      {% endunless %}
+                    </p>
+                    {% endunless %}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="hero__image1">
+        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% endif %}
+      {% endif %}
+
+    </div>
+    {% endfor %}
+  </div>
+  <!-- for mobile ends -->
+  {% endif %}
+</div>
+{% schema %}
+{
+"name": {
+"pt-BR": "Apresentação de slides",
+"es": "Diapositivas",
+"de": "Slideshow",
+"it": "Presentazione",
+"en": "Drenched In Dew",
+"ja": "スライドショー",
+"fr": "Diaporama"
+},
+"class" : "drenched-in-dew-section",
+"max_blocks": 6,
+"settings": [
+],
+"blocks": [
+{
+"type": "slide",
+"name": {
+"pt-BR": "Slide",
+"es": "Diapositiva",
+"de": "Folie",
+"it": "Slide",
+"en": "Slide",
+"ja": "スライド",
+"fr": "Diapositive"
+},
+"settings": [
+{
+"type" : "header",
+"content" : "For Desktop"
+},
+{
+"type": "image_picker",
+"id": "bg_image",
+"label": {
+"pt-BR": "Imagem",
+"es": "Imagen",
+"de": "Bild",
+"it": "Immagine",
+"en": "Background Image Left",
+"ja": "画像",
+"fr": "Image"
+}
+},
+{
+"type": "image_picker",
+"id": "rbg_image",
+"label": {
+"pt-BR": "Imagem",
+"es": "Imagen",
+"de": "Bild",
+"it": "Immagine",
+"en": "Background Image Right",
+"ja": "画像",
+"fr": "Image"
+}
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": {
+"pt-BR": "Imagem",
+"es": "Imagen",
+"de": "Bild",
+"it": "Immagine",
+"en": "Image",
+"ja": "画像",
+"fr": "Image"
+}
+},
+{
+"type": "header",
+"content": {
+"pt-BR": "Texto",
+"es": "texto",
+"de": "Text",
+"it": "Testo",
+"en": "Text",
+"ja": "テキスト",
+"fr": "Texte"
+}
+},
+{
+"type": "text",
+"id": "slide_heading_part",
+"label": {
+"pt-BR": "Texto do título",
+"es": "Texto del encabezado",
+"de": "Überschriftentext",
+"it": "Testo del titolo",
+"en": "Heading text",
+"ja": "見出しテキスト",
+"fr": "Texte du titre"
+}
+},
+{
+"type": "text",
+"id": "slide_heading",
+"label": {
+"pt-BR": "Texto do título",
+"es": "Texto del encabezado",
+"de": "Überschriftentext",
+"it": "Testo del titolo",
+"en": "Sub Heading text",
+"ja": "見出しテキスト",
+"fr": "Texte du titre"
+},
+"default": {
+"pt-BR": "Banner do Hero",
+"es": "Banner destacado",
+"de": "Hero-Banner",
+"it": "Banner hero",
+"en": "Hero Banner",
+"ja": "ヒーローバナー",
+"fr": "Bannière de premier plan"
+}
+},
+{
+"type": "html",
+"id": "slide_subheading",
+"label": {
+"pt-BR": "Texto do subtítulo",
+"es": "Texto del subtítulo",
+"de": "Untertiteltext",
+"it": "Testo del sottotitolo",
+"en": "Content",
+"ja": "小見出しテキスト",
+"fr": "Texte du sous-titre"
+},
+"default": {
+"pt-BR": "Uma introdução",
+"es": "Frase introductoria",
+"de": "Für den Einstieg:",
+"it": "Come introduzione",
+"en": "An introductory",
+"ja": "紹介",
+"fr": "Introduction"
+}
+},
+{
+"type": "text",
+"id": "slide_cta",
+"label": {
+"pt-BR": "Texto do botão",
+"es": "Botón de texto",
+"de": "Schaltflächentext",
+"it": "Testo pulsante",
+"en": "Button text",
+"ja": "ボタンテキスト",
+"fr": "Texte du bouton"
+},
+"default": {
+"pt-BR": "Compre agora",
+"es": "Compra ya",
+"de": "Jetzt shoppen",
+"it": "Acquista ora",
+"en": "Shop now",
+"ja": "今すぐ購入",
+"fr": "Acheter maintenant"
+}
+},
+{
+"type": "url",
+"id": "slide_link",
+"label": {
+"pt-BR": "Link do slide",
+"es": "Enlace de la diapositiva",
+"de": "Folienlink",
+"it": "Link slide",
+"en": "Slide link",
+"ja": "スライドリンク",
+"fr": "Lien de diapositive"
+}
+},
+{
+"type" : "header",
+"content" : "For Mobile"
+},
+{
+"type": "image_picker",
+"id": "mob_bg_image",
+"label": {
+"pt-BR": "Imagem",
+"es": "Imagen",
+"de": "Bild",
+"it": "Immagine",
+"en": "Background Image Left",
+"ja": "画像",
+"fr": "Image"
+}
+},
+{
+"type": "image_picker",
+"id": "rmob_bg_image",
+"label": {
+"pt-BR": "Imagem",
+"es": "Imagen",
+"de": "Bild",
+"it": "Immagine",
+"en": "Background Image Right",
+"ja": "画像",
+"fr": "Image"
+}
+},
+{
+"type": "image_picker",
+"id": "mob_image",
+"label": {
+"pt-BR": "Imagem",
+"es": "Imagen",
+"de": "Bild",
+"it": "Immagine",
+"en": "Image",
+"ja": "画像",
+"fr": "Image"
+}
+},
+{
+"type": "header",
+"content": {
+"pt-BR": "Texto",
+"es": "texto",
+"de": "Text",
+"it": "Testo",
+"en": "Text",
+"ja": "テキスト",
+"fr": "Texte"
+}
+},
+{
+"type": "text",
+"id": "mob_slide_heading_part",
+"label": {
+"pt-BR": "Texto do título",
+"es": "Texto del encabezado",
+"de": "Überschriftentext",
+"it": "Testo del titolo",
+"en": "Heading text",
+"ja": "見出しテキスト",
+"fr": "Texte du titre"
+}
+},
+{
+"type": "text",
+"id": "mob_slide_heading",
+"label": {
+"pt-BR": "Texto do título",
+"es": "Texto del encabezado",
+"de": "Überschriftentext",
+"it": "Testo del titolo",
+"en": "Sub Heading text",
+"ja": "見出しテキスト",
+"fr": "Texte du titre"
+},
+"default": {
+"pt-BR": "Banner do Hero",
+"es": "Banner destacado",
+"de": "Hero-Banner",
+"it": "Banner hero",
+"en": "Hero Banner",
+"ja": "ヒーローバナー",
+"fr": "Bannière de premier plan"
+}
+},
+{
+"type": "html",
+"id": "mob_slide_subheading",
+"label": {
+"pt-BR": "Texto do subtítulo",
+"es": "Texto del subtítulo",
+"de": "Untertiteltext",
+"it": "Testo del sottotitolo",
+"en": "Content",
+"ja": "小見出しテキスト",
+"fr": "Texte du sous-titre"
+},
+"default": {
+"pt-BR": "Uma introdução",
+"es": "Frase introductoria",
+"de": "Für den Einstieg:",
+"it": "Come introduzione",
+"en": "An introductory",
+"ja": "紹介",
+"fr": "Introduction"
+}
+},
+{
+"type": "text",
+"id": "mob_slide_cta",
+"label": {
+"pt-BR": "Texto do botão",
+"es": "Botón de texto",
+"de": "Schaltflächentext",
+"it": "Testo pulsante",
+"en": "Button text",
+"ja": "ボタンテキスト",
+"fr": "Texte du bouton"
+},
+"default": {
+"pt-BR": "Compre agora",
+"es": "Compra ya",
+"de": "Jetzt shoppen",
+"it": "Acquista ora",
+"en": "Shop now",
+"ja": "今すぐ購入",
+"fr": "Acheter maintenant"
+}
+},
+{
+"type": "url",
+"id": "mob_slide_link",
+"label": {
+"pt-BR": "Link do slide",
+"es": "Enlace de la diapositiva",
+"de": "Folienlink",
+"it": "Link slide",
+"en": "Slide link",
+"ja": "スライドリンク",
+"fr": "Lien de diapositive"
+}
+}
+]
+}
+],
+"presets": [
+{
+"name": {
+"en": "Drenched In Dew"
+},
+"category": {
+"en": "Image"
+}
+}
+]
+}
+{% endschema %}

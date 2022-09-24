@@ -1,0 +1,18 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/articles/edit-field/48586
+{% endcomment %}
+{% if article.metafields.custom_fields["lifestage"] != blank %}
+  <div class="custom-field custom-field__lifestage custom-field__type--text-list">
+    <h3 class="custom-field--title">Lifestage</h3>
+    <div class="custom-field--value">  
+      {% assign values = article.metafields.custom_fields["lifestage"] | split: "|" %}
+      <ul>
+      {% for value in values %}
+        <li>{{ value }}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}

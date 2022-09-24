@@ -1,0 +1,14 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/articles/edit-field/40539
+{% endcomment %}
+{% if article.metafields.custom_fields["collection"] != blank %}
+  <div class="custom-field custom-field__collection custom-field__type--collection-reference">
+    <h3 class="custom-field--title">Collection</h3>
+    <div class="custom-field--value">  
+      {% assign collection_ref = collections[article.metafields.custom_fields["collection"]] %}
+      {{ collection_ref.title | link_to: collection_ref.url }}
+    </div>
+  </div>
+{% endif %}

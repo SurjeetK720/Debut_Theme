@@ -1,0 +1,154 @@
+<div class="wrapper">
+  {% if section.settings.section_title != blank %}
+  <div class="section-header text-center">
+    <h2 class="section-header__title h1 text-center"><span>{{ section.settings.section_title }}</span></h2>
+  </div>
+  {% endif %}
+  <div class="grid">
+    {% for block in section.blocks %}
+    {% case block.settings.width %}
+    {% when '20%' %}
+    {%- assign block_width = 'small--one-fifth one-fifth' -%}
+    {% when '25%' %}
+    {%- assign block_width = 'small--one-fifth one-quarter' -%}
+    {% when '33%' %}
+    {%- assign block_width = 'small--one-fifth one-third' -%}
+    {% when '50%' %}
+    {%- assign block_width = 'small--one-fifth one-half' -%}
+    {% when '66%' %}
+    {%- assign block_width = 'small--one-fifth two-thirds' -%}
+    {% when '75%' %}
+    {%- assign block_width = 'small--one-fifth three-quarters' -%}
+    {% when '100%' %}
+    {%- assign block_width = 'one-whole' -%}
+    {% endcase %}
+    <div class="grid__item {{ block_width }}" {{ block.shopify_attributes }}>
+      {% case block.type %}
+      {% when 'html' %}
+      {% if block.settings.image != blank %}
+      <div class="favourites--image_wrapper">
+        {% if block.settings.url != blank %}
+        <a href="{{ block.settings.url }}">
+          {% endif %}
+          <img src="{{ block.settings.image | img_url : 'original' }}" alt="{{ block.settings.image.alt }}"  />
+          {% if block.settings.url != blank %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% endcase %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+"name": {
+"en": "Shop your favourites"
+},
+"class" : "shop-your-favourites",
+"max_blocks": 10,
+"settings":[
+{
+"type": "text",
+"id": "section_title",
+"label": {
+"it": "Heading"
+},
+"default": {
+"en": "Shop your favourites"
+}
+}
+],
+"blocks": [
+{
+"type": "html",
+"name": {
+"en": "Shop your favourites"
+},
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": {
+"en": "Image"
+}
+},
+{
+"type" : "url",
+"id" : "url",
+"label" : "URL"
+},
+{
+"type": "select",
+"id": "width",
+"label": {
+"en": "Container width"
+},
+"default": "100%",
+"options": [
+{
+"value": "20%",
+"label": {
+"en": "20%"
+}
+},
+{
+"value": "25%",
+"label": {
+"en": "25%"
+}
+},
+{
+"value": "33%",
+"label": {
+"en": "33%"
+}
+},
+{
+"value": "50%",
+"label": {
+"en": "50%"
+}
+},
+{
+"value": "66%",
+"label": {
+"en": "66%"
+}
+},
+{
+"value": "75%",
+"label": {
+"en": "75%"
+}
+},
+{
+"value": "100%",
+"label": {
+"en": "100%"
+}
+}
+]
+}
+]
+}
+],
+"presets": [
+{
+"name": {
+"en": "Shop your favourites"
+},
+"category": {
+"en": "Advanced layout"
+},
+"blocks": [
+{
+"type": "html"
+}
+]
+}
+]
+}
+{% endschema %}

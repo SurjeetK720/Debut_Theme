@@ -1,0 +1,87 @@
+<!-- snippets/lakmeContent-image-grid.liquid -->
+<style>
+
+  .custom-mobile-pSize {
+    font-size : 20px;
+    line-height: 28px;
+  }
+
+  .hr-grid-images {
+    width: 100%;
+    height: 410px;
+    margin-bottom: 5px;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+
+  .hr-ml-custom {
+    margin-left : -2px;
+  }
+
+  @media screen and (max-width : 1200px) {
+    .hr-grid-images {
+      height : 360px;
+    }
+  }
+
+  @media screen and (max-width : 1024px) {
+    .hr-grid-images {
+      height : 300px;
+    }
+  }
+
+  @media screen and (max-width : 1024px) {
+    .hr-grid-images {
+      width : 45%;
+      /*       height: 100%; */
+    }
+  }
+
+  @media screen and (max-width : 640px) {
+    .hr-grid-images {
+      width  : 80%;
+      height : 80%;
+      margin : 0 auto;
+    }
+
+    .hr-custom-grid-img:nth-child(2) {
+      padding : 0 0px !important;
+    }
+
+    .hr-custom-grid-img:last-child {
+      padding : 0px !important;
+    }
+
+    .hr-custom-grid-img:first-child {
+      padding : 0px !important;
+    }
+
+    .custom-mobile-pSize {
+      font-size : 18px;
+    }
+  }
+</style>
+<div class="grid text-center contentWidget hr-ml-custom">
+  <div class="grid__item contentWidget-heading">
+    {% if contentWidget.heading != blank %}
+    <span class="h5 contentWidget-heading">{{ contentWidget.heading }}</span>
+    {% endif %}
+  </div>
+  <div class="contentWidget-content">
+    {% assign imageSerial = 0 %}
+    {% for contentImage in contentWidget.images %}
+    {% assign imageSerial = imageSerial | plus: 1 %}
+    {% assign imageModulo = imageSerial | modulo: 3 %}
+    <div class="grid__item large--one-third small--one-whole hr-custom-grid-img" style="padding: 0 2%;">
+      <img class="hr-grid-images" src="{{ contentImage.image }}" alt="{{ contentWidget.altText }}" />
+      {% if contentImage.text != blank %}
+      <p class="text-left custom-mobile-pSize">{{ contentImage.text }}</p>
+      {% endif %}
+    </div>
+    {% if imageModulo == 0 %}
+    <div class="clearfix"></div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>

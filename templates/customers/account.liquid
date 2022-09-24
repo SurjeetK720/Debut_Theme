@@ -1,0 +1,35 @@
+<!-- /templates/customers/account.liquid -->
+{% comment %}
+
+  For all available customer liquid tags:
+    - http://docs.shopify.com/themes/liquid-variables/customer
+
+{% endcomment %}
+
+{% paginate customer.orders by 20 %}
+
+<header class="section-header text-center">
+  <h1>{{ 'customer.account.title' | t }}</h1>
+  {{ 'layout.customer.log_out'| t | customer_logout_link }}
+  <hr class="hr--small">
+</header>
+
+<div class="grid">
+
+  <div class="grid__item one-whole medium-down--one-whole text-center">
+    <h3>{{ 'customer.account.details' | t }}</h3>
+
+    <p class="h5">{{ customer.name }}</p>
+
+    {{ customer.default_address | format_address }}
+
+    <p><a href="/account/addresses" class="text-link">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+  </div>
+
+</div>
+
+{% if paginate.pages > 1 %}
+  {% include 'pagination' %}
+{% endif %}
+{% endpaginate %}
+

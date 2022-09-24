@@ -1,0 +1,80 @@
+{% if section.blocks != blank %}
+<div class="blocks-wrapper lips-blk">
+ {% if section.settings.heading != blank %}
+  <div class="lips-heading">
+    {{section.settings.heading}}
+  </div>
+  {% endif %}
+  {% if section.settings.content != blank %}
+  <div class="lips-paragraph">
+    <p>{{section.settings.content}}</p>
+  </div>
+  {% endif %}
+  <div class="wrapper">
+  <div class="collection-img-wrapper">
+  {% for block in section.blocks %}
+  <div class="img-blocks" id='{{block.settings.collection}}'>
+    <img src="{{ block.settings.image | img_url : 'original' }}" width="140px" height="140px" alt="{{ block.settings.image.alt }}" />
+  </div>
+  {% endfor %}
+  </div>
+  <div class="collection-slider-wrapper">
+    {% assign count = 0 %}
+    {% for block in section.blocks %}
+     {% assign collection = collections[block.settings.collection] %}
+    <div class="blocks-product-slider {{block.settings.collection}} slick-{{count}}">
+      {% for product in collection.products %}
+    	{% include 'product-grid-item' %}
+      {% endfor%}
+      {% assign count = count | plus:1 %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Desktop Lip Blocks",
+     "settings": [
+    {
+    "type" : "html",
+    "id" : "heading",
+    "label" : "Enter Heading"
+    },
+	{
+    "type" : "textarea",
+    "id" : "content",
+    "label" : "Enter Content"
+    }
+],
+  "blocks": [
+  {
+  "type": "html",
+  "name": {
+  "en": "Lip Blocks"
+  },
+  "settings": [
+  {
+  "type": "collection",
+  "id": "collection",
+  "label": {
+  "en": "Collection"
+  }
+  },
+  {
+  "type" : "image_picker",
+  "id" : "image",
+  "label" : "Block Image"
+  }
+  ]
+  }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

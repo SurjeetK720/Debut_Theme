@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/products/edit-field/35018
+{% endcomment %}
+{% if product.metafields.custom_fields["application"] != blank %}
+  <div class="custom-field custom-field__application custom-field__type--html">
+    <h3 class="custom-field--title">application</h3>
+    <div class="custom-field--value">
+      {{ product.metafields.custom_fields["application"] }}
+    </div>
+  </div>
+{% endif %}

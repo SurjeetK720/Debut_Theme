@@ -1,0 +1,261 @@
+<div class="grid">
+  <div class="grid__item small--one-whole large--one-half large--text-left medium--text-center small--text-center">
+    {% if section.settings.enable_book %} 
+    <div class="book_a_visit">
+      {% if section.settings.book_heading %}<h5 class="head">{{ section.settings.book_heading }}</h5>{% endif %}
+      {% if section.settings.book_content %}<p class="content">{{ section.settings.book_content }}</p>{% endif %}
+    </div>
+    {% endif %}
+    {% if section.settings.enable_lakme %}
+    <div class="own_lakme_salon">
+      {% if section.settings.salon_heading %}<h5 class="head">{{ section.settings.salon_heading }}</h5>{% endif %}
+      {% if section.settings.salon_mailto %}<p class="content">{{ section.settings.salon_subhead}}<a href="mailto:{{ section.settings.salon_content }}">{{ section.settings.salon_content }}</a></p>{% endif %}
+      {% if section.settings.salon_content != blank and section.settings.salon_url != blank and section.settings.salon_mailto == false %}
+      <p class="content">
+        {{ section.settings.salon_subhead }}
+        <a href="{{ section.settings.salon_url }}">{{ section.settings.salon_content }}</a>
+      </p>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if section.settings.enable_work %}
+    <div class="work_at_lakme">
+      {% if section.settings.work_heading %}<h5 class="head">{{ section.settings.work_heading }}</h5>{% endif %}
+      {% if section.settings.work_subheading %}<p class="subhead">{{ section.settings.work_subheading }}</p>{% endif %}
+      {% if section.settings.back_mailto %}
+      <p class="content">
+        <a href="mailto:{{ section.settings.back_content }}">
+          {{ section.settings.back_content }}
+        </a>
+      </p>
+      {% endif %}
+      {% if section.settings.back_content != blank and section.settings.back_url != blank and section.settings.back_mailto == false %}
+      <p class="content">
+        <a href="{{ section.settings.back_url }}">
+          {{ section.settings.back_content }}
+        </a>
+      </p>
+      {% endif %}
+      {% if section.settings.email_mailto %}
+      <p class="content">
+        {% if section.settings.work_text != blank %}
+        {{ section.settings.work_text }}
+        <br>
+        {% endif %}
+        {{ section.settings.email_subhead}}
+        <a href="mailto:{{ section.settings.email_link }}">
+          {{ section.settings.email_link }}
+        </a>
+      </p>
+      {% endif %}
+      {% if section.settings.email_link != blank and section.settings.email_url != blank and section.settings.email_mailto == false %}
+      <p class="content">
+        {% if section.settings.work_text != blank %}
+        {{ section.settings.work_text }}
+        <br>
+        {% endif %}
+        {{ section.settings.email_subhead }}
+        <a href="{{ section.settings.email_url }}">{{ section.settings.email_link }}</a>
+      </p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="grid__item large--one-half small--one-whole">
+    <div class="form-vertical">
+      {% form 'contact' %}
+
+      {% comment %}
+      Successful message
+      {% endcomment %}
+      {% if form.posted_successfully? %}
+      <p class="note form-success">
+        {{ 'contact.form.post_success' | t }}
+      </p>
+      {% endif %}
+
+      {{ form.errors | default_errors }}
+
+      <div class="grid grid--small">
+        <div class="grid__item large--one-whole">
+          <h5 class="head large--text-left small--text-center medium--text-center">{{ 'contact.form.heading' | t }}</h5>
+        </div> 
+        <div class="grid__item large--one-whole">
+          <label for="ContactFormName" class="hidden-label">{{ 'contact.form.firstname' | t }}</label>
+          <input type="text" id="ContactFormFirstName" class="input-full" name="contact[firstname]" placeholder="{{ 'contact.form.firstname' | t }}" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          <span class="firstname__error form-error"></span>
+        </div>
+        <div class="grid__item large--one-whole">
+          <label for="ContactFormName" class="hidden-label">{{ 'contact.form.lastname' | t }}</label>
+          <input type="text" id="ContactFormLastName" class="input-full" name="contact[lastname]" placeholder="{{ 'contact.form.lastname' | t }}" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          <span class="lastname__error form-error"></span>
+        </div>
+        <div class="grid__item large--one-whole">
+          <label for="ContactFormPhone" class="hidden-label">{{ 'contact.form.phone' | t }}</label>
+          <input type="tel" id="ContactFormPhone" class="input-full" name="contact[phone]" placeholder="{{ 'contact.form.phone' | t }}" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+          <span class="phone__error form-error"></span>
+        </div>
+
+        <div class="grid__item large--one-whole">
+          <label for="ContactFormEmail" class="hidden-label">{{ 'contact.form.email' | t }}</label>
+          <input type="email" id="ContactFormEmail" class="input-full" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+          <span class="email__error form-error"></span>
+        </div>
+      </div>
+      <label for="ContactFormMessage" class="hidden-label">{{ 'contact.form.message' | t }}</label>
+      <textarea rows="10" id="ContactFormMessage" class="input-full" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+      <span class="message__error form-error"></span>
+      <p class="msg-recieve">
+        Contact Us and be the first to know about exciting offers, product updates and more from Lakmé and other Unilever brands. For furthur information, please refer to our <a href="https://lakmeindia.com/pages/privacy-policy">Privacy Policy</a> 
+      </p>
+      {% comment %}
+      <div class="msg-sec">
+        <span class="msg-checkbox"> <input type="radio" name="contact[Receive Updates]" id="recieve" class="input-full" value="I would like to receive such offers"></span>
+        <span class="msg-text"><label for="recieve">Yes, I would like to recieve such offers.</label></span>
+      </div>
+      <span class="recieve__error form-error"></span>
+      {% endcomment %}
+      <div class="msg-sec">
+        <span class="msg-checkbox"><input type="checkbox" name="contact[Receive Updates]" id="recievelakme" class="input-full" value="I am above the age of 18, and I would like to receive these news and offers from brand Lakmé"></span>
+        <span class="msg-text"> <label for="recievelakme">I am above the age of 18, and I would like to receive these news and offers from brand Lakmé</label></span>
+      </div>
+      <span class="recievepond__error form-error"></span>
+      <button type="submit" class="btn cont-btn" id="contact__button" value="{{ 'contact.form.send' | t }}">{{ 'contact.form.send' | t }}</button>
+
+      {% endform %}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+"name": "Contact page",
+"settings": [
+{
+"type" : "header",
+"content" : "Book a visit"
+},
+{
+"type" : "checkbox",
+"id" : "enable_book",
+"label" : "Enable book a visit"
+},
+{
+"type" : "text",
+"id" : "book_heading",
+"label" : "Heading"
+},
+{
+"type" : "html",
+"id" : "book_content",
+"label" : "Content"
+},
+{
+"type" : "header",
+"content" : "Own a lakme salon"
+},
+{
+"type" : "checkbox",
+"id" : "enable_lakme",
+"label" : "Enable own a lakme salon"
+},
+{
+"type" : "text",
+"id" : "salon_heading",
+"label" : "Heading"
+},
+{
+"type" : "checkbox",
+"id" : "salon_mailto",
+"label" : "Enable MailTo"
+},
+{
+"type" : "text",
+"id" : "salon_subhead",
+"label" : "Subheading"
+},
+{
+"type" : "text",
+"id" : "salon_content",
+"label" : "Content"
+},
+{
+"type" : "url",
+"id" : "salon_url",
+"label" : "Url"
+},
+{
+"type" : "header",
+"content" : "Work at lakme"
+},
+{
+"type" : "checkbox",
+"id" : "enable_work",
+"label" : "Enable work at lakme"
+},
+{
+"type" : "text",
+"id" : "work_heading",
+"label" : "Heading"
+},
+{
+"type" : "text",
+"id" : "work_subheading",
+"label" : "Sub Heading"
+},
+{
+"type" : "header",
+"content" : "Backstage expert content"
+},
+{
+"type" : "checkbox",
+"id" : "back_mailto",
+"label" : "Enable MailTo"
+},
+{
+"type" : "text",
+"id" : "back_content",
+"label" : "Backstage expert link"
+},
+{
+"type" : "url",
+"id" : "back_url",
+"label" : "Backstage expert url"
+},
+{
+"type" : "textarea",
+"id" : "work_text",
+"label" : "Query Details"
+},
+{
+"type" : "header",
+"content" : "Email Content"
+},
+{
+"type" : "checkbox",
+"id" : "email_mailto",
+"label" : "Enable MailTo"
+},
+{
+"type" : "text",
+"id" : "email_subhead",
+"label" : "Subheading"
+},
+{
+"type" : "text",
+"id" : "email_link",
+"label" : "Email content"
+},
+{
+"type" : "text",
+"id" : "email_url",
+"label" : "Email url"
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

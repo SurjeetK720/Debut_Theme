@@ -1,0 +1,39 @@
+{{ 'jquery.fancybox.css' | asset_url | stylesheet_tag }}
+{{ 'jquery.fancybox.js' | asset_url | script_tag }}  
+
+{% form 'customer' %}
+{{ form.errors | default_errors }}
+{% if form.posted_successfully? %}
+<div class="form--submission__success text-center newsletter--form" id="inline1">
+  <div class="form--submission__image"><img src="{{ 'thankyou-arrow.jpg' | asset_url }}" alt="" /></div>
+  <div class="form--submission__thankyou">Thank you !</div>
+  <div class="form--submission__content">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>
+</div>
+<div class="newsletter--form">
+  <div class="note form-success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.fancybox("#inline1");
+  })
+</script>
+{% else %}
+<label for="Email" class="newsletter__label hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+<input type="hidden" name="contact[tags]" value="newsletter">
+<div class="newsletter--form">
+  <div class="input-group">
+    <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" onfocus="this.placeholder = ''"
+           onblur="this.placeholder = '{{ 'general.newsletter_form.newsletter_placeholder' | t }}'" name="contact[email]" id="Email" class="input-group-field newsletter__input" autocorrect="off" autocapitalize="off">
+    <span class="email__error1 form-error" style="display:none"></span>
+    <span class="input-group-btn">
+      <button type="submit" class="btn newsletter__submit" name="commit" id="Subscribe">
+        <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
+        <span class="newsletter__submit-text--small">
+          <span class="icon icon-arrow-right" aria-hidden="true"></span>
+        </span>
+      </button>
+    </span>
+  </div>
+</div>
+{% endif %}
+{% endform %}

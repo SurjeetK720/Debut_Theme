@@ -1,0 +1,54 @@
+{% if section.settings.image != blank %}
+<div class="grid natural-banner bottom-banner">
+  <div class="grid__item one-whole" >
+    {% if section.settings.url != blank %}
+    <a href="{{section.settings.url}}">
+      {% endif %}
+      <img class="natural-img for-desktop"  src="{{ section.settings.image | img_url : '1920x'}}" alt="{{ section.settings.image.alt | escape }}" />
+      <img class="natural-img for-ipad"  src="{{ section.settings.image1 | img_url : '1920x'}}" alt="{{ section.settings.image1.alt | escape }}" />
+      <img class="natural-img for-mobile"  src="{{ section.settings.image2 | img_url : '1920x'}}" alt="{{ section.settings.image2.alt | escape }}" />
+      {% if section.settings.url != blank %}
+    </a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Bottom banner Section",
+	"class":"natural-section",
+    "settings": [
+	{
+      "type" : "url",
+      "id" : "url",
+      "label" : "Choose URL"
+    },
+    {
+      "type" : "image_picker",
+      "id" : "image",
+      "label" : "Background Image Desktop"
+    },
+    {
+    "type" : "image_picker",
+    "id" : "image1",
+    "label" : "Background Image Ipad"
+    },
+    {
+    "type" : "image_picker",
+    "id" : "image2",
+    "label" : "Background Image Mobile"
+    },
+	{
+      "type" : "html",
+      "id" : "content",
+      "label" : "Content"
+    }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

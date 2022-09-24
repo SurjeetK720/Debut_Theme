@@ -1,0 +1,65 @@
+<div class="grid natural-block-wrapper">
+  <div class="grid__item one-whole">
+    <div class="natural-block-wrapper left-content">
+    {% if section.settings.image != blank  %}
+    <div class="block-img" >
+      <img class="natural-img" src="{{ section.settings.image | img_url : '1920x'}}" alt="{{ section.settings.image.alt | escape }}" />
+      {% if section.settings.heading != blank %}
+      <div class="natural-content">
+       <div class="natural-block-heading">{{section.settings.heading}}</div>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% if section.blocks != blank %}
+    <div class="natural-product"> 
+        <div class="wrapper">
+          <div class="grid--full">
+            {% for block in section.blocks %}
+            {% assign product = all_products[block.settings.product] %}
+            {% include 'product-grid-item' %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Natural Blocks",
+	"class":"natural-blocks",
+    "settings": [
+    {
+    "type" : "image_picker",
+    "id" : "image",
+    "label" : "Background Image"
+    },
+    {
+    "type" : "html",
+    "id" : "heading",
+    "label" : "Heading"
+    }
+],
+	"blocks": [
+{
+  "type":"product",
+  "name": "Product",
+  "settings": [
+{
+  "type": "product",
+  "id": "product",
+  "label": "Choose Product"
+}
+]
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

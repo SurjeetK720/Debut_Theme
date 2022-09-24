@@ -1,0 +1,37 @@
+<!-- snippets/lakmeContent-banner.liquid -->
+<style>
+    .a-plus-banner {
+        width : 100%
+    }
+
+    .hr-custom-banner-p a {
+        font-style : italic;
+        color      : #f60033 !important;
+    }
+
+    .hr-custom-pad-banner {
+        margin-top    : 20px;
+        margin-bottom : 20px;
+    }
+
+    @media screen and (max-width : 640px) {
+        .hr-custom-banner-p a {
+            font-size : 16px;
+        }
+    }
+</style>
+<div class="grid text-center contentWidget contentWidget-{{ contentWidget.type }} hr-custom-banner-width">
+    <div class="grid__item text-left contentWidget-heading">
+        {% if contentWidget.heading != blank %}
+            <span class="h5 contentWidget-heading">{{ contentWidget.heading }}</span>
+        {% endif %}
+    </div>
+    <div class="contentWidget-content">
+        <div class="grid__item text-left hr-custom-pad-banner">
+            <img class="a-plus-banner" src="{{ contentWidget.image }}" alt="{{ contentWidget.altText }}" />
+            {% if contentWidget.postContent != blank %}
+                <p class="hr-custom-banner-p">{{ contentWidget.postContent }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,397 @@
+{% if section.blocks.size > 0 %}
+<div class="wrapper1">
+  <div class="discover-section display-table">
+    <div class="grid-top text-center">
+      <ul class="tabs1">
+        {% assign count = 0 %}
+        <li class="tab-link1 current" data-tab="tab-0" style="display:none" id="hidethisslide">All</li>
+        {% for block in section.blocks %}
+        {% assign blog = block.settings.blog %}
+        {% assign count = count | plus : 1 %}
+        <li class="tab-link1" data-tab="tab-{{ count }}">
+          <div class="overlay-content">
+            {% if block.settings.blog_image != blank %}
+            <img src="{{ block.settings.blog_image | img_url : 'original' }}" alt="{{ block.settings.blog_image.alt }}" />
+            {% endif %}
+            {% if blog == 'how-tos' %}
+            <span>how-to's</span>
+            {% else %}
+            <span>{{ blog | replace: '-', ' ' }}</span>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="grid">
+      <div id="tab-0" class="tab-content1 current">
+        {% assign count2 = 0 %}
+        {% assign article_count = 0 %}
+        {% for block in section.blocks %}
+        {% assign count2 = count2 | plus : 1 %}
+        {% assign blog = block.settings.blog  %}
+        {% assign blog_new = blog | downcase %}
+        {% for article in blogs[blog_new].articles %}
+        {% assign article_count = article_count | plus : 1 %}
+        {% assign article_mod = article_count | modulo:2 %}
+        {% if article_mod == 0 %}
+        <div class="text-alignment__right display-table swatch--none ">
+          <div class="grid__item five-eighths medium--one-half small--one-whole display-table-cell trend-content-section">
+            {% if blog == 'how-tos' %}
+            <a href="/pages/{{ blog }}" class="blog-category small--hide medium-down--hide"><span>how-to's</span></a>
+            {% else %}
+            <a href="/pages/{{ blog }}" class="blog-category small--hide medium-down--hide"><span>{{ blog | replace: '-', ' ' }}</span></a>
+            {% endif %}
+            {% if article.excerpt != blank %}
+            <div class="background_text text-left" style="color:#333333">
+              {{ article.excerpt }}
+            </div>
+            <div class="large--hide large__heading trends--heading with-border ">
+              <a href="{{ article.url }}" style="color:#333333">
+                {{ article.excerpt }}
+              </a>
+            </div>
+            {% endif %}
+            <div class="grid__item five-twelfths medium--one-half small-one-whole trend-inner display-table-cell large--hide">
+              {% if article.metafields.custom_fields["image1"] != blank and article.metafields.custom_fields["featured--instagram_mobile"] == blank and article.metafields.custom_fields["featured--instagram_desktop"] == blank %}
+              <div class="trends--left_image  right-padding-img large--hide medium--hide">
+                <a href="{{ article.url }}">
+                  {{ article.metafields.custom_fields["image1"] }}
+                </a>
+              </div>
+              {% endif %}
+              {% if article.metafields.custom_fields["featured--instagram_mobile"] != blank %}
+              <div class="trends--left_image  left-padding-img insta--feed large--hide medium--hide">
+                {{ article.metafields.custom_fields["featured--instagram_mobile"] }}
+                <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+              </div>
+              {% endif %}
+              {% if blog == 'how-tos' %}
+              <a href="/pages/{{ blog }}" class="blog-category"><span>how-to's</span></a>
+              {% else %}
+              <a href="/pages/{{ blog }}" class="blog-category"><span>{{ blog | replace: '-', ' ' }}</span></a>
+              {% endif %}
+            </div>
+            <div class="trends--right_image trends__right-2">
+              <div class="trends--right_image1">
+                {% if article.excerpt != blank %}
+                <div class="small--hide medium--hide large__heading trends--heading with-border ">
+                  <a href="{{ article.url }}" style="color:#333333">
+                    {{ article.excerpt }}
+                  </a>
+                </div>
+                {% endif %}
+                <div class="trends--content">
+                  <a href="{{ article.url }}">
+                    <p>
+                    {% if article.content != blank %}
+                    {{ article.content }}
+                    {% else %}
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    {% endif %}
+                    <span class="hero__cta">Read More</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid__item three-eighths medium--one-half small-one-whole trend-inner display-table-cell medium-down--hide">
+            {% if article.metafields.custom_fields["image1"] != blank and article.metafields.custom_fields["featured--instagram_mobile"] == blank and article.metafields.custom_fields["featured--instagram_desktop"] == blank %}
+            <div class="trends--left_image  right-padding-img">
+              <a href="{{ article.url }}">
+                {{ article.metafields.custom_fields["image1"] }}
+              </a>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["featured--instagram_desktop"] != blank %}
+            <div class="trends--left_image  left-padding-img insta--feed small--hide">
+              {{ article.metafields.custom_fields["featured--instagram_desktop"] }}
+              <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+        {% else %}
+        <div class="text-alignment__left display-table swatch--none">
+          <div class="grid__item three-eighths medium--one-half medium-down--one-whole trend-inner display-table-cell">
+            {% if article.excerpt != blank %}
+            <div class="large--hide  background_text text-left" style="color:#333333">
+              {{ article.excerpt }}
+            </div>
+            <div class="large--hide large__heading trends--heading with-border ">
+              <a href="{{ article.url }}" style="color:#333333">
+                {{ article.excerpt }}
+              </a>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["image1"] != blank and article.metafields.custom_fields["featured--instagram_mobile"] == blank and article.metafields.custom_fields["featured--instagram_desktop"] == blank %}
+            <div class="trends--left_image  left-padding-img">
+              <a href="{{ article.url }}" target="_blank">
+                {{ article.metafields.custom_fields["image1"] }}
+              </a>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["featured--instagram_desktop"] != blank %}
+            <div class="trends--left_image  left-padding-img insta--feed small--hide">
+              {{ article.metafields.custom_fields["featured--instagram_desktop"] }}
+              <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["featured--instagram_mobile"] != blank %}
+            <div class="trends--left_image  left-padding-img insta--feed large--hide medium--hide">
+              {{ article.metafields.custom_fields["featured--instagram_mobile"] }}
+              <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+            </div>
+            {% endif %}
+          </div>
+          <div class="grid__item five-eighths medium--one-half small--one-whole display-table-cell trend-content-section">
+            {% if blog == 'how-tos' %}
+            <a href="/pages/{{ blog }}" class="blog-category"><span>how-to's</span></a>
+            {% else %}
+            <a href="/pages/{{ blog }}" class="blog-category"><span>{{ blog | replace: '-', ' ' }}</span></a>
+            {% endif %}
+            {% if article.excerpt != blank %}
+            <div class="small--hide medium--hide background_text text-left" style="color:#333333">
+              {{ article.excerpt }}
+            </div>
+            <div class="trends--right_image trends__right-1">
+              <div class="trends--right_image1">
+                <div class="small--hide medium--hide large__heading trends--heading with-border ">
+                  <a href="{{ article.url }}" style="color:#333333">
+                    {{ article.excerpt }}
+                  </a>
+                </div>
+                <div class="trends--content">
+                  <a href="{{ article.url }}">
+                    <p>
+                    {% if article.content != blank %}
+                    {{ article.content }}
+                    {% else %}
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    {% endif %}
+                    <span class="hero__cta">Read more</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endfor %} 
+      </div>
+      {% assign count1 = 0 %}
+      {% assign article_count1 = 0 %}
+      {% for block in section.blocks %}
+      {% assign count1 = count1 | plus : 1 %}
+      <div id="tab-{{ count1 }}" class="tab-content1">
+        {% assign blog = block.settings.blog  %}
+        {% assign blog_new = blog | downcase %}
+        {% for article in blogs[blog_new].articles %}
+        {% assign article_count1 = article_count1 | plus : 1 %}
+        {% assign article_mod1 = article_count1 | modulo:2 %}
+        {% if article_mod1 == 0 %}
+        <div class="text-alignment__right display-table swatch--none ">
+          <div class="grid__item five-eighths medium--one-half small--one-whole display-table-cell trend-content-section">
+            {% if blog == 'how-tos' %}
+            <a href="/pages/{{ blog }}" class="blog-category small--hide medium-down--hide"><span>how-to's</span></a>
+            {% else %}
+            <a href="/pages/{{ blog }}" class="blog-category small--hide medium-down--hide"><span>{{ blog | replace: '-', ' ' }}</span></a>
+            {% endif %}
+            {% if article.excerpt != blank %}
+            <div class="background_text text-left" style="color:#333333">
+              {{ article.excerpt }}
+            </div>
+            <div class="large--hide large__heading trends--heading with-border ">
+              <a href="{{ article.url }}" style="color:#333333">
+                {{ article.excerpt }}
+              </a>
+            </div>
+            {% endif %}
+            <div class="grid__item five-twelfths medium--one-half small-one-whole trend-inner display-table-cell large--hide">
+              {% if article.metafields.custom_fields["image1"] != blank and article.metafields.custom_fields["featured--instagram_mobile"] == blank and article.metafields.custom_fields["featured--instagram_desktop"] == blank %}
+              <div class="trends--left_image  right-padding-img large--hide medium--hide">
+                <a href="{{ article.url }}">
+                  {{ article.metafields.custom_fields["image1"] }}
+                </a>
+              </div>
+              {% endif %}
+              {% if article.metafields.custom_fields["featured--instagram_mobile"] != blank %}
+              <div class="trends--left_image  left-padding-img insta--feed large--hide medium--hide">
+                {{ article.metafields.custom_fields["featured--instagram_mobile"] }}
+                <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+              </div>
+              {% endif %}
+              {% if blog == 'how-tos' %}
+              <a href="/pages/{{ blog }}" class="blog-category"><span>how-to's</span></a>
+              {% else %}
+              <a href="/pages/{{ blog }}" class="blog-category"><span>{{ blog | replace: '-', ' ' }}</span></a>
+              {% endif %}
+            </div>
+            <div class="trends--right_image trends__right-2">
+              <div class="trends--right_image1">
+                {% if article.excerpt != blank %}
+                <div class="small--hide medium--hide large__heading trends--heading with-border ">
+                  <a href="{{ article.url }}" style="color:#333333">
+                    {{ article.excerpt }}
+                  </a>
+                </div>
+                {% endif %}
+                <div class="trends--content">
+                  <a href="{{ article.url }}">
+                    <p>
+                    {% if article.content != blank %}
+                    {{ article.content }}
+                    {% else %}
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    {% endif %}
+                    <span class="hero__cta">Read More</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid__item three-eighths medium--one-half small-one-whole trend-inner display-table-cell medium-down--hide">
+            {% if article.metafields.custom_fields["image1"] != blank and article.metafields.custom_fields["featured--instagram_mobile"] == blank and article.metafields.custom_fields["featured--instagram_desktop"] == blank %}
+            <div class="trends--left_image  right-padding-img">
+              <a href="{{ article.url }}">
+                {{ article.metafields.custom_fields["image1"] }}
+              </a>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["featured--instagram_desktop"] != blank %}
+            <div class="trends--left_image  left-padding-img insta--feed small--hide">
+              {{ article.metafields.custom_fields["featured--instagram_desktop"] }}
+              <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+        {% else %}
+        <div class="text-alignment__left display-table swatch--none">
+          <div class="grid__item three-eighths medium--one-half medium-down--one-whole trend-inner display-table-cell">
+            {% if article.excerpt != blank %}
+            <div class="large--hide  background_text text-left" style="color:#333333">
+              {{ article.excerpt }}
+            </div>
+            <div class="large--hide large__heading trends--heading with-border ">
+              <a href="{{ article.url }}" style="color:#333333">
+                {{ article.excerpt }}
+              </a>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["image1"] != blank and article.metafields.custom_fields["featured--instagram_mobile"] == blank and article.metafields.custom_fields["featured--instagram_desktop"] == blank %}
+            <div class="trends--left_image  left-padding-img">
+              <a href="{{ article.url }}" target="_blank">
+                {{ article.metafields.custom_fields["image1"] }}
+              </a>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["featured--instagram_desktop"] != blank %}
+            <div class="trends--left_image  left-padding-img insta--feed small--hide">
+              {{ article.metafields.custom_fields["featured--instagram_desktop"] }}
+              <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+            </div>
+            {% endif %}
+            {% if article.metafields.custom_fields["featured--instagram_mobile"] != blank %}
+            <div class="trends--left_image  left-padding-img insta--feed large--hide medium--hide">
+              {{ article.metafields.custom_fields["featured--instagram_mobile"] }}
+              <div class="insta-wrapper"><a href="{{ article.url }}" target="_blank"><img src="{{ 'insta.jpg' | asset_url }}"></a></div>
+            </div>
+            {% endif %}
+          </div>
+          <div class="grid__item five-eighths medium--one-half small--one-whole display-table-cell trend-content-section">
+            {% if blog == 'how-tos' %}
+            <a href="/pages/{{ blog }}" class="blog-category"><span>how-to's</span></a>
+            {% else %}
+            <a href="/pages/{{ blog }}" class="blog-category"><span>{{ blog | replace: '-', ' ' }}</span></a>
+            {% endif %}
+            {% if article.excerpt != blank %}
+            <div class="small--hide medium--hide background_text text-left" style="color:#333333">
+              {{ article.excerpt }}
+            </div>
+            <div class="trends--right_image trends__right-1">
+              <div class="trends--right_image1">
+                <div class="small--hide medium--hide large__heading trends--heading with-border ">
+                  <a href="{{ article.url }}" style="color:#333333">
+                    {{ article.excerpt }}
+                  </a>
+                </div>
+                <div class="trends--content">
+                  <a href="{{ article.url }}">
+                    <p>
+                    {% if article.content != blank %}
+                    {{ article.content }}
+                    {% else %}
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    {% endif %}
+                    <span class="hero__cta">Read more</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% schema %}
+{
+"name": {
+"en": "Discover"
+},
+"class" : "discover--section",
+"max_blocks": 9,
+"settings":[
+
+],
+"blocks": [
+{
+"type": "html",
+"name": {
+"en": "Add Article"
+},
+"settings": [
+{
+"type": "blog",
+"id": "blog",
+"label": {
+"en": "Blog"
+}
+},
+{
+"type" : "image_picker",
+"id" : "blog_image",
+"label" : "Blog Image"
+}
+]
+}
+],
+"presets": [
+{
+"name": {
+"en": "Discover"
+},
+"blocks": [
+{
+"type": "html"
+}
+]
+}
+]
+}
+{% endschema %}

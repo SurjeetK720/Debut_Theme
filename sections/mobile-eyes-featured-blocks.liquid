@@ -1,0 +1,78 @@
+{% if section.blocks != blank %}
+<div class="featured-blocks-wrapper">
+  {% for block in section.blocks%}
+  {% if block.settings.image != blank %}
+  <div class="banner-wrapper">
+  <img src="{{block.settings.image | img_url:'original'}}" class="banner-img"/>
+  </div>
+  {% endif %}
+  <div class="content-wrapper">
+  {% if block.settings.heading != blank %}
+  <div class="lips-heading">
+    {{block.settings.heading}}
+  </div>
+  {% endif %}
+  {% if block.settings.content != blank %}
+  <div class="lips-paragraph">
+    <p>{{block.settings.content}}</p>
+  </div>    
+  {% endif %}
+    {% if block.settings.collection != blank %}
+    <div class="lip-collection grid">
+      {% assign collection = collections[block.settings.collection] %}
+        {% for product in collection.products %}
+    	{% include 'product-grid-item-lips' %} 
+      {% endfor%}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Mobile Featured Blocks",
+	"class":"lips-featured-blocks",
+     "settings": [
+],
+  "blocks": [
+  {
+  "type": "html",
+  "name": {
+  "en": "Lip Blocks"
+  },
+  "settings": [
+{
+  "type" : "image_picker",
+  "id" : "image",
+  "label" : "Block Banner Image"
+  },
+  {
+  "type" : "html",
+  "id" : "heading",
+  "label" : "Enter Heading"
+  },
+  {
+  "type" : "textarea",
+  "id" : "content",
+  "label" : "Enter Content"
+  },
+  {
+  "type": "collection",
+  "id": "collection",
+  "label": {
+  "en": "Collection"
+  }
+  }
+  
+  ]
+  }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

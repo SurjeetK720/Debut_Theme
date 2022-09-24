@@ -1,0 +1,124 @@
+ {% if section.settings.heading != blank %}
+  <header class="section-header text-center">
+    <div class="about--heading text-center">{{ section.settings.heading }}</div>
+  </header>
+  {% endif %}
+<div class="about--key_facts custom-content">
+ 
+  {% for block in section.blocks %}
+  {% case block.settings.width %}
+  {% when '25%' %}
+  {%- assign block_width = 'small--one-whole one-quarter medium-down--one-whole' -%}
+  {% when '33%' %}
+  {%- assign block_width = 'small--one-whole one-third medium-down--one-whole' -%}
+  {% when '50%' %}
+  {%- assign block_width = 'small--one-whole one-half medium-down--one-whole' -%}
+  {% when '66%' %}
+  {%- assign block_width = 'small--one-whole two-thirds medium-down--one-whole' -%}
+  {% when '75%' %}
+  {%- assign block_width = 'small--one-whole three-quarters medium-down--one-whole' -%}
+  {% when '100%' %}
+  {%- assign block_width = 'one-whole' -%}
+  {% endcase %}
+  <div class="custom__item {{ block_width }} text-center"{ block.shopify_attributes }}>
+    <div class="custom__item-inner custom__item-inner--{{ block.type }}">
+      {% case block.type %}
+      {% when 'html' %}
+      {% if block.settings.image != blank %}
+      <img src="{{ block.settings.image | img_url : '262x262' }}" alt="{{ block.settings.image.alt | escape }}" />
+      {% endif %}
+      {% if block.settings.code != blank %}
+      <div class="rte about--content  text-center" data-section-id="{{ section.id }}" data-section-type="featured-content-section">
+        {{ block.settings.code }}
+      </div>
+      {% endif %}
+      {% endcase %}
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+
+{% schema %}
+{
+"name": {
+"en": "About - key facts"
+},
+"settings":[
+{
+"type" : "text",
+"id" : "heading",
+"label" : "Heading"
+}
+],
+"blocks": [
+{
+"type": "html",
+"name": {
+"en": "About - key facts"
+},
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": {
+"en": "Image"
+}
+},
+{
+"type": "html",
+"id": "code",
+"label": {
+"en": "Content"
+}
+},
+{
+"type": "select",
+"id": "width",
+"label": {
+"en": "Container width"
+},
+"default": "100%",
+"options": [
+{
+"value": "25%",
+"label": {
+"en": "25%"
+}
+},
+{
+"value": "33%",
+"label": {
+"en": "33%"
+}
+},
+{
+"value": "50%",
+"label": {
+"en": "50%"
+}
+},
+{
+"value": "66%",
+"label": {
+"en": "66%"
+}
+},
+{
+"value": "75%",
+"label": {
+"en": "75%"
+}
+},
+{
+"value": "100%",
+"label": {
+"en": "100%"
+}
+}
+]
+}
+]
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,120 @@
+<!-- snippets/lakmeContent-image-zigzag.liquid -->
+<style>
+    .hr-d-flex {
+        display         : flex;
+        justify-content : center;
+        margin-top      : 15px;
+        margin-bottom   : 15px;
+    }
+
+    .hr-align-text {
+        text-align : justify !important;
+    }
+
+    .hr-custom-width {
+        width : 30% !important;
+    }
+
+    .hr-custom-h5-heading {
+        margin         : 0 0 10px;
+        line-height    : 1;
+        letter-spacing : 0px;
+        font-size      : 1.5em;
+        font-weight    : 600;
+    }
+
+    .hr-custom-para-content-mobile {
+        padding-right : 0% !important;
+        padding-left  : 0% !important;
+        text-align    : left !important;
+    }
+
+    @media screen and (max-width : 640px) {
+        .hr-d-flex {
+            flex-direction : column;
+            padding-left   : 0;
+        }
+
+        .hr-custom-width {
+            width      : 100% !important;
+            text-align : center !important;
+        }
+
+        .hr-custom-image-grid {
+            width  : 80%;
+            margin : 0 auto;
+        }
+
+        .hr-custom-h5 {
+            font-size     : 1em;
+            font-weight   : bold;
+            text-align    : left;
+            margin-bottom : 0px;
+        }
+
+        .hr-mobile-custom-content-width {
+            padding : 0 6% !important;
+        }
+
+        .hr-custom-para-content-mobile {
+            padding-right : 0% !important;
+            padding-left  : 0% !important;
+            text-align    : left !important;
+        }
+
+        .hr-d-flex:nth-child(2) {
+            flex-direction : column-reverse;
+        }
+
+        .hr-d-flex:nth-child(3) {
+            margin-bottom : 0px;
+        }
+    }
+</style>
+<div class="grid text-center contentWidget">
+    <div class="grid__item contentWidget-heading">
+        {% if contentWidget.heading != blank %}
+            <span class="h5 contentWidget-heading">{{ contentWidget.heading }}</span>
+        {% endif %}
+    </div>
+    <div class="grid__item contentWidget-content hr-mobile-custom-content-width" style="padding: 0 12%;">
+        {% assign is_odd = true %}
+        {% assign contentAlignment = "left" %}
+        {% assign imageAlignment = "right" %}
+        {% for contentImage in contentWidget.images %}
+            <div class="grid__item hr-d-flex">
+                {% if is_odd == true %}
+                    <div class="grid__item large--one-half small--one-whole text-right hr-align-text hr-custom-width">
+                        <img class="hr-custom-image-grid" src="{{ contentImage.image }}"
+                             alt="{{ contentWidget.altText }}" />
+                    </div>
+                {% endif %}
+                {% if contentImage.text != blank %}
+                    <div class="grid__item large--one-half small--one-whole text-{{ contentAlignment }} hr-align-text">
+                        {% if contentImage.heading != blank %}
+                            <span class="h5 hr-custom-h5 hr-custom-h5-heading">{{ contentImage.heading }}</span>
+                        {% endif %}
+                        <p class="text-{{ contentAlignment }} hr-custom-banner-p hr-custom-para-content-mobile"
+                           style="padding-{{ imageAlignment }}: 20%;">{{ contentImage.text }}</p>
+                    </div>
+                {% endif %}
+
+                {% if is_odd == false %}
+                    <div class="grid__item large--one-half small--one-whole text-left hr-align-text hr-custom-width">
+                        <img class="hr-custom-image-grid" src="{{ contentImage.image }}"
+                             alt="{{ contentWidget.altText }}" />
+                    </div>
+                {% endif %}
+            </div>
+            {% if is_odd == true %}
+                {% assign is_odd = false %}
+                {% assign contentAlignment = "right" %}
+                {% assign imageAlignment = "left" %}
+            {% else %}
+                {% assign is_odd = true %}
+                {% assign contentAlignment = "left" %}
+                {% assign imageAlignment = "right" %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

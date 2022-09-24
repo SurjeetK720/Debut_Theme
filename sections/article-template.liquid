@@ -1,0 +1,235 @@
+<!-- /templates/article.liquid -->
+{% assign blog_handle = blog.handle %}
+{% assign number_of_comments = article.comments_count %}
+
+{% if comment and comment.created_at %}
+{% assign number_of_comments = article.comments_count | plus: 1 %}
+{% endif %}
+
+<div class="grid">
+  <article class="grid__item large--five-sixths push--large--one-twelfth article" itemscope itemtype="http://schema.org/Article">
+    <div class="grid">
+      <div class="grid__item one-whole">
+        <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+          <a href="/" title="Home">Home</a>
+          {% for tag in article.tags %}
+          {% if tag contains 'Main:' %}
+          {% assign tag_parts = tag | split: 'Main:' %}
+          <span aria-hidden="true">&rsaquo;</span>
+          <a href="/pages/{{ tag_parts[1] | handleize }}">{{ tag_parts[1] }}</a>
+          {% endif %}
+          {% if tag contains 'Sub:' %}
+          {% assign tag_parts1 = tag | split: 'Sub:' %}
+          <span aria-hidden="true">&rsaquo;</span>
+          <a href="/pages/{{ tag_parts1[1] | handleize }}">{{ tag_parts1[1] }}</a>
+          {% endif %}
+          {% endfor %}
+        </nav>
+        {% if article.excerpt != blank %}
+        <div class="rte article__excerpt article-inner-heading">
+          {{ article.excerpt }}
+        </div>
+        {% endif %}
+
+        {% if article.author != blank and section.settings.social_sharing_blog %}
+        <div class="article--social_author--wrapper">
+          <div class="article__author text-left">
+            By - {{ article.author }}
+          </div>
+          <div class="article__social text-right">
+            {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+          </div>
+        </div>
+        {% endif %}
+        <div class="grid">
+          {% if article.image != blank %}
+          <div class="grid__item article__featured-wrapper three-eighths small--one-whole ">
+            <img src="{{ article.image | img_url: '480x480' }}"
+                 alt="{{ article.title | escape }}" />
+          </div>
+          {% endif %}
+          <div class="grid__item five-eighths small--one-whole">
+            <header class="section-header article-top-header">
+              <h1>{{ article.title }}</h1>
+            </header>
+
+            {% if article.content != blank %}
+            <div class="rte rte--indented-content article-description" itemprop="articleBody">
+              {{ article.content }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+  {% if article.metafields.custom_fields["video-image-1"] != blank %}
+  <div class="grid__item large--five-sixths push--large--one-twelfth article__video-wrapper ">
+    <div class="custom-field--value custom-field__video-image-1">
+      {{ article.metafields.custom_fields["video-image-1"] }}
+    </div>
+    {% if article.metafields.custom_fields["video-1"] != blank %}
+    <div class="custom-field custom-field__video-1 custom-field__type--embed">
+      <div class="custom-field--value">
+        {{ article.metafields.custom_fields["video-1"] }}
+      </div>
+    </div>
+    {% endif %}
+    {% if article.metafields.custom_fields["video-content-1"] != blank %}
+    <div class="custom-field--value content-after-video custom-field__video-content-1 ">
+      {{ article.metafields.custom_fields["video-content-1"] }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% if article.metafields.custom_fields["product-handle-1"] != blank %}
+  <div class="grid__item one-whole text-center article__product">
+    <div class="custom-field--value custom-field__product-handle-1">  
+      {% assign product_ref = all_products[article.metafields.custom_fields["product-handle-1"]] %}
+      {% include 'article-product' %}
+    </div>
+    {% if article.metafields.custom_fields["product-content-1"] != blank %}
+    <div class="custom-field--value content-after-product custom-field__product-content-1">
+      {{ article.metafields.custom_fields["product-content-1"] }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% if article.metafields.custom_fields["video-image-2"] != blank %}
+  <div class="grid__item one-whole text-center article__video-wrapper">
+    <div class="custom-field--value custom-field__video-image-2">
+      {{ article.metafields.custom_fields["video-image-2"] }}
+    </div>
+    {% if article.metafields.custom_fields["video-2"] != blank %}
+    <div class="custom-field custom-field__video-2 custom-field__type--embed">
+      <div class="custom-field--value">
+        {{ article.metafields.custom_fields["video-2"] }}
+      </div>
+    </div>
+    {% endif %}
+    {% if article.metafields.custom_fields["video-content-2"] != blank %}
+    <div class="custom-field--value content-after-video custom-field__video-content-2">
+      {{ article.metafields.custom_fields["video-content-2"] }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% if article.metafields.custom_fields["product-handle-2"] != blank %}
+  <div class="grid__item one-whole text-center article__product">
+    <div class="custom-field--value custom-field__product-handle-2">  
+      {% assign product_ref = all_products[article.metafields.custom_fields["product-handle-2"]] %}
+      {% include 'article-product' %}
+    </div>
+    {% if article.metafields.custom_fields["product-content-2"] != blank %}
+    <div class="custom-field--value content-after-product custom-field__product-content-1">
+      {{ article.metafields.custom_fields["product-content-2"] }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% if article.metafields.custom_fields["video-image-3"] != blank %}
+  <div class="grid__item one-whole text-center article__video-wrapper">
+    <div class="custom-field--value custom-field__video-image-3">
+      {{ article.metafields.custom_fields["video-image-3"] }}
+    </div>
+    {% if article.metafields.custom_fields["video-3"] != blank %}
+    <div class="custom-field custom-field__video-3 custom-field__type--embed">
+      <div class="custom-field--value">
+        {{ article.metafields.custom_fields["video-3"] }}
+      </div>
+    </div>
+    {% endif %}
+    {% if article.metafields.custom_fields["video-content-3"] != blank %}
+    <div class="custom-field--value content-after-video custom-field__video-content-3">
+      {{ article.metafields.custom_fields["video-content-3"] }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% if article.metafields.custom_fields["product-handle-3"] != blank %}
+  <div class="grid__item one-whole text-center article__product">
+    <div class="custom-field--value custom-field__product-handle-3">  
+      {% assign product_ref = all_products[article.metafields.custom_fields["product-handle-3"]] %}
+      {% include 'article-product' %}
+    </div>
+    {% if article.metafields.custom_fields["product-content-3"] != blank %}
+    <div class="custom-field--value content-after-product custom-field__product-content-3">
+      {{ article.metafields.custom_fields["product-content-3"] }}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% if article.metafields.custom_fields["collection"] != blank %}
+  <div class="grid__item large--five-sixths push--large--one-twelfth text-center article__collection-outer">
+    <div class="article__collection">
+      {% assign collection_ref = collections[article.metafields.custom_fields["collection"]] %}
+      {% assign collection = collection_ref.handle %}
+      {% for product in collections[collection].products %}
+      {% include 'product-grid-item' %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% if section.settings.enable_related_articles %}
+<div class="text-center article__related-products">
+  {% if section.settings.heading != blank %}
+  <header class="section-header text-center related-products__heading">
+    <h1>{{ section.settings.heading }}</h1>
+  </header>
+  {% endif %}
+  {% include 'related-articles' %}
+  <a href="javascript:void(0)" id="loadMore" class="btn">Load more</a>
+</div>
+{% endif %}
+<style>
+  .related--articles .blog_post{ 
+    display:none;
+  }
+</style>
+{% schema %}
+{
+"name": {
+"pt-BR": "Páginas do artigo",
+"es": "Páginas del artículo",
+"de": "Artikelseiten",
+"it": "Pagine articoli",
+"en": "Article pages",
+"ja": "記事ページ",
+"fr": "Pages d'articles"
+},
+"settings": [
+{
+"type": "checkbox",
+"id": "social_sharing_blog",
+"label": {
+"pt-BR": "Exibir botões de compartilhamento em redes sociais",
+"es": "Mostrar botones para compartir en redes sociales",
+"de": "Social-Sharing-Schaltflächen anzeigen",
+"it": "Mostra i pulsanti per la condivisione sui social",
+"en": "Show social sharing buttons",
+"ja": "ソーシャル共有ボタンを表示する",
+"fr": "Afficher les boutons de partage social"
+},
+"default": true
+},
+{
+"type" : "header",
+"content" : "Related articles"
+},
+{
+"type": "checkbox",
+"id": "enable_related_articles",
+"label": {
+"en": "Enable Related Articles"
+},
+"default": true
+},
+{
+"type" : "text",
+"id" : "heading",
+"label" : "Heading"
+}
+]
+}
+{% endschema %}

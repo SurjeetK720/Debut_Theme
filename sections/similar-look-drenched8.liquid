@@ -1,0 +1,86 @@
+{% if section.blocks!=blank%}
+<div class="similar-looks">
+  {%if section.settings.heading!=blank%}
+  	<h1>{{ section.settings.heading }}</h1>
+  {% endif%}
+  <div class="similar-wrap">
+  {% for block in section.blocks %}
+  	 {% if block.settings.block_image!=blank %}
+    <div class="block-content">
+      <div>
+	<img src="{{ block.settings.block_image | img_url: 'original' }}" alt="{{ block.settings.block_image.alt }}" />
+  {% if block.settings.block_heading!=blank%}
+      <h1>{%if block.settings.block_link!=blank %}<a href="{{block.settings.block_link}}">{% endif%}{{block.settings.block_heading}}
+        {%if block.settings.block_link!=blank %}</a>{% endif%}
+        </h1>
+      {% endif %}
+      </div>
+  </div>
+    {% endif%}
+  {% endfor %}
+  </div>
+</div>
+{% endif%}
+<script>
+  $(document).ready(function(){
+    if($(window).width()<=769)
+    {
+     setTimeout(function(){
+   $('.similar-wrap').slick({
+
+      infinite: true,
+      speed: 300,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      
+
+    });
+  },3000)
+    }
+  
+  })
+ 
+  
+</script>
+{% schema %}
+   {
+    "name": "Add Similar Look",
+    "settings": [
+			{
+                "id": "heading",
+                "type": "text",
+                "label": "Enter Heading"
+              }
+	],
+    "blocks": [
+          {
+           "type":"similar_look",
+            "name": "Similar Looks Blocks",
+            "settings": [
+              {
+                "id": "block_heading",
+                "type": "text",
+                "label": "Enter Heading"
+              },
+  			{
+                "id": "block_link",
+                "type": "url",
+                "label": "Enter Link"
+              },
+				{
+                "type": "image_picker",
+                "id": "block_image",
+                "label": "Block Image"
+              }
+            
+              ]
+          }
+        ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

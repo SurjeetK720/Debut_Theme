@@ -1,0 +1,14 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/hul-lakme.myshopify.com/pages/edit-field/45233
+{% endcomment %}
+{% if page.metafields.custom_fields["contentwidgets"] != blank %}
+  <div class="custom-field custom-field__contentwidgets custom-field__type--page-reference">
+    <h3 class="custom-field--title">contentWidgets</h3>
+    <div class="custom-field--value">  
+      {% assign page_ref = pages[page.metafields.custom_fields["contentwidgets"]] %}
+      {{ page_ref.title | link_to: page_ref.url }}
+    </div>
+  </div>
+{% endif %}
